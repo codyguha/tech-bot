@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<% include ./partials/head %>
+
+<body>
+
+<p>
+ID: <%= user.id %><br/>
+Name: <%= user.displayName %><br/>
+</p>
+<select id="selectPage">
+    <option>Choose a Page</option>
+</select>
+<br/>
+<p><%= JSON.stringify(user, null, 4) %></p>
+
+<script>
+var select = document.getElementById("selectPage");
+var array = [<%- pages %>];
+for(var i = 0; i < array.length; i++) {
+    var opt = array[i];
+    var el = document.createElement("option");
+    el.textContent = opt;
+    el.value = opt;
+    select.appendChild(el);
+}
+</script>
+</body>

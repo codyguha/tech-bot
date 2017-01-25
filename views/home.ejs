@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<% include ./partials/head %>
+
+<body>
+
+  <% if (!user) { %>
+	<p>Welcome! Please <a href="/login">log in</a>.</p>
+  <% } else { %>
+	<p>Hello, <%= user.username %>. View your <a href="/profile">profile</a>.</p>
+  <% } %>
+  <center>
+    <form method="POST" action="/">
+
+      <textarea class="lined" type="textarea" rows="49" cols="100" style="width:700px" name="broadcast" value=""></textarea>
+      <br>
+      <input type="submit" value="BROADCAST!">
+    </form>
+  </center>
+  <script>
+$(function() {
+  // Target all classed with ".lined"
+  $(".lined").linedtextarea(
+    {selectedLine: 1}
+  );
+});
+</script>
+</body>

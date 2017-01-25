@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<% include ./partials/head %>
+<style>
+img{width: 150px;}
+</style>
+
+<body>
+  <div class="description z-depth-2" style="margin-bottom: 20px;"> <p>We’d like to know which of the following products you would consider purchasing and which you would not.  Select all that you would consider purchasing</p></div>
+
+<div class="content">
+    <form id="ProductList" method="post" action="/products">
+        <input id="facebook_id" type="hidden" name='fb_id'>
+      <select multiple="multiple" id="product-picker" class="image-picker" name="products">
+        <option data-img-src="/images/luckycharms.jpg" value="Lucky Charms">Lucky Charms</option>
+        <option data-img-src="/images/cornflakes.jpg" value="Corn Flakes">Corn Flakes</option>
+        <option data-img-src="/images/frostedflakes.jpg" value="Frosted Flakes">Frosted Flakes</option>
+        <option data-img-src="/images/naturalPB.jpg" value="SmuckersPB">Cute Kitten 4</option>
+        <option data-img-src="/images/creamyPB.jpg" value="PlanterPb">Cute Kitten 4</option>
+        <option data-img-src="/images/darkchocolatePB.jpg" value="DarkChocolatePB">Cute Kitten 4</option>
+      </select>
+        <div id="submit" class="fixed-action-btn">
+          <a class="btn-floating btn-large blue z-depth-2">
+            <i class="material-icons">done</i>
+           </a>
+       </div>
+    </form>
+</div>
+<script>
+$(document).ready(function () {
+    $("#product-picker").imagepicker({
+        hide_select: true
+    });
+
+    var $container = $('.image_picker_selector');
+    // initialize
+    $container.imagesLoaded(function () {
+        $container.masonry({
+            columnWidth: 10,
+            itemSelector: '.thumbnail'
+        });
+    });
+});
+
+window.extAsyncInit = function() {
+  var check = MessengerExtensions.isInExtension();
+  console.log(check)
+  if (check === false) {
+    $("#facebook_id").val(<%= id %>)
+  } else {
+    MessengerExtensions.getUserID(function success(uids) {
+         var psid = uids.psid.toString();
+         $("#facebook_id").val(psid)
+       }, function error(err) {
+
+       });
+  }
+};
+
+
+
+$('#submit').click(function (evt) {
+    $('form').submit();
+    evt.preventDefault();
+    MessengerExtensions.requestCloseBrowser(function success() {}, function error(err) {});
+    setTimeout(function() {
+          window.close();
+    }, 1000);
+});
+
+
+</script>
+</body>

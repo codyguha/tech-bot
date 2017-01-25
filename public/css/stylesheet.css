@@ -1,0 +1,111 @@
+.sugarbutton-rank {
+  margin:6px;
+  background-color:#f7f7f7;
+  border-radius:14px;
+  border:1px solid #D0D0D0;
+  overflow:auto;
+  float:left;
+  cursor: move;
+}
+
+.sugarbutton-rank label {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  color:#1f93ff;
+  font-size: 1.2em;
+  width: 16.0em;
+}
+.sugarbutton-rank label span {
+  text-align:center;
+  padding:3px 0px;
+  display:block;
+}
+.sugarbutton {
+  margin:6px;
+  background-color:#f7f7f7;
+  border-radius:14px;
+  border:1px solid #D0D0D0;
+  overflow:auto;
+  float:left;
+  cursor: move;
+}
+
+.sugarbutton label {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  color:#1f93ff;
+  font-size: 1.2em;
+  width: 16.0em;
+}
+
+.sugarbutton label span {
+  text-align:center;
+  padding:3px 0px;
+  display:block;
+}
+
+.sugarbutton label input {
+    position:absolute;
+    top:-20px;
+}
+
+.sugarbutton input:checked + span {
+    background-color: #0084ff;
+    color:white;
+}
+.sugarbutton.over {
+  border: 2px dashed #1f93ff;
+}
+.description {
+  margin: 0;
+  padding: 0;
+  background-color: #0084ff;
+  height: 150px;
+  position: relative;
+  color:white;
+}
+p {
+  padding: 20px;
+  text-align:left;
+}
+.content {
+    position: relative;
+    width: 300px;
+    top: 0px;
+    left:0px;
+    right:0px;
+    bottom:0px;
+    margin: 0 auto;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    height:100%;
+}
+
+#top-rank {
+  background-color: #4caf50;
+}
+#low-rank {
+  background-color: #0084ff;
+}
+.ghost {
+  opacity: .5;
+  background: #C8EBFB;
+}
+
+.jq-toast-wrap {
+  opacity: 0.8;
+  font-size: 1.2em;
+}
+
+.personality-img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -20px;
+}
+
+img {
+  width: 150px;
+}

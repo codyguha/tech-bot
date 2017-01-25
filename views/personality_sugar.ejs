@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<% include ./partials/head %>
+
+
+
+<body>
+  <div class="description z-depth-2" style="height: 200px;">
+    <p>How would you describe this person? (Choose all that apply.)</p>
+      <% if (sugarperson === "Henry") {%>
+        <img class="personality-img" src="/images/Henry Yoo.JPG">
+      <% } else if (sugarperson === "Ivan") {%>
+          <img class="personality-img" src="/images/Ivan Rickard Liow.JPG">
+      <% } else if (sugarperson === "Wilson") {%>
+          <img class="personality-img" src="/images/Wilson Chu.JPG">
+      <% } else if (sugarperson === "Toto") {%>
+          <img class="personality-img" src="/images/Toto Lai.JPG">
+      <% } %>
+  </div>
+
+<div class="content">
+
+  <form id="sugarList" method="post" action="/personality1">
+    <input id="facebook_id" type="hidden" name='fb_id'>
+    <input type="hidden" name='sugarperson' value="<%= sugarperson %>">
+    <input type="hidden" name='sweetenerperson' value="<%= sweetenerperson %>">
+    <% for(var i=0; i<list.length; i++) {%>
+      <div class="sugarbutton">
+        <label>
+          <input type="checkbox" name='<%= list[i] %>'><span><%= list[i] %></span>
+        </label>
+      </div>
+    <% } %>
+
+    <div id="submit" class="fixed-action-btn">
+      <a class="btn-floating btn-large blue">
+        <i class="material-icons">send</i>
+       </a>
+   </div>
+  </form>
+</div>
+<script>
+
+window.extAsyncInit = function() {
+  var check = MessengerExtensions.isInExtension();
+  console.log(check)
+  if (check === false) {
+    $("#facebook_id").val(<%= id %>)
+  } else {
+    MessengerExtensions.getUserID(function success(uids) {
+         var psid = uids.psid.toString();
+         $("#facebook_id").val(psid)
+       }, function error(err) {
+
+       });
+  }
+};
+$("select").imagepicker();
+
+$('#submit').click(function (evt) {
+  $.toast({
+    text : "Got it! Loading next question...",
+    showHideTransition : 'plain',     // It can be plain, fade or slide
+    bgColor : '#1f93ff',              // Background color for toast
+    textColor : 'white',              // text color
+    allowToastClose : false,          // Show the close button or not
+    hideAfter : false,                // `false` to make it sticky or time in miliseconds to hide after
+    stack : false,                    // `fakse` to show one stack at a time count showing the number of toasts that can be shown at once
+    textAlign : 'left',               // Alignment of text i.e. left, right, center
+    position : 'bottom-left'          // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values to position the toast on page
+  })
+  window.setTimeout(toastSubmit, 1000)
+});
+
+function toastSubmit() {
+  $('form').submit();
+  evt.preventDefault();
+}
+</script>
+</body>

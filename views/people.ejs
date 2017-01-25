@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<% include ./partials/head %>
+
+<body>
+  <div class="description z-depth-2" style="margin-bottom: 20px; height: 200px;"> <p>Here are some photos of different people who are all roughly the same age and earn approximately the same amount of money.  However, it’s important to notice that each one has a different personality.  Please select the person you would like to associate with "Natural Sugar".</p></div>
+
+<div class="content">
+    <form id="ProductList" method="post" action="/sugarperson">
+        <input id="facebook_id" type="hidden" name='fb_id'>
+      <select id="product-picker" class="image-picker" name="person">
+        <option data-img-src="/images/Henry Yoo.JPG" value="Henry">Henry</option>
+        <option data-img-src="/images/Toto Lai.JPG" value="Toto">Toto</option>
+        <option data-img-src="/images/Ivan Rickard Liow.JPG" value="Ivan">Ivan</option>
+        <option data-img-src="/images/Wilson Chu.JPG" value="Wilson">Wilson</option>
+      </select>
+        <div id="submit" class="fixed-action-btn">
+          <a class="btn-floating btn-large blue z-depth-2">
+            <i class="material-icons">done</i>
+           </a>
+       </div>
+    </form>
+</div>
+<script>
+$(document).ready(function () {
+    $("#product-picker").imagepicker({
+        hide_select: true
+    });
+
+    var $container = $('.image_picker_selector');
+    // initialize
+    $container.imagesLoaded(function () {
+        $container.masonry({
+            columnWidth: 10,
+            itemSelector: '.thumbnail'
+        });
+    });
+});
+
+window.extAsyncInit = function() {
+  var check = MessengerExtensions.isInExtension();
+  console.log(check)
+  if (check === false) {
+    $("#facebook_id").val(<%= id %>)
+  } else {
+    MessengerExtensions.getUserID(function success(uids) {
+         var psid = uids.psid.toString();
+         $("#facebook_id").val(psid)
+       }, function error(err) {
+
+       });
+  }
+};
+
+$('#submit').click(function (evt) {
+  $.toast({
+    text : "Got it! Loading next question...",
+    showHideTransition : 'plain',     // It can be plain, fade or slide
+    bgColor : '#1f93ff',              // Background color for toast
+    textColor : 'white',              // text color
+    allowToastClose : false,          // Show the close button or not
+    hideAfter : false,                // `false` to make it sticky or time in miliseconds to hide after
+    stack : false,                    // `fakse` to show one stack at a time count showing the number of toasts that can be shown at once
+    textAlign : 'left',               // Alignment of text i.e. left, right, center
+    position : 'bottom-left'          // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values to position the toast on page
+  })
+  window.setTimeout(toastSubmit, 1000)
+});
+
+function toastSubmit() {
+  $('form').submit();
+  evt.preventDefault();
+}
+
+</script>
+</body>
