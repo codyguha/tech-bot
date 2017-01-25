@@ -7,25 +7,76 @@
 <body>
     <div class="description z-depth-2">  <p id="text">We know there are heaps of different sugars and sweeteners on the market right now so first we would like to know which ones you’ve heard of. Please tap on all the products that you are aware of:</p></div>
 
-    <div class="content">
-      <form id="sugarList" method="post" action="/list">
-        <input id="facebook_id" type="hidden" name='fb_id'>
-
-        <% for(var i=0; i<list.length; i++) {%>
-          <div class="sugarbutton">
-            <label>
-              <input type="checkbox" name='<%= list[i] %>'><span><%= list[i] %></span>
-            </label>
-          </div>
-        <% } %>
-
-        <div id="submit" class="fixed-action-btn">
-          <a class="btn-floating btn-large blue">
-            <i class="material-icons">send</i>
-           </a>
-       </div>
-      </form>
-    </div>
+    <table>
+  <tr>
+    <td id="question">My friends and family often ask me for advice when purchasing technology</td>
+    <td id="sliderguy">
+      <div class="amount"></div>
+      <div class="slider"></div>
+    </td>
+  </tr>
+  <tr>
+    <td id="question">I rarely buy off the shelf Consumer Electronic products, I like to assemble my Consumer Electronics products and customize the functionality</td>
+    <td id="sliderguy">
+      <div class="amount"></div>
+      <div class="slider"></div>
+    </td>
+  </tr>
+  <tr>
+    <td id="question">I am a risk taker</td>
+    <td id="sliderguy">
+      <div class="amount"></div>
+      <div class="slider"></div>
+    </td>
+  </tr>
+  <tr>
+    <td id="question">I seek out the Consumer Electronics products with the most advanced features</td>
+    <td id="sliderguy">
+      <div class="amount"></div>
+      <div class="slider"></div>
+    </td>
+  </tr>
+  <tr>
+    <td id="question">I am the first among my friends and family to experience something new</td>
+    <td id="sliderguy">
+      <div class="amount"></div>
+      <div class="slider"></div>
+    </td>
+  </tr>
+  <tr>
+    <td id="question">I like having technology that is different, cutting-edge, and sets me apart from the crowd</td>
+    <td id="sliderguy">
+      <div class="amount"></div>
+      <div class="slider"></div>
+    </td>
+  </tr>
+  <tr>
+    <td id="question">I’m often multi-tasking with more than one device (tablet, computer or phone)</td>
+    <td id="sliderguy">
+      <div class="amount"></div>
+      <div class="slider"></div>
+    </td>
+  </tr>
+  <tr>
+    <td id="question">I want devices that say a lot about who I am</td>
+    <td id="sliderguy">
+      <div class="amount"></div>
+      <div class="slider"></div>
+    </td>
+  </tr>
+  <tr>
+    <td id="question">I feel confident in my views and choices</td>
+    <td id="sliderguy">
+      <div class="amount"></div>
+      <div class="slider"></div>
+    </td>
+  </tr>
+</table>
+<div id="<%= submit %>" class="fixed-action-btn">
+  <a class="btn-floating btn-large blue z-depth-2">
+    <i class="material-icons">done</i>
+   </a>
+</div>
 
 <script>
 window.extAsyncInit = function() {
@@ -57,6 +108,31 @@ $('#submit').click(function (evt) {
             window.close();
       }, 1000);
 });
+
+var steps = [1, 2, 3, 4, 5];
+$(".amount").text("Neither Agree Nor Disagree");
+
+$(".slider").slider({
+  range: "min",
+  value: 2,
+  min: 0,
+  max: steps.length - 1,
+  step: 1,
+  slide: function(event, ui) {
+    if (steps[ui.value] === 1) {
+      $(this).prev().text("Disagree Completely");
+    } else if (steps[ui.value] === 2) {
+      $(this).prev().text("Disagree Somewhat");
+    } else if (steps[ui.value] === 3) {
+      $(this).prev().text("Neither Agree Nor Disagree");
+    } else if (steps[ui.value] === 4) {
+      $(this).prev().text("Agree Somewhat");
+    } else if (steps[ui.value] === 5) {
+      $(this).prev().text("Agree Completely");
+    }
+  }
+});
+
 
 </script>
 

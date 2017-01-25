@@ -58,6 +58,51 @@
 .sugarbutton.over {
   border: 2px dashed #1f93ff;
 }
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.ui-slider-range.ui-widget-header.ui-slider-range-min {
+  background: white;
+}
+
+.slider.ui-slider.ui-slider-horizontal.ui-widget.ui-widget-content.ui-corner-all {
+  background: white;
+}
+
+#question {
+  width: 25%;
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+  background-color: #0084ff;
+  color: white;
+}
+
+#sliderguy {
+  width: 100%;
+  padding: 20px;
+}
+
+.slider {
+  background-color: white;
+}
+
+.amount {
+  width: 33%;
+  margin: 10px auto;
+  text-align: center;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+}
+
 .description {
   margin: 0;
   padding: 0;
