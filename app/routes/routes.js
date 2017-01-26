@@ -3,6 +3,7 @@ var broadcaster = require('../controllers/botkit').broadcast
 var attitudinal = require('../controllers/botkit').attitudinal
 var compromise = require('../controllers/botkit').compromise
 var sayThanks = require('../controllers/botkit').sayThanks
+var statement = require('../controllers/botkit').statement
 
 module.exports = function (app) {
 
@@ -33,8 +34,7 @@ module.exports = function (app) {
   app.post('/statement',function(req,res){
     var facebook_id = req.body.fb_id
     var statement = req.body.statement
-    res.render('statements', {id: req.params.id});
-    console.log(facebook_id, statement)
+    statement(facebook_id, statement)
   })
 
 

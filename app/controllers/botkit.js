@@ -134,6 +134,23 @@ var create_user_if_new = function (id, ts) {
 
 controller.on('tick', function(bot, event) { });
 
+var statement = function (id, statement){
+  if (statement === "1"){
+    user.segment = "Innovator"
+  } else if  (statement === "2"){
+    user.segment = "Early Adopter"
+  } else if (statement === "3"){
+    user.segment = "Early Majority"
+  } else if (statement === "4"){
+    user.segment = "Late Majority"
+  } else {
+    user.segment = "Laggard"
+  }
+  bot.say({
+      text: `Thanks for that... I have you pinned as a `+user.saavy+" "+user.segment+". :)",
+      channel: id
+  });
+}
 var broadcast = function (id, list) {
   var user_data = {id: id, list: list};
   controller.storage.users.save(user_data);
@@ -274,7 +291,7 @@ var sayThanks = function (id) {
   });
   request.post('https://still-earth-50244.herokuapp.com/finished-sug', {form:{id: id}})
 }
-
+exports.statement = statement
 exports.sayThanks = sayThanks
 exports.handler = handler
 exports.broadcast = broadcast
