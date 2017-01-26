@@ -295,7 +295,7 @@ function startSurvey(bot, incoming){
                     "I want devices that say a lot about who I am",
                     "I feel confident in my views and choices" ]
   bot.startConversation(incoming, function(err, convo) {
-    for (i = 1; i < questions.length; ++i) {
+    for (i = 0; i < questions.length; ++i) {
       if (i === (questions.length-1)) {
         convo.ask({
           text: questions[i],
