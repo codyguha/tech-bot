@@ -98,8 +98,8 @@ function change_state(obj) {
 
         //if radiobutton is being checked, add a "checked" class
         obj.parentNode.classList.add("checked");
-        alert( obj.innerHTML );
-        $("#choice").val(str)
+        alert( obj.value );
+        $("#choice").val(obj.value)
     }
     else {
         //else remove it
