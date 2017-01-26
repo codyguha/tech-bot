@@ -90,7 +90,7 @@ $('#submit').click(function (evt) {
 });
 
 function change_state(obj) {
-
+    var str = obj.html()
     if (obj.checked) {
         var checkedNodes = getElementsByClassName(document, "checked");
         for (var i=0;i<checkedNodes.length;i++) {
@@ -99,7 +99,6 @@ function change_state(obj) {
 
         //if radiobutton is being checked, add a "checked" class
         obj.parentNode.classList.add("checked");
-        var str = obj.html()
         $("#choice").val(str)
     }
     else {
