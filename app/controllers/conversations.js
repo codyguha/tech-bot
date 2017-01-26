@@ -287,6 +287,7 @@ function startSurvey(bot, incoming){
   var questions = [ "My friends and family often ask me for advice when purchasing technology",
                     "I rarely buy off the shelf Consumer Electronic products, I like to assemble my Consumer Electronics products and customize the functionality",
                     "I am a risk taker",
+                    "I’m the kind of person who knows what I want and how to achieve it ",
                     "I seek out the Consumer Electronics products with the most advanced features",
                     "I am the first among my friends and family to experience something new",
                     "I like having technology that is different, cutting-edge, and sets me apart from the crowd",
@@ -331,7 +332,7 @@ function startSurvey(bot, incoming){
           score += +response.payload
           console.log("SCORE:>>>>>>>>>>>>> " + score)
           convo.stop()
-          // naturalOrArtificial(bot, incoming)
+          giveResults(bot, incoming, score)
         });
       } else {
         convo.ask({
@@ -378,6 +379,20 @@ function startSurvey(bot, incoming){
       }
     }
   });
+}
+
+function giveResults(bot, incoming, score) {
+  var segment;
+  if (score === 50){
+    segment = "Most Tech Saavy"
+  } else if (score >= 35 && score < 50){
+    segment = "Very Tech Saavy"
+  } else if (score >= 25 && score < 35){
+    segment = "Somewhat Tech Saavy"
+  } else if (score < 25){
+    segment = "Not Very Tech Saavy"
+  }
+  bot.reply(incoming, {text: "Nice! Your score was "+score+"/50.  You are ranked as: "+segment+"."});
 }
 
 function naturalOrArtificial(bot, incoming){
