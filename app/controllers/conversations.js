@@ -268,7 +268,7 @@ module.exports = function (controller) {
       }
 
   });
-var score;
+var score = 0;
 function welcomeMessage(bot, incoming){
   bot.reply(incoming, {text: "Welcome!"});
   setTimeout(function() {
@@ -365,7 +365,6 @@ function startSurvey(bot, incoming){
               }
           ]
         }, function(response, convo) {
-          var object = JSON.stringify(response, null, 4);
           console.log("RESPONSE:>>>>>>>>>>>>> " + response.payload)
           var int = parseInt(response.payload)
           score += int
