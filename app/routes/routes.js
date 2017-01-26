@@ -1,5 +1,5 @@
 var facebook_handler = require('../controllers/botkit').handler
-var statementVerify = require('../controllers/botkit').statementVerify
+var statementVerify = require('../controllers/conversations').statementVerify
 
 module.exports = function (app) {
 
