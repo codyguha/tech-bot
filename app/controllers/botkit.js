@@ -134,14 +134,14 @@ var create_user_if_new = function (id, ts) {
 
 controller.on('tick', function(bot, event) { });
 
-var statement = function (id, statement){
-  if (statement === "1"){
+var statement = function (id, s){
+  if (s === "1"){
     user.segment = "Innovator"
-  } else if  (statement === "2"){
+  } else if  (s === "2"){
     user.segment = "Early Adopter"
-  } else if (statement === "3"){
+  } else if (s === "3"){
     user.segment = "Early Majority"
-  } else if (statement === "4"){
+  } else if (s === "4"){
     user.segment = "Late Majority"
   } else {
     user.segment = "Laggard"
