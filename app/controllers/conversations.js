@@ -278,7 +278,7 @@ function welcomeMessage(bot, incoming){
       setTimeout(function() {
         startSurvey(bot, incoming)
       }, 1000)
-    }, 4000)
+    }, 6000)
   }, 1000)
 }
 
