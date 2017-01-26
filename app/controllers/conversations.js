@@ -395,7 +395,7 @@ function giveResults(bot, incoming, user_score) {
   }
   user.saavy = saavy
   user.score = user_score
-  bot.reply(incoming, {text: "Nice! Your score was "+user_score+"/50.  We are going to rank you as: "+saavy+"."});
+  bot.reply(incoming, {text: "Nice! Your score was "+user_score+"/50.  I'm going to rank you as: '"+saavy+"'."});
   setTimeout(function() {
     console.log(user)
     // startSurvey(bot, incoming)
