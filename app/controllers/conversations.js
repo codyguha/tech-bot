@@ -326,6 +326,7 @@ function startSurvey(bot, incoming){
               }
           ]
         }, function(response, convo) {
+          score.push(response.payload);
           var object = JSON.stringify(response, null, 4);
           console.log("L-RESPONSE:>>>>>>>>>>>>> " + object)
           console.log("SCORE:>>>>>>>>>>>>> " + score)
