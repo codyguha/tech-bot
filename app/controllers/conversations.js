@@ -283,7 +283,7 @@ function welcomeMessage(bot, incoming){
 }
 
 function startSurvey(bot, incoming){
-  score = 0
+  score = []
   var questions = [ "My friends and family often ask me for advice when purchasing technology",
                     "I rarely buy off the shelf Consumer Electronic products, I like to assemble my Consumer Electronics products and customize the functionality",
                     "I am a risk taker",
@@ -364,7 +364,8 @@ function startSurvey(bot, incoming){
           ]
         }, function(response, convo) {
           var object = JSON.stringify(response, null, 4);
-          console.log("RESPONSE:>>>>>>>>>>>>> " + object)
+          console.log("RESPONSE:>>>>>>>>>>>>> " + response.payload)
+          score.push(response.payload);
           convo.next();
         });
       }
