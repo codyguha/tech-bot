@@ -293,7 +293,7 @@ var sayThanks = function (id) {
   });
   request.post('https://still-earth-50244.herokuapp.com/finished-sug', {form:{id: id}})
 }
-exports.statementVerify = statementVerify
+// exports.statementVerify = statementVerify
 exports.sayThanks = sayThanks
 exports.handler = handler
 exports.broadcast = broadcast
