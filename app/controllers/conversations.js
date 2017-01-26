@@ -278,7 +278,7 @@ function welcomeMessage(bot, incoming){
       setTimeout(function() {
         startSurvey(bot, incoming)
       }, 1000)
-    }, 6000)
+    }, 10000)
   }, 1000)
 }
 
@@ -326,7 +326,8 @@ function startSurvey(bot, incoming){
               }
           ]
         }, function(response, convo) {
-          console.log("LAST-RESPONSE:>>>>>>>>>>>>> " + response)
+          var object = JSON.stringify(response, null, 4);
+          console.log("L-RESPONSE:>>>>>>>>>>>>> " + object)
           console.log("SCORE:>>>>>>>>>>>>> " + score)
           convo.stop()
           // naturalOrArtificial(bot, incoming)
@@ -362,7 +363,8 @@ function startSurvey(bot, incoming){
               }
           ]
         }, function(response, convo) {
-          console.log("RESPONSE:>>>>>>>>>>>>> " + response)
+          var object = JSON.stringify(response, null, 4);
+          console.log("RESPONSE:>>>>>>>>>>>>> " + object)
           convo.next();
         });
       }
