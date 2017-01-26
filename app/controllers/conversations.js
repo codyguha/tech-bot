@@ -283,7 +283,7 @@ function welcomeMessage(bot, incoming){
 }
 
 function startSurvey(bot, incoming){
-  score = []
+  score = 0
   var questions = [ "My friends and family often ask me for advice when purchasing technology",
                     "I rarely buy off the shelf Consumer Electronic products, I like to assemble my Consumer Electronics products and customize the functionality",
                     "I am a risk taker",
@@ -330,6 +330,8 @@ function startSurvey(bot, incoming){
           var object = JSON.stringify(response, null, 4);
           console.log("L-RESPONSE:>>>>>>>>>>>>> " + object)
           console.log("SCORE:>>>>>>>>>>>>> " + score)
+          var int = parseInt(response.payload)
+          score += int
           convo.stop()
           // naturalOrArtificial(bot, incoming)
         });
@@ -366,7 +368,8 @@ function startSurvey(bot, incoming){
         }, function(response, convo) {
           var object = JSON.stringify(response, null, 4);
           console.log("RESPONSE:>>>>>>>>>>>>> " + response.payload)
-          score.push(response.payload);
+          var int = parseInt(response.payload)
+          score += int
           convo.next();
         });
       }
