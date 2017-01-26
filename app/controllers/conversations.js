@@ -326,12 +326,11 @@ function startSurvey(bot, incoming){
               }
           ]
         }, function(response, convo) {
-          score.push(response.payload);
           var object = JSON.stringify(response, null, 4);
           console.log("L-RESPONSE:>>>>>>>>>>>>> " + object)
-          console.log("SCORE:>>>>>>>>>>>>> " + score)
           var int = parseInt(response.payload)
           score += int
+          console.log("SCORE:>>>>>>>>>>>>> " + score)
           convo.stop()
           // naturalOrArtificial(bot, incoming)
         });
