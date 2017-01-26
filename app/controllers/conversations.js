@@ -277,7 +277,7 @@ function welcomeMessage(bot, incoming){
       bot.reply(incoming, {text: "Please choose to agree or disagree with the following statements."});
       setTimeout(function() {
         startSurvey(bot, incoming)
-      }, 1000)
+      }, 3000)
     }, 1000)
   }, 1000)
 }
