@@ -69,7 +69,7 @@ module.exports = function (controller) {
   var form3 = {
     'setting_type': 'greeting',
     'greeting': {
-      'text': 'What is your sugar IQ?'
+      'text': 'What do you know about Technology?'
     }
   }
 
