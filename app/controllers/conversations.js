@@ -382,20 +382,20 @@ function startSurvey(bot, incoming){
   });
 }
 
-function giveResults(bot, incoming, score) {
-  var saavy;
-  if (score === 50){
+function giveResults(bot, incoming, user_score) {
+  var saavy = ""
+  if (user_score === 50){
     saavy = "Extremely Tech Saavy"
-  } else if (score >= 35 && score < 50){
+  } else if (user_score >= 35 && user_score < 50){
     saavy = "Very Tech Saavy"
-  } else if (score >= 25 && score < 35){
+  } else if (user_score >= 25 && user_score < 35){
     saavy = "Somewhat Tech Saavy"
-  } else if (score < 25){
+  } else if (user_score < 25){
     saavy = "Not Very Tech Saavy"
   }
   user.saavy = saavy
-  user.score = score
-  bot.reply(incoming, {text: "Nice! Your score was "+score+"/50.  We are going to rank you as: "+saavy+"."});
+  user.score = user_score
+  bot.reply(incoming, {text: "Nice! Your score was "+user_score+"/50.  We are going to rank you as: "+saavy+"."});
   setTimeout(function() {
     console.log(user)
     // startSurvey(bot, incoming)
