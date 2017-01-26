@@ -282,23 +282,6 @@ var sayThanks = function (id) {
   });
   request.post('https://still-earth-50244.herokuapp.com/finished-sug', {form:{id: id}})
 }
-var statementVerify = function (id, s){
-  if (s === "1"){
-    user.segment = "Innovator"
-  } else if  (s === "2"){
-    user.segment = "Early Adopter"
-  } else if (s === "3"){
-    user.segment = "Early Majority"
-  } else if (s === "4"){
-    user.segment = "Late Majority"
-  } else {
-    user.segment = "Laggard"
-  }
-  bot.say({
-      text: `Thanks for that... I have you pinned as a `+user.saavy+" "+user.segment+". :)",
-      channel: id
-  });
-}
 exports.statementVerify = statementVerify
 exports.sayThanks = sayThanks
 exports.handler = handler
