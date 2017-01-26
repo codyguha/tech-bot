@@ -275,7 +275,9 @@ function welcomeMessage(bot, incoming){
   }, 1000)
 }
 function startSurvey(bot, incoming){
-    bot.reply(incoming, {"attachment":{
+    bot.say({
+      channel: incoming.user,
+      "attachment":{
       "type":"template",
       "payload":{
         "template_type":"button",
