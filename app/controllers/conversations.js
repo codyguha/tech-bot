@@ -269,6 +269,7 @@ module.exports = function (controller) {
 
   });
 var score = 0;
+var user = {}
 function welcomeMessage(bot, incoming){
   bot.reply(incoming, {text: "Welcome!"});
   setTimeout(function() {
@@ -382,17 +383,23 @@ function startSurvey(bot, incoming){
 }
 
 function giveResults(bot, incoming, score) {
-  var segment;
+  var saavy;
   if (score === 50){
-    segment = "Most Tech Saavy"
+    saavy = "Extremely Tech Saavy"
   } else if (score >= 35 && score < 50){
-    segment = "Very Tech Saavy"
+    saavy = "Very Tech Saavy"
   } else if (score >= 25 && score < 35){
-    segment = "Somewhat Tech Saavy"
+    saavy = "Somewhat Tech Saavy"
   } else if (score < 25){
-    segment = "Not Very Tech Saavy"
+    saavy = "Not Very Tech Saavy"
   }
-  bot.reply(incoming, {text: "Nice! Your score was "+score+"/50.  You are ranked as: "+segment+"."});
+  user.saavy = saavy
+  user.score = score
+  bot.reply(incoming, {text: "Nice! Your score was "+score+"/50.  We are going to rank you as: "+saavy+"."});
+  setTimeout(function() {
+    console.log(user)
+    // startSurvey(bot, incoming)
+  }, 1000)
 }
 
 function naturalOrArtificial(bot, incoming){
