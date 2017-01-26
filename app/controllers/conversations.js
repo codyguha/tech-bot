@@ -21,21 +21,7 @@ module.exports = function (controller) {
 
   // user said hello
   controller.hears(['hi', 'hello', 'Hi'], 'message_received', function (bot, message) {
-    bot.reply(message, {
-      text: "Would you like to take a not so quick survey about sugar?",
-      quick_replies: [
-          {
-              "content_type": "text",
-              "title": "Yes",
-              "payload": "start",
-          },
-          {
-              "content_type": "text",
-              "title": "No",
-              "payload": "start",
-          }
-      ]
-    });
+    welcomeMessage(bot, message)
   });
   controller.hears(['Yes'], 'message_received', function (bot, message) {
     bot.reply(message, {"attachment":{
@@ -282,18 +268,23 @@ module.exports = function (controller) {
       }
 
   });
-
-function askNextQuestion(bot, incoming){
+function Welcome(bot, incoming){
+  bot.reply(message, {text: "Welcome!"});
+  setTimeout(function() {
+    startSurvey(bot, incoming);
+  }, 1000)
+}
+function startSurvey(bot, incoming){
     bot.reply(incoming, {"attachment":{
       "type":"template",
       "payload":{
         "template_type":"button",
-        "text":"There’s a wide variety in terms of what each sugar/sweetener type is made of, how it’s made, etc.  We want to know how you would classify each of these by ranking them where #1 is the most natural down to the most artificial.",
+        "text":"In this short survey, we are seeking to understand your approach towards technology and related products. As with all of our studies, your responses will remain entirely confidential and will be reported on an aggregate basis only. None of your personal data will be shared or used for marketing purposes.",
         "buttons":[
           {
             "type":"web_url",
-            "url":"https://lit-thicket-26597.herokuapp.com/rank/" + incoming.user,
-            "title":"Rank Sugars",
+            "url":"https://gentle-earth-80429.herokuapp.com/statements/" + incoming.user,
+            "title":"Get Started",
             "messenger_extensions": true,
             "webview_height_ratio": "tall"
           }

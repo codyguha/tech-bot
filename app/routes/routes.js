@@ -26,10 +26,9 @@ module.exports = function (app) {
       var randomorder = shuffle(list)
       res.render('list', {list: randomorder});
   });
-  app.get('/list/:id',
+  app.get('/statments/:id',
     function(req, res){
-      var randomorder = shuffle(list)
-      res.render('list', {list: randomorder, id: req.params.id});
+      res.render('statements', {id: req.params.id});
   });
   app.get('/people/:id',
     function(req, res){
