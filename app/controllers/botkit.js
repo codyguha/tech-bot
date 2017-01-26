@@ -135,13 +135,35 @@ var create_user_if_new = function (id, ts) {
 controller.on('tick', function(bot, event) { });
 
 var statementVerify = function (id, s){
+  var segment;
+  if (s === "1"){
+    segment = "Innovator"
+  } else if  (s === "2"){
+    segment = "Early Adopter"
+  } else if (s === "3"){
+    segment = "Early Majority"
+  } else if (s === "4"){
+    segment = "Late Majority"
+  } else {
+    segment = "Laggard"
+  }
   bot.say({
-      text: `Thanks for that...`,
-      channel: id
+      text: "Thanks for that... I have put you in the "+segment+" segment. :) Is that ok?",
+      channel: id,
+      quick_replies: [
+          {
+              "content_type": "text",
+              "title": "Yes",
+              "payload": segment,
+          },
+          {
+              "content_type": "text",
+              "title": "No",
+              "payload": segment,
+          }
+      ]
   });
-  testFunction(bot, id, s)
 }
-// exports.statementVerify = statementVerify
 
 var broadcast = function (id, list) {
   var user_data = {id: id, list: list};

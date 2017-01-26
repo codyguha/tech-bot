@@ -23,23 +23,8 @@ module.exports = function (controller) {
   controller.hears(['hi', 'hello', 'Hi'], 'message_received', function (bot, message) {
     welcomeMessage(bot, message)
   });
-  controller.hears(['Yes'], 'message_received', function (bot, message) {
-    bot.reply(message, {"attachment":{
-      "type":"template",
-      "payload":{
-        "template_type":"button",
-        "text":"We know there are heaps of different sugars and sweeteners on the market right now so first we would like to know which ones you’ve heard of. Please click on all the products below that you are aware of:",
-        "buttons":[
-          {
-            "type":"web_url",
-            "url":"https://lit-thicket-26597.herokuapp.com/list/"+ message.user,
-            "title":"Show List",
-            "messenger_extensions": true,
-            "webview_height_ratio": "tall"
-          }
-        ]
-      }
-    }})
+  controller.hears(['Yes', 'No'], 'message_received', function (bot, incoming) {
+    console.log(incoming.payload)
   });
   controller.hears(['Q2'], 'message_received', function (bot, message) {
     bot.reply(message, {"attachment":{
@@ -399,7 +384,7 @@ function giveResults(bot, incoming, user_score) {
   bot.reply(incoming, {text: "Nice! Your score was "+user_score+"/50.  I'm going to rank you as: '"+user.saavy+"'."});
   console.log(user)
   setTimeout(function() {
-    segmentation(bot, incoming, user)
+    segmentation(bot, incoming)
   }, 1000)
 }
 
@@ -426,15 +411,8 @@ function naturalOrArtificial(bot, incoming){
     ]
   });
 }
-function testFunction(bot, id, s){
-  bot.say({
-    channel: id,
-    text: user.saavy,
-  });
-}
 
-
-function segmentation(bot, incoming, user_data){
+function segmentation(bot, incoming){
   bot.reply(incoming, {"attachment":{
     "type":"template",
     "payload":{
