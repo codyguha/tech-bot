@@ -365,7 +365,10 @@ function startSurvey(bot, incoming){
           ]
         }, function(response, convo) {
           console.log("RESPONSE:>>>>>>>>>>>>> " + response.payload)
-          score += +response.payload
+          var int = +response.payload
+          score += int
+          console.log("INT:>>>>>>>>>>>>> " + int)
+          console.log("SCORE:>>>>>>>>>>>>> " + score)
           convo.next();
         });
       }
