@@ -328,8 +328,7 @@ function startSurvey(bot, incoming){
         }, function(response, convo) {
           var object = JSON.stringify(response, null, 4);
           console.log("L-RESPONSE:>>>>>>>>>>>>> " + object)
-          var int = parseInt(response.payload)
-          score += int
+          score += +response.payload
           console.log("SCORE:>>>>>>>>>>>>> " + score)
           convo.stop()
           // naturalOrArtificial(bot, incoming)
@@ -366,8 +365,7 @@ function startSurvey(bot, incoming){
           ]
         }, function(response, convo) {
           console.log("RESPONSE:>>>>>>>>>>>>> " + response.payload)
-          var int = parseInt(response.payload)
-          score += int
+          score += +response.payload
           convo.next();
         });
       }
