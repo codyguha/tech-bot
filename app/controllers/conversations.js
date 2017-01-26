@@ -197,12 +197,12 @@ module.exports = function (controller) {
                     quick_replies: [
                         {
                             "content_type": "text",
-                            "title": "Strongly agree",
+                            "title": "Strongly Agree",
                             "payload": "888",
                         },
                         {
                             "content_type": "text",
-                            "title": "Somewhat agree",
+                            "title": "Somewhat Agree",
                             "payload": "888",
                         },
                         {
@@ -212,12 +212,12 @@ module.exports = function (controller) {
                         },
                         {
                             "content_type": "text",
-                            "title": "Somewhat disagree",
+                            "title": "Somewhat Disagree",
                             "payload": "888",
                         },
                         {
                             "content_type": "text",
-                            "title": "Strongly disagree",
+                            "title": "Strongly Disagree",
                             "payload": "888",
                         }
                     ]
@@ -268,31 +268,106 @@ module.exports = function (controller) {
       }
 
   });
+var score;
 function welcomeMessage(bot, incoming){
   bot.reply(incoming, {text: "Welcome!"});
   setTimeout(function() {
-    startSurvey(bot, incoming);
+    bot.reply(incoming, {text: "In this short survey, we are seeking to understand your approach towards technology and related products. As with all of our studies, your responses will remain entirely confidential and will be reported on an aggregate basis only. None of your personal data will be shared or used for marketing purposes."});
+    setTimeout(function() {
+      bot.reply(incoming, {text: "Please choose to agree or disagree with the following statements."});
+      setTimeout(function() {
+        startSurvey(bot, incoming)
+      }, 1000)
+    }, 1000)
   }, 1000)
 }
+
 function startSurvey(bot, incoming){
-    bot.say({
-      channel: incoming.user,
-      "attachment":{
-      "type":"template",
-      "payload":{
-        "template_type":"button",
-        "text":"In this short survey, we are seeking to understand your approach towards technology and related products. As with all of our studies, your responses will remain entirely confidential and will be reported on an aggregate basis only. None of your personal data will be shared or used for marketing purposes.",
-        "buttons":[
-          {
-            "type":"web_url",
-            "url":"https://gentle-earth-80429.herokuapp.com/statements/" + incoming.user,
-            "title":"Get Started",
-            "messenger_extensions": true,
-            "webview_height_ratio": "tall"
-          }
-        ]
+  score = 0
+  var questions = [ "My friends and family often ask me for advice when purchasing technology",
+                    "I rarely buy off the shelf Consumer Electronic products, I like to assemble my Consumer Electronics products and customize the functionality",
+                    "I am a risk taker",
+                    "I seek out the Consumer Electronics products with the most advanced features",
+                    "I am the first among my friends and family to experience something new",
+                    "I like having technology that is different, cutting-edge, and sets me apart from the crowd",
+                    "I’m often multi-tasking with more than one device (tablet, computer or phone)",
+                    "I want devices that say a lot about who I am",
+                    "I feel confident in my views and choices" ]
+  bot.startConversation(incoming, function(err, convo) {
+    for (i = 1; i < questions.length; ++i) {
+      if (i === (questions.length-1)) {
+        convo.ask({
+          text: questions[i],
+          quick_replies: [
+              {
+                  "content_type": "text",
+                  "title": "Strongly Agree",
+                  "payload": "5",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Somewhat Agree",
+                  "payload": "4",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Neither",
+                  "payload": "3",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Somewhat Disagree",
+                  "payload": "2",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Strongly Disagree",
+                  "payload": "1",
+              }
+          ]
+        }, function(response, convo) {
+          console.log("LAST-RESPONSE:>>>>>>>>>>>>> " + response)
+          console.log("SCORE:>>>>>>>>>>>>> " + score)
+          convo.stop()
+          // naturalOrArtificial(bot, incoming)
+        });
+      } else {
+        convo.ask({
+          text: questions[i],
+          quick_replies: [
+              {
+                  "content_type": "text",
+                  "title": "Strongly Agree",
+                  "payload": "5",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Somewhat Agree",
+                  "payload": "4",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Neither",
+                  "payload": "3",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Somewhat Disagree",
+                  "payload": "2",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Strongly Disagree",
+                  "payload": "1",
+              }
+          ]
+        }, function(response, convo) {
+          console.log("RESPONSE:>>>>>>>>>>>>> " + response)
+          convo.next();
+        });
       }
-    }});
+    }
+  });
 }
 
 function naturalOrArtificial(bot, incoming){
