@@ -117,12 +117,12 @@ p {
 }
 .content {
     position: relative;
-    width: 75%;
+    width: 100%;
     top: 0px;
     left:0px;
     right:0px;
     bottom:0px;
-    margin: 0 auto;
+    margin-top: 20px;
     overflow: hidden;
     -webkit-overflow-scrolling: touch;
     height:100%;
