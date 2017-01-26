@@ -268,7 +268,7 @@ module.exports = function (controller) {
       }
 
   });
-function Welcome(bot, incoming){
+function welcomeMessage(bot, incoming){
   bot.reply(message, {text: "Welcome!"});
   setTimeout(function() {
     startSurvey(bot, incoming);
