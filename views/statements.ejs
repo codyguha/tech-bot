@@ -2,81 +2,61 @@
 <html dir="ltr" lang="en-US">
 <% include ./partials/head %>
 
+<style>
+/*this is the style of an radio "button"*/
+.input-check {
+    display: inline-block;
+    padding:5px 8px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 14px;
+    border-color:  #0084ff;
+    color: #0084ff;
+    text-align: center;
+    margin: 20px;
+}
+/* This is the style for a radio "button" */
+.input-check.checked{
+  background-color: #0084ff;
+  color:white;
+}
+/*Hide the radiobutton*/
+.input-check input {
+    display:none;
+}
 
+</style>
 
 <body>
     <div class="description z-depth-2">  <p id="text">Please choose to agree or disagree with the following statements.</p></div>
+    <div class="content">
+      <label class="input-check">
+        <input onchange="change_state(this)" type="radio" value="1"   name="review[rating]" /> I’m someone who enjoys giving things a go, both in my personal and professional life. What’s life if you can’t handle some spice? I am young, be it in age or in spirit. I would consider myself very social, I keep up with the latest trends, buy the newest technology offerings, and appreciate nice things. That being said, I’m extremely inventive and forward thinking, I have strong views but do appreciate collaboration.
+      </label>
+      <label class="input-check">
+        <input onchange="change_state(this)" type="radio" value="2"   name="review[rating]" /> I’m a less extreme version of the person described above. While still young, well-educated and very social, I would say that I really embody ‘opinion leadership.’ I am very specific and conscious about the types of innovations / technology advancements I want to pursue and invest in.
+      </label>
+      <label class="input-check">
+        <input onchange="change_state(this)" type="radio" value="3"   name="review[rating]" /> I’m up to date on the latest innovations and technology advancements but I’d prefer to do my research, and see how it fares in the market before I buy in. Perhaps have a chat to a couple of my friends who describe themselves as the first two types of people listed above and to see what they have to say.
+      </label>
+      <label class="input-check">
+        <input onchange="change_state(this)" type="radio" value="4"   name="review[rating]" />  Innovation and new tech gadgets are great and all, but I would consider myself a bit of a skeptic towards the speed at which they are developed and introduced to the public. As long as what I currently have is working, I’m happy.
+      </label>
+      <label class="input-check">
+        <input onchange="change_state(this)" type="radio" value="5"   name="review[rating]" />I don’t really have an interest in all the latest and greatest innovations. I don’t keep track of the latest phone released, or which tablet or laptop is the best investment. I’ve got everything I need, so why complicate it?
+      </label>
 
-<table>
-  <tr>
-    <td id="question">My friends and family often ask me for advice when purchasing technology</td>
-    <td id="sliderguy">
-      <div class="amount"></div>
-      <div class="slider"></div>
-    </td>
-  </tr>
-  <tr>
-    <td id="question">I rarely buy off the shelf Consumer Electronic products, I like to assemble my Consumer Electronics products and customize the functionality</td>
-    <td id="sliderguy">
-      <div class="amount"></div>
-      <div class="slider"></div>
-    </td>
-  </tr>
-  <tr>
-    <td id="question">I am a risk taker</td>
-    <td id="sliderguy">
-      <div class="amount"></div>
-      <div class="slider"></div>
-    </td>
-  </tr>
-  <tr>
-    <td id="question">I seek out the Consumer Electronics products with the most advanced features</td>
-    <td id="sliderguy">
-      <div class="amount"></div>
-      <div class="slider"></div>
-    </td>
-  </tr>
-  <tr>
-    <td id="question">I am the first among my friends and family to experience something new</td>
-    <td id="sliderguy">
-      <div class="amount"></div>
-      <div class="slider"></div>
-    </td>
-  </tr>
-  <tr>
-    <td id="question">I like having technology that is different, cutting-edge, and sets me apart from the crowd</td>
-    <td id="sliderguy">
-      <div class="amount"></div>
-      <div class="slider"></div>
-    </td>
-  </tr>
-  <tr>
-    <td id="question">I’m often multi-tasking with more than one device (tablet, computer or phone)</td>
-    <td id="sliderguy">
-      <div class="amount"></div>
-      <div class="slider"></div>
-    </td>
-  </tr>
-  <tr>
-    <td id="question">I want devices that say a lot about who I am</td>
-    <td id="sliderguy">
-      <div class="amount"></div>
-      <div class="slider"></div>
-    </td>
-  </tr>
-  <tr>
-    <td id="question">I feel confident in my views and choices</td>
-    <td id="sliderguy">
-      <div class="amount"></div>
-      <div class="slider"></div>
-    </td>
-  </tr>
-</table>
-<div id="submit" class="fixed-action-btn">
-  <a class="btn-floating btn-large blue z-depth-2">
-    <i class="material-icons">done</i>
-   </a>
-</div>
+        <form id="statementList" method="post" action="/statement">
+            <input id="facebook_id" type="hidden" name='fb_id'>
+            <input id="choice" type="hidden" name='statment'>
+            <div id="submit" class="fixed-action-btn">
+              <a class="btn-floating btn-large blue z-depth-2">
+                <i class="material-icons">done</i>
+               </a>
+           </div>
+        </form>
+    </div>
+
 
 <script>
 window.extAsyncInit = function() {
@@ -99,41 +79,57 @@ $('#submit').click(function (evt) {
     $('form').submit();
 
     evt.preventDefault();
-    MessengerExtensions.requestCloseBrowser(function success() {
-
-      }, function error(err) {
-
-      });
-      setTimeout(function() {
-            window.close();
-      }, 1000);
+    // MessengerExtensions.requestCloseBrowser(function success() {
+    //
+    //   }, function error(err) {
+    //
+    //   });
+    //   setTimeout(function() {
+    //         window.close();
+    //   }, 1000);
 });
 
-var steps = [1, 2, 3, 4, 5];
-$(".amount").text("Neither Agree Nor Disagree");
+function change_state(obj) {
 
-$(".slider").slider({
-  range: "min",
-  value: 2,
-  min: 0,
-  max: steps.length - 1,
-  step: 1,
-  slide: function(event, ui) {
-    if (steps[ui.value] === 1) {
-      $(this).prev().text("Disagree Completely");
-    } else if (steps[ui.value] === 2) {
-      $(this).prev().text("Disagree Somewhat");
-    } else if (steps[ui.value] === 3) {
-      $(this).prev().text("Neither Agree Nor Disagree");
-    } else if (steps[ui.value] === 4) {
-      $(this).prev().text("Agree Somewhat");
-    } else if (steps[ui.value] === 5) {
-      $(this).prev().text("Agree Completely");
+    if (obj.checked) {
+        var checkedNodes = getElementsByClassName(document, "checked");
+        for (var i=0;i<checkedNodes.length;i++) {
+            checkedNodes[i].classList.remove("checked");
+        }
+
+        //if radiobutton is being checked, add a "checked" class
+        obj.parentNode.classList.add("checked");
+        var str = obj.text();
+        $("#choice").val(str)
     }
+    else {
+        //else remove it
+        obj.parentNode.classList.remove("checked");
+    }
+}
+
+function getElementsByClassName(node,classname) {
+  if (node.getElementsByClassName) { // use native implementation if available
+    return node.getElementsByClassName(classname);
+  } else {
+    return (function getElementsByClass(searchClass,node) {
+        if ( node == null )
+          node = document;
+        var classElements = [],
+            els = node.getElementsByTagName("*"),
+            elsLen = els.length,
+            pattern = new RegExp("(^|\\s)"+searchClass+"(\\s|$)"), i, j;
+
+        for (i = 0, j = 0; i < elsLen; i++) {
+          if ( pattern.test(els[i].className) ) {
+              classElements[j] = els[i];
+              j++;
+          }
+        }
+        return classElements;
+    })(classname, node);
   }
-});
-
-
+}
 </script>
 
 <script src="/js/materialize.js"></script>

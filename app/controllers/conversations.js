@@ -399,7 +399,7 @@ function giveResults(bot, incoming, user_score) {
   bot.reply(incoming, {text: "Nice! Your score was "+user_score+"/50.  I'm going to rank you as: '"+user.saavy+"'."});
   console.log(user)
   setTimeout(function() {
-    // startSurvey(bot, incoming)
+    segmentation(bot, incoming, user)
   }, 1000)
 }
 
@@ -427,17 +427,17 @@ function naturalOrArtificial(bot, incoming){
   });
 }
 
-function productPreference(bot, incoming){
+function segmentation(bot, incoming, user_data){
   bot.reply(incoming, {"attachment":{
     "type":"template",
     "payload":{
       "template_type":"button",
-      "text":"Thanks for your input – the sugar vs. sweetener issue can be quite a hot topic.  Switching gears a bit from sugar vs. sweetener, we’d like to know which of the following products you would consider purchasing and which you would not.",
+      "text":"Now I want to understand you a little bit further... I am going to present you with 5 statements. Choose the statement that best describes you",
       "buttons":[
         {
           "type":"web_url",
-          "url":"https://lit-thicket-26597.herokuapp.com/products/" + incoming.user,
-          "title":"Show Me The Products",
+          "url":"https://gentle-earth-80429.herokuapp.com/statements/" + incoming.user,
+          "title":"Show Me The Statements",
           "messenger_extensions": true,
           "webview_height_ratio": "tall"
         }

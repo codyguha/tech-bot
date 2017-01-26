@@ -30,6 +30,14 @@ module.exports = function (app) {
     function(req, res){
       res.render('statements', {id: req.params.id});
   });
+  app.post('/statement',function(req,res){
+    var facebook_id = req.body.fb_id
+    var statement = req.body.statement
+    res.render('statements', {id: req.params.id});
+    console.log(facebook_id, statement)
+  })
+
+
   app.get('/people/:id',
     function(req, res){
       res.render('people', {id: req.params.id});
