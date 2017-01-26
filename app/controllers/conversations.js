@@ -383,21 +383,22 @@ function startSurvey(bot, incoming){
 }
 
 function giveResults(bot, incoming, user_score) {
-  var saavy = ""
   if (user_score === 50){
-    saavy = "Extremely Tech Saavy"
+    user.saavy = "Extremely Tech Saavy"
+    user.score = user_score
   } else if (user_score >= 35 && user_score < 50){
-    saavy = "Very Tech Saavy"
+    user.saavy = "Very Tech Saavy"
+    user.score = user_score
   } else if (user_score >= 25 && user_score < 35){
-    saavy = "Somewhat Tech Saavy"
+    user.saavy = "Somewhat Tech Saavy"
+    user.score = user_score
   } else if (user_score < 25){
-    saavy = "Not Very Tech Saavy"
+    user.saavy = "Not Very Tech Saavy"
+    user.score = user_score
   }
-  user.saavy = saavy
-  user.score = user_score
-  bot.reply(incoming, {text: "Nice! Your score was "+user_score+"/50.  I'm going to rank you as: '"+saavy+"'."});
+  bot.reply(incoming, {text: "Nice! Your score was "+user_score+"/50.  I'm going to rank you as: '"+user.saavy+"'."});
+  console.log(user)
   setTimeout(function() {
-    console.log(user)
     // startSurvey(bot, incoming)
   }, 1000)
 }
