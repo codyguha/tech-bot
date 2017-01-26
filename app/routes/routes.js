@@ -1,9 +1,5 @@
 var facebook_handler = require('../controllers/botkit').handler
-var broadcaster = require('../controllers/botkit').broadcast
-var attitudinal = require('../controllers/botkit').attitudinal
-var compromise = require('../controllers/botkit').compromise
-var sayThanks = require('../controllers/botkit').sayThanks
-var statement = require('../controllers/botkit').statement
+var statementVerify = require('../controllers/botkit').statementVerify
 
 module.exports = function (app) {
 
@@ -34,7 +30,7 @@ module.exports = function (app) {
   app.post('/statement',function(req,res){
     var facebook_id = req.body.fb_id
     var statement = req.body.statement
-    statement(facebook_id, statement)
+    statementVerify(facebook_id, statement)
   })
 
 

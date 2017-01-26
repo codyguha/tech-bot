@@ -134,7 +134,7 @@ var create_user_if_new = function (id, ts) {
 
 controller.on('tick', function(bot, event) { });
 
-var statement = function (id, s){
+var statementVerify = function (id, s){
   if (s === "1"){
     user.segment = "Innovator"
   } else if  (s === "2"){
@@ -151,6 +151,7 @@ var statement = function (id, s){
       channel: id
   });
 }
+
 var broadcast = function (id, list) {
   var user_data = {id: id, list: list};
   controller.storage.users.save(user_data);
@@ -291,7 +292,7 @@ var sayThanks = function (id) {
   });
   request.post('https://still-earth-50244.herokuapp.com/finished-sug', {form:{id: id}})
 }
-exports.statement = statement
+exports.statementVerify = statementVerify
 exports.sayThanks = sayThanks
 exports.handler = handler
 exports.broadcast = broadcast
