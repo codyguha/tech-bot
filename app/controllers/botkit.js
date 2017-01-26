@@ -134,23 +134,12 @@ var create_user_if_new = function (id, ts) {
 
 controller.on('tick', function(bot, event) { });
 
-// var statementVerify = function (id, s){
-//   if (s === "1"){
-//     user.segment = "Innovator"
-//   } else if  (s === "2"){
-//     user.segment = "Early Adopter"
-//   } else if (s === "3"){
-//     user.segment = "Early Majority"
-//   } else if (s === "4"){
-//     user.segment = "Late Majority"
-//   } else {
-//     user.segment = "Laggard"
-//   }
-//   bot.say({
-//       text: `Thanks for that... I have you pinned as a `+user.saavy+" "+user.segment+". :)",
-//       channel: id
-//   });
-// }
+var statementVerify = function (id, s){
+  bot.say({
+      text: `Thanks for that...`,
+      channel: id
+  });
+}
 // exports.statementVerify = statementVerify
 
 var broadcast = function (id, list) {
@@ -293,7 +282,24 @@ var sayThanks = function (id) {
   });
   request.post('https://still-earth-50244.herokuapp.com/finished-sug', {form:{id: id}})
 }
-// exports.statementVerify = statementVerify
+var statementVerify = function (id, s){
+  if (s === "1"){
+    user.segment = "Innovator"
+  } else if  (s === "2"){
+    user.segment = "Early Adopter"
+  } else if (s === "3"){
+    user.segment = "Early Majority"
+  } else if (s === "4"){
+    user.segment = "Late Majority"
+  } else {
+    user.segment = "Laggard"
+  }
+  bot.say({
+      text: `Thanks for that... I have you pinned as a `+user.saavy+" "+user.segment+". :)",
+      channel: id
+  });
+}
+exports.statementVerify = statementVerify
 exports.sayThanks = sayThanks
 exports.handler = handler
 exports.broadcast = broadcast
