@@ -278,12 +278,11 @@ function welcomeMessage(bot, incoming){
       setTimeout(function() {
         startSurvey(bot, incoming)
       }, 1000)
-    }, 10000)
+    }, 6000)
   }, 1000)
 }
 
 function startSurvey(bot, incoming){
-  score = 0
   var questions = [ "My friends and family often ask me for advice when purchasing technology",
                     "I rarely buy off the shelf Consumer Electronic products, I like to assemble my Consumer Electronics products and customize the functionality",
                     "I am a risk taker",
@@ -364,12 +363,16 @@ function startSurvey(bot, incoming){
               }
           ]
         }, function(response, convo) {
-          console.log("RESPONSE:>>>>>>>>>>>>> " + response.payload)
-          var int = +response.payload
-          score += int
-          console.log("INT:>>>>>>>>>>>>> " + int)
-          console.log("SCORE:>>>>>>>>>>>>> " + score)
-          convo.next();
+          if (response.payload === undefined) {
+            convo.next();
+          } else {
+            console.log("RESPONSE:>>>>>>>>>>>>> " + response.payload)
+            var int = +response.payload
+            score += int
+            console.log("INT:>>>>>>>>>>>>> " + int)
+            console.log("SCORE:>>>>>>>>>>>>> " + score)
+            convo.next();
+          }
         });
       }
     }
