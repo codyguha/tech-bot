@@ -139,6 +139,7 @@ var statementVerify = function (id, s){
       text: `Thanks for that...`,
       channel: id
   });
+  testFunction(bot, id, s)
 }
 // exports.statementVerify = statementVerify
 

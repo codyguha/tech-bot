@@ -426,6 +426,13 @@ function naturalOrArtificial(bot, incoming){
     ]
   });
 }
+function testFunction(bot, id, s){
+  bot.say({
+    channel: id,
+    text: user.saavy,
+  });
+}
+
 
 function segmentation(bot, incoming, user_data){
   bot.reply(incoming, {"attachment":{
