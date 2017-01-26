@@ -269,7 +269,7 @@ module.exports = function (controller) {
 
   });
 function welcomeMessage(bot, incoming){
-  bot.reply(message, {text: "Welcome!"});
+  bot.reply(incoming, {text: "Welcome!"});
   setTimeout(function() {
     startSurvey(bot, incoming);
   }, 1000)
