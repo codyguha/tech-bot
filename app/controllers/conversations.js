@@ -31,7 +31,7 @@ module.exports = function (controller) {
   });
 
   controller.hears(['what can I do here?'], 'message_received', function(bot, message) {
-      bot.reply(message, "In the future i will be able to determine your sugar IQ!");
+      bot.reply(message, "You can share with me your views and opinions about technology!");
   });
 
   controller.hears(['help'], 'message_received', function(bot, message) {
@@ -146,8 +146,6 @@ function startSurvey(bot, incoming){
         }, function(response, convo) {
             score += +response.payload
             convo.next();
-          console.log("SCORE>>>>>>>: " + score)
-          console.log("POINTS>>>>>>>: " + response.payload)
         });
       }
     }
@@ -166,7 +164,6 @@ function giveResults(bot, incoming, user_score) {
     saavy = "Not Very Tech Saavy"
   }
   controller.storage.users.get(incoming.user, function (err, user) {
-    console.log(user)
     user.score = user_score
     user.saavy = saavy
     controller.storage.users.save(user)
