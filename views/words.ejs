@@ -10,7 +10,7 @@
       <input id="facebook_id" type="hidden" name='fb_id'>
 
       <% for(var i=0; i<list.length; i++) {%>
-            <input class="single-checkbox" type="checkbox" name='<%= list[i] %>'><span><%= list[i] %></span>
+            <input class="single-checkbox" type="checkbox" name='<%= list[i] %>'><%= list[i] %><br>
       <% } %>
 
       <div id="submit-final" class="fixed-action-btn">
