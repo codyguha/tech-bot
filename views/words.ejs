@@ -17,7 +17,7 @@
         </div>
       <% } %>
 
-      <div id="submit" class="fixed-action-btn">
+      <div id="submit-final" class="fixed-action-btn">
         <a class="btn-floating btn-large blue">
           <i class="material-icons">send</i>
          </a>
@@ -128,7 +128,12 @@ function toastSubmit() {
   $('form').submit();
   evt.preventDefault();
 }
-
+var limit = 3;
+$('input.single-checkbox').on('change', function(evt) {
+   if($(this).siblings(':checked').length >= limit) {
+       this.checked = false;
+   }
+});
 $('#submit-final').click(function (evt) {
     $('form').submit();
     evt.preventDefault();

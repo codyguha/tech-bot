@@ -2,21 +2,7 @@
 module.exports = function (controller) {
   // this is triggered when a user clicks the send-to-messenger plugin
   controller.on('facebook_optin', function (bot, message) {
-    bot.reply(message, {
-      text: "Would you like to take a not so quick survey about sugar?",
-      quick_replies: [
-          {
-              "content_type": "text",
-              "title": "Yes",
-              "payload": "start",
-          },
-          {
-              "content_type": "text",
-              "title": "No",
-              "payload": "start",
-          }
-      ]
-    });
+    welcomeMessage(bot, message)
   })
 
   // user said hello
@@ -29,24 +15,6 @@ module.exports = function (controller) {
     setTimeout(function() {
       lastQuestion(bot, incoming)
     }, 1000)
-  });
-  controller.hears(['Q2'], 'message_received', function (bot, message) {
-    bot.reply(message, {"attachment":{
-      "type":"template",
-      "payload":{
-        "template_type":"button",
-        "text":"There’s a wide variety in terms of what each sugar/sweetener type is made of, how it’s made, etc.  We want to know how you would classify each of these by ranking them where #1 is the most natural down to the most artificial.",
-        "buttons":[
-          {
-            "type":"web_url",
-            "url":"https://lit-thicket-26597.herokuapp.com/rank",
-            "title":"Rank Sugars",
-            "messenger_extensions": true,
-            "webview_height_ratio": "tall"
-          }
-        ]
-      }
-    }})
   });
 
   controller.hears(['what can I do here?'], 'message_received', function(bot, message) {
@@ -257,7 +225,7 @@ module.exports = function (controller) {
       }
 
   });
-var score = 0;
+
 var user = {}
 function welcomeMessage(bot, incoming){
   bot.reply(incoming, {text: "Welcome!"});
@@ -273,7 +241,7 @@ function welcomeMessage(bot, incoming){
 }
 
 function startSurvey(bot, incoming){
-  score = 0
+  var score = 0
   var questions = [ "My friends and family often ask me for advice when purchasing technology",
                     "I rarely buy off the shelf Consumer Electronic products, I like to assemble my Consumer Electronics products and customize the functionality",
                     "I am a risk taker",
@@ -317,10 +285,7 @@ function startSurvey(bot, incoming){
               }
           ]
         }, function(response, convo) {
-          var object = JSON.stringify(response, null, 4);
-          console.log("L-RESPONSE:>>>>>>>>>>>>> " + object)
           score += +response.payload
-          console.log("SCORE:>>>>>>>>>>>>> " + score)
           convo.stop()
           giveResults(bot, incoming, score)
         });
@@ -358,11 +323,7 @@ function startSurvey(bot, incoming){
           if (response.payload === undefined) {
             convo.next();
           } else {
-            console.log("RESPONSE:>>>>>>>>>>>>> " + response.payload)
-            var int = +response.payload
-            score += int
-            console.log("INT:>>>>>>>>>>>>> " + int)
-            console.log("SCORE:>>>>>>>>>>>>> " + score)
+            score += +response.payload
             convo.next();
           }
         });
@@ -372,48 +333,26 @@ function startSurvey(bot, incoming){
 }
 
 function giveResults(bot, incoming, user_score) {
+  var saavy;
   if (user_score === 50){
-    user.saavy = "Extremely Tech Saavy"
-    user.score = user_score
+    saavy = "Extremely Tech Saavy"
   } else if (user_score >= 35 && user_score < 50){
-    user.saavy = "Very Tech Saavy"
-    user.score = user_score
+    saavy = "Very Tech Saavy"
   } else if (user_score >= 25 && user_score < 35){
-    user.saavy = "Somewhat Tech Saavy"
-    user.score = user_score
+    saavy = "Somewhat Tech Saavy"
   } else if (user_score < 25){
-    user.saavy = "Not Very Tech Saavy"
-    user.score = user_score
+    saavy = "Not Very Tech Saavy"
   }
-  bot.reply(incoming, {text: "Nice! Your score was "+user_score+"/50.  I'm going to rank you as: '"+user.saavy+"'."});
+  controller.storage.users.get(id, function (err, user) {
+    user.score = user_score
+    user.saavy = saavy
+    controller.storage.users.save(user)
+  })
+  bot.reply(incoming, {text: "Nice! Your score was "+user_score+"/50.  I'm going to rank you as: '"+saavy+"'."});
   console.log(user)
   setTimeout(function() {
     segmentation(bot, incoming)
   }, 1000)
-}
-
-function naturalOrArtificial(bot, incoming){
-  bot.say({
-    channel: incoming.user,
-    text: "Given the choice, do you have a preference between natural sugars or artificial sweeteners?",
-    quick_replies: [
-        {
-            "content_type": "text",
-            "title": "I prefer natural",
-            "payload": "question009",
-        },
-        {
-            "content_type": "text",
-            "title": "I prefer artificial",
-            "payload": "question009",
-        },
-        {
-            "content_type": "text",
-            "title": "No preference",
-            "payload": "question009",
-        }
-    ]
-  });
 }
 
 function segmentation(bot, incoming){
@@ -435,156 +374,6 @@ function segmentation(bot, incoming){
   }});
 }
 
-function compromiseConvo(bot, incoming, user_choice, not_user_choice) {
-  var questions = [ "There is a brand that I like which contains " + not_user_choice,
-                    "The " + user_choice + " option is significantly more expensive",
-                    "I would have to go out of my way in terms of convenience to seek out a "+user_choice+" alternative to what is on offer",
-                    "I am with other people (friends, colleagues, etc.) who are consuming products with " +not_user_choice
-                     ]
-  bot.startConversation(incoming, function(err, convo) {
-      for (i = 1; i < questions.length; ++i) {
-        if (i === (questions.length-1)) {
-          convo.ask({
-            text: questions[i],
-            quick_replies: [
-                {
-                    "content_type": "text",
-                    "title": "Very unlikely",
-                    "payload": "compromise2",
-                },
-                {
-                    "content_type": "text",
-                    "title": "Somewhat unlikely",
-                    "payload": "compromise2",
-                },
-                {
-                    "content_type": "text",
-                    "title": "Somewhat likely",
-                    "payload": "compromise2",
-                },
-                {
-                    "content_type": "text",
-                    "title": "Very likely",
-                    "payload": "compromise2",
-                }
-            ]
-          }, function(response, convo) {
-            convo.stop()
-            compromise3(bot, incoming, user_choice, not_user_choice)
-          });
-        } else {
-          convo.ask({
-            text: questions[i],
-            quick_replies: [
-                {
-                    "content_type": "text",
-                    "title": "Very unlikely",
-                    "payload": "888",
-                },
-                {
-                    "content_type": "text",
-                    "title": "Somewhat unlikely",
-                    "payload": "888",
-                },
-                {
-                    "content_type": "text",
-                    "title": "Somewhat likely",
-                    "payload": "888",
-                },
-                {
-                    "content_type": "text",
-                    "title": "Very likely",
-                    "payload": "888",
-                }
-            ]
-          }, function(response, convo) {
-            convo.next();
-          });
-        }
-      }
-  });
-}
-
-function compromise3(bot, incoming, user_choice, not_user_choice){
-  bot.startConversation(incoming, function(err, convo) {
-    convo.ask({
-      text: "We appreciate that you prefer "+user_choice+", but let’s imagine that you had to consider "+not_user_choice+".  When would you be mostly likely to consider a product with "+not_user_choice+"?",
-      quick_replies: [
-          {
-              "content_type": "text",
-              "title": "Morning",
-              "payload": "999",
-          },
-          {
-              "content_type": "text",
-              "title": "Midday",
-              "payload": "999",
-          },
-          {
-              "content_type": "text",
-              "title": "Afternoon",
-              "payload": "999",
-          },
-          {
-              "content_type": "text",
-              "title": "Evening",
-              "payload": "999",
-          },
-          {
-              "content_type": "text",
-              "title": "Late night",
-              "payload": "999",
-          },
-          {
-              "content_type": "text",
-              "title": "I would never",
-              "payload": "999",
-          }
-      ]
-    }, function(response, convo) {
-      convo.next()
-      convo.ask({
-        text: "Is there a particular meal occasion when you would be more likely to consider a product with "+not_user_choice+"?",
-        quick_replies: [
-            {
-                "content_type": "text",
-                "title": "Breakfast",
-                "payload": "timeofday",
-            },
-            {
-                "content_type": "text",
-                "title": "Mid-morning snack",
-                "payload": "timeofday",
-            },
-            {
-                "content_type": "text",
-                "title": "Lunch",
-                "payload": "timeofday",
-            },
-            {
-                "content_type": "text",
-                "title": "Afternoon snack",
-                "payload": "timeofday",
-            },
-            {
-                "content_type": "text",
-                "title": "Dinner",
-                "payload": "timeofday",
-            },
-            {
-                "content_type": "text",
-                "title": "I would never",
-                "payload": "timeofday",
-            }
-        ]
-      }, function(response, convo) {
-        lastQuestion(bot, incoming)
-        convo.next();
-      });
-    });
-  });
-}
-
 function lastQuestion(bot, incoming) {
   bot.reply(incoming, {
       text: `You’re almost done!`,
@@ -602,7 +391,7 @@ function lastQuestion2(bot, incoming) {
       "buttons":[
         {
           "type":"web_url",
-          "url":"https://lit-thicket-26597.herokuapp.com/words/"+ incoming.user,
+          "url":"https://gentle-earth-80429.herokuapp.com/words/"+ incoming.user,
           "title":"Show Me The Words",
           "messenger_extensions": true,
           "webview_height_ratio": "tall"
@@ -611,35 +400,6 @@ function lastQuestion2(bot, incoming) {
     }
   }});
 }
-function lastQuestion3(bot, incoming) {
-  bot.reply(incoming, {"attachment":{
-    "type":"template",
-    "payload":{
-      "template_type":"button",
-      "text":"We would like you to imagine that natural sugar and artificial sweetener are people, and choose which of these people they would be based on your first impression.  You may only choose one person for each.",
-      "buttons":[
-        {
-          "type":"web_url",
-          "url":"https://lit-thicket-26597.herokuapp.com/people/"+ incoming.user,
-          "title":"Show Me The People",
-          "messenger_extensions": true,
-          "webview_height_ratio": "tall"
-        }
-      ]
-    }
-  }});
-}
 
-// controller.hears(['I prefer natural', 'I prefer artificial', 'No preference'], 'message_received', function(bot, incoming) {
-//   convo.ask({
-//     text: "why?"
-//   }, function(response, convo) {
-//     console.log('whoa')// whoa, I got the postback payload as a response to my convo.ask!
-//     convo.next();
-//   });
-// });
-  // user says anything else
-  // controller.hears('(.*)', 'message_received', function (bot, message) {
-  //   bot.reply(message, 'you said ' + message.match[1])
-  // });
+
 }
