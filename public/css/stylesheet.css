@@ -64,6 +64,33 @@ table {
   width: 100%;
 }
 
+
+#question {
+  width: 25%;
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+  background-color: #0084ff;
+  color: white;
+}
+
+#sliderguy {
+  width: 100%;
+  padding: 20px;
+}
+
+.slider {
+  background-color: white;
+}
+
+.amount {
+  width: 33%;
+  margin: 10px auto;
+  text-align: center;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
 td,
 th {
   border: 1px solid #dddddd;
