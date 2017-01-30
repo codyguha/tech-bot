@@ -45,13 +45,8 @@ module.exports = function (controller) {
     'call_to_actions': [
       {
         'type': 'postback',
-        'title': ' Menu Item 1',
-        'payload': 'Item 1'
-      },
-      {
-        'type': 'postback',
-        'title': 'Menu Item 2',
-        'payload': 'Item 2'
+        'title': 'Restart',
+        'payload': 'Restart'
       }
     ]
   }

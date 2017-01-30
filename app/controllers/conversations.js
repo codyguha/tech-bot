@@ -29,6 +29,9 @@ module.exports = function (controller) {
       }, 3000)
     }, 1000)
   });
+  controller.hears(['Restart'], 'message_received', function(bot, incoming) {
+    welcomeMessage(bot, message);
+  });
 
   controller.hears(['what can I do here?'], 'message_received', function(bot, message) {
       bot.reply(message, "You can share with me your views and opinions about technology!");
