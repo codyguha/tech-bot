@@ -24,7 +24,11 @@ module.exports = function (controller) {
     welcomeMessage(bot, message)
   });
   controller.hears(['Yes', 'No'], 'message_received', function (bot, incoming) {
-    console.log(incoming.payload)
+    user.segment = incoming.payload
+    bot.reply(incoming, "Excellent!  So far I have you pinned as a "+user.saavy+" "+user.segment+".");
+    setTimeout(function() {
+      lastQuestion(bot, incoming)
+    }, 1000)
   });
   controller.hears(['Q2'], 'message_received', function (bot, message) {
     bot.reply(message, {"attachment":{
@@ -590,12 +594,22 @@ function lastQuestion(bot, incoming) {
   }, 1000)
 }
 function lastQuestion2(bot, incoming) {
-  bot.reply(incoming, {
-      text: `We all know how first impressions work – we tend to make certain assumptions about someone the first time we see them.  You may change your impression of someone over time but we’d like to tap into what you think at first sight.`,
-  });
-  setTimeout(function() {
-    lastQuestion3(bot, incoming);
-  }, 2000)
+  bot.reply(incoming, {"attachment":{
+    "type":"template",
+    "payload":{
+      "template_type":"button",
+      "text":"Finally, I want to understand you even further. Choose three words from a list to capture what you’re all about.",
+      "buttons":[
+        {
+          "type":"web_url",
+          "url":"https://lit-thicket-26597.herokuapp.com/words/"+ incoming.user,
+          "title":"Show Me The Words",
+          "messenger_extensions": true,
+          "webview_height_ratio": "tall"
+        }
+      ]
+    }
+  }});
 }
 function lastQuestion3(bot, incoming) {
   bot.reply(incoming, {"attachment":{
