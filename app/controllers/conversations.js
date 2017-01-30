@@ -151,7 +151,6 @@ function giveResults(bot, incoming, user_score) {
     controller.storage.users.save(user)
   })
   bot.reply(incoming, {text: "Nice! Your score was "+user_score+"/50.  I'm going to rank you as: '"+saavy+"'."});
-  console.log(user)
   setTimeout(function() {
     segmentation(bot, incoming)
   }, 1000)
