@@ -17,7 +17,7 @@ module.exports = function (controller) {
       }, 1000)
     })
   });
-  controller.hears(['True', 'False'], 'message_received', function(bot, message) {
+  controller.hears(['True', 'False'], 'message_received', function(bot, incoming) {
     bot.reply(incoming, {text: "We’re not sure either, but from what we hear…"});
     setTimeout(function() {
       bot.reply(incoming, {text: "According to the financial reports of the three largest credit card companies in the world, there were over 1,635 million cards in circulation in 2013: Visa had 800 million, MasterCard had 731 million, and American Express had 104 million."});
