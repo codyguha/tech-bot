@@ -3,7 +3,7 @@
 <% include ./partials/head %>
 
 <body>
-  <div class="description z-depth-2">  <p>Which three words from the list below capture what you’re all about?</p></div>
+  <div class="description z-depth-2">  <p>Which of these words from the list below capture what you’re all about? (Please choose 3)</p></div>
 
   <div class="content">
     <form id="wordList" method="post" action="/words">
@@ -42,16 +42,16 @@ window.extAsyncInit = function() {
 };
 
 var iosDragDropShim = { enableEnterLeave: true }
-var limit = 3;
+
 $('input').on('change', function(evt) {
   var clicked = $("#wordList :checked").length;
   console.log(clicked)
-  if (clicked > limit) {
+  if (clicked > 3) {
     this.checked = false;
     $.toast({
       text : "oops... you can only select 3.",
       showHideTransition : 'plain',     // It can be plain, fade or slide
-      bgColor : '#1f93ff',              // Background color for toast
+      bgColor : '#FFA500',              // Background color for toast
       textColor : 'white',              // text color
       allowToastClose : false,          // Show the close button or not
       hideAfter : false,                // `false` to make it sticky or time in miliseconds to hide after
@@ -62,12 +62,6 @@ $('input').on('change', function(evt) {
     window.setTimeout(toastSubmit, 1000)
   }
 });
-
-
-function toastSubmit() {
-  $('form').submit();
-  evt.preventDefault();
-}
 
 $('#submit-final').click(function (evt) {
     $('form').submit();
