@@ -122,12 +122,10 @@ function startSurvey(bot, incoming){
               }
           ]
         }, function(response, convo) {
-          if (response.payload === undefined) {
-            convo.next();
-          } else {
             score += +response.payload
             convo.next();
-          }
+          console.log("SCORE>>>>>>>: " + score)
+          console.log("POINTS>>>>>>>: " + response.payload)
         });
       }
     }
