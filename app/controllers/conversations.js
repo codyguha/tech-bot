@@ -208,6 +208,3 @@ function lastQuestion2(bot, incoming) {
     }
   }});
 }
-
-
-}
