@@ -30,14 +30,6 @@ module.exports = function (controller) {
   });
 
 function welcomeMessage(bot, incoming){
-  controller.storage.users.get(incoming.user, function (err, user) {
-    if (err) {
-      console.log(err)
-    }
-    else if (!user) {
-      controller.storage.users.save({id: id})
-    }
-  })
   bot.reply(incoming, {text: "Welcome!"});
   setTimeout(function() {
     bot.reply(incoming, {text: "In this short survey, we are seeking to understand your approach towards technology and related products. As with all of our studies, your responses will remain entirely confidential and will be reported on an aggregate basis only. None of your personal data will be shared or used for marketing purposes."});
@@ -206,4 +198,7 @@ function lastQuestion2(bot, incoming) {
       ]
     }
   }});
+}
+
+
 }
