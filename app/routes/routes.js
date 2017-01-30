@@ -32,7 +32,7 @@ module.exports = function (app) {
       wordlist = ["A daydreamer","Full of wild ideas","A deep thinker","Good communicator","Adaptable","Imaginative","Adventurous","Impulsive",
 "Agreeable","Inquisitive","Assertive","Logical","Complex","Non-conforming","Confident","Observant","Creative","Organized","Curious","Risk taker","Decisive","Self-disciplined","Flexible", "Sensitive"]
       var randomorder = shuffle(wordlist)
-      res.render('words', {id: req.params.id, list:randomorder});
+      res.render('words', {id: req.params.id, list: randomorder});
   });
   app.post('/statement',function(req,res){
     var facebook_id = req.body.fb_id
