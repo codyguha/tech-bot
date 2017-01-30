@@ -17,6 +17,18 @@ module.exports = function (controller) {
       }, 1000)
     })
   });
+  controller.hears(['True', 'False'], 'message_received', function(bot, message) {
+    bot.reply(incoming, {text: "We’re not sure either, but from what we hear…"});
+    setTimeout(function() {
+      bot.reply(incoming, {text: "According to the financial reports of the three largest credit card companies in the world, there were over 1,635 million cards in circulation in 2013: Visa had 800 million, MasterCard had 731 million, and American Express had 104 million."});
+      setTimeout(function() {
+        bot.reply(incoming, {text: "If you placed all those cards side by side, you could span 86,981 miles: the equivalent of three and a half trips around the world."});
+        setTimeout(function() {
+          bot.reply(incoming, {text: "We look forward to talking to you again in our next activity."});
+        }, 1000)
+      }, 3000)
+    }, 1000)
+  });
 
   controller.hears(['what can I do here?'], 'message_received', function(bot, message) {
       bot.reply(message, "In the future i will be able to determine your sugar IQ!");

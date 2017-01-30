@@ -30,7 +30,7 @@ module.exports = function (app) {
   });
   app.get('/words/:id',
     function(req, res){
-      wordlist = ["A daydreamer","Full of wild ideas","A deep thinker","Good communicator","Adaptable","Imaginative","Adventurous","Impulsive",
+      wordlist = ["Daydreamer","Full of wild ideas","Deep thinker","Good communicator","Adaptable","Imaginative","Adventurous","Impulsive",
 "Agreeable","Inquisitive","Assertive","Logical","Complex","Non-conforming","Confident","Observant","Creative","Organized","Curious","Risk taker","Decisive","Self-disciplined","Flexible", "Sensitive"]
       var randomorder = shuffle(wordlist)
       res.render('words', {id: req.params.id, list: randomorder});

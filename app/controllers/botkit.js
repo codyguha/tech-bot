@@ -170,9 +170,12 @@ var statementVerify = function (id, s){
 }
 
 var getWords = function (id, words){
-  bot.say({text: "Alright! We are done. Thanks for your time today…we hope you enjoyed the activity. Here’s a fun question for you…", channel: id});
+  controller.storage.users.get(id, function (err, user) {
+    bot.say({text: "Alright! We are done. Thanks for your time today… You are being saved to the database as a "+words[0]+", "+words[1]+", "+words[2]+", "+user.saavy+" "+user.segment+".",
+     channel: id});
+  })
   setTimeout(function() {
-    bot.say({text: "True or false?", channel: id});
+    bot.say({text: "We hope you enjoyed the activity. Here’s a fun question for you… True or false?", channel: id});
     setTimeout(function() {
       bot.say({
           text: "There are enough credit cards in circulation to span the earth over 3.5 times.",
@@ -190,8 +193,8 @@ var getWords = function (id, words){
               }
           ]
       });
-    }, 1000)
-  }, 1000)
+    }, 3000)
+  }, 3000)
 }
 exports.handler = handler
 exports.statementVerify = statementVerify
