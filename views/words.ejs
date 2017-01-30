@@ -42,9 +42,13 @@ window.extAsyncInit = function() {
 };
 
 var iosDragDropShim = { enableEnterLeave: true }
+var limit = 3;
 $('input').on('change', function(evt) {
   var clicked = $("#wordList :checked").length;
   console.log(clicked)
+  if (clicked >= limit) {
+    this.checked = false;
+  }
 });
 
 
