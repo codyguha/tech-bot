@@ -42,8 +42,9 @@ module.exports = function (app) {
 
   app.post('/words',function(req,res){
     var facebook_id = req.body.fb_id
-    var cnslbody = JSON.stringify(req.body, null, 4);
-    console.log(cnslbody)
+    // var cnslbody = JSON.stringify(req.body, null, 4);
+    var words = Object.keys(req.body)
+    console.log(words)
   })
 
 }
