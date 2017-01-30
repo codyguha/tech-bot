@@ -43,7 +43,7 @@ window.extAsyncInit = function() {
 
 var iosDragDropShim = { enableEnterLeave: true }
 $('input').on('change', function(evt) {
-  var clicked = $("#wordList > *").filter(":checked").size();
+  var clicked = $("#wordList :checked").length;
   console.log(clicked)
 });
 
