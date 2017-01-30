@@ -44,6 +44,7 @@ module.exports = function (app) {
     var facebook_id = req.body.fb_id
     // var cnslbody = JSON.stringify(req.body, null, 4);
     var words = Object.keys(req.body)
+    words.shift();
     console.log(words)
   })
 
