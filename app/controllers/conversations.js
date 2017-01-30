@@ -10,11 +10,12 @@ module.exports = function (controller) {
     welcomeMessage(bot, message)
   });
   controller.hears(['Yes', 'No'], 'message_received', function (bot, incoming) {
-    user.segment = incoming.payload
-    bot.reply(incoming, "Excellent!  So far I have you pinned as a "+user.saavy+" "+user.segment+".");
-    setTimeout(function() {
-      lastQuestion(bot, incoming)
-    }, 1000)
+    controller.storage.users.get(incoming.user, function (err, user) {
+      bot.reply(incoming, "Excellent!  So far I have you pinned as a "+user.saavy+" "+user.segment+".");
+      setTimeout(function() {
+        lastQuestion(bot, incoming)
+      }, 1000)
+    })
   });
 
   controller.hears(['what can I do here?'], 'message_received', function(bot, message) {
