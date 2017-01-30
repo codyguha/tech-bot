@@ -46,7 +46,7 @@ var limit = 3;
 $('input').on('change', function(evt) {
   var clicked = $("#wordList :checked").length;
   console.log(clicked)
-  if (clicked >= limit) {
+  if (clicked > limit) {
     this.checked = false;
   }
 });
