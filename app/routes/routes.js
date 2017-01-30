@@ -1,5 +1,6 @@
 var facebook_handler = require('../controllers/botkit').handler
 var statementVerify = require('../controllers/botkit').statementVerify
+var getWords = require('../controllers/botkit').getWords
 
 module.exports = function (app) {
 
@@ -45,7 +46,7 @@ module.exports = function (app) {
     // var cnslbody = JSON.stringify(req.body, null, 4);
     var words = Object.keys(req.body)
     words.shift();
-    console.log(words)
+    getWords(facebook_id, words)
   })
 
 }

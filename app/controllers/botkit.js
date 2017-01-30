@@ -169,4 +169,30 @@ var statementVerify = function (id, s){
   });
 }
 
+var getWords = function (id, words){
+  bot.say({text: "Alright! We are done. Thanks for your time today…we hope you enjoyed the activity. Here’s a fun question for you…", channel: id});
+  setTimeout(function() {
+    bot.say({text: "True or false?", channel: id});
+    setTimeout(function() {
+      bot.say({
+          text: "There are enough credit cards in circulation to span the earth over 3.5 times.",
+          channel: id,
+          quick_replies: [
+              {
+                  "content_type": "text",
+                  "title": "True",
+                  "payload": "credit",
+              },
+              {
+                  "content_type": "text",
+                  "title": "False",
+                  "payload": "credit",
+              }
+          ]
+      });
+    }, 1000)
+  }, 1000)
+}
+exports.handler = handler
 exports.statementVerify = statementVerify
+exports.getWords = getWords

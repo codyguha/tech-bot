@@ -64,6 +64,11 @@ $('input').on('change', function(evt) {
 });
 
 
+function toastSubmit() {
+  $('form').submit();
+  evt.preventDefault();
+}
+
 $('#submit-final').click(function (evt) {
     $('form').submit();
     evt.preventDefault();
