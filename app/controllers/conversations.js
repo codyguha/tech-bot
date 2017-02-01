@@ -147,8 +147,13 @@ function startSurvey(bot, incoming){
               }
           ]
         }, function(response, convo) {
+          if (response.payload){
             score += +response.payload
             convo.next();
+          }else {
+            convo.stop()
+          }
+
         });
       }
     }
