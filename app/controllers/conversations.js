@@ -30,7 +30,7 @@ module.exports = function (controller) {
     }, 1000)
   });
   controller.hears(['Restart'], 'message_received', function(bot, incoming) {
-    welcomeMessage(bot, message);
+    welcomeMessage(bot, incoming);
   });
 
   controller.hears(['what can I do here?'], 'message_received', function(bot, message) {
