@@ -252,7 +252,7 @@ function npsSurveyStart(bot, incoming) {
             },
             {
                 "content_type": "text",
-                "title": "<<",
+                "title": "<<--",
                 "payload": "9",
             },
             {
@@ -262,7 +262,7 @@ function npsSurveyStart(bot, incoming) {
             },
             {
                 "content_type": "text",
-                "title": "<",
+                "title": "<--",
                 "payload": "7",
             },
             {
@@ -272,7 +272,7 @@ function npsSurveyStart(bot, incoming) {
             },
             {
                 "content_type": "text",
-                "title": ">",
+                "title": "-->",
                 "payload": "5",
             },
             {
@@ -282,7 +282,7 @@ function npsSurveyStart(bot, incoming) {
             },
             {
                 "content_type": "text",
-                "title": ">>",
+                "title": "-->>",
                 "payload": "3",
             },
             {
