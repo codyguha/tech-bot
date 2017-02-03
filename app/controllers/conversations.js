@@ -330,7 +330,7 @@ function unhappyProbe2(bot, incoming){
     });
   });
 }
-function happy(bot, incoming){
+function happyProbe(bot, incoming){
   bot.reply(incoming, {
       text: `That’s great that you are happy with ACME!`,
   });
