@@ -52,7 +52,7 @@ module.exports = function (controller) {
         setTimeout(function() {
         startSurvey(bot, incoming)
         }, 2000)
-      }, 2000)
+      }, 5000)
     }, 1000)
   });
 
