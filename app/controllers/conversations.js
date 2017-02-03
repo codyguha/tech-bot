@@ -43,6 +43,18 @@ module.exports = function (controller) {
   controller.hears(['help'], 'message_received', function(bot, message) {
       bot.reply(message, "type 'hi'");
   });
+  controller.hears(['Yes Continue'], 'message_received', function(bot, incoming) {
+    bot.reply(incoming, {text: "Ok let's kick off part one."});
+    setTimeout(function() {
+      bot.reply(incoming, {text: "In this section we are going to present you with a handful of statements.  Your job is to choose a selection form our 'agree' or 'disagree' responses."});
+      setTimeout(function() {
+        bot.reply(incoming, {text: "Here is our first statement"});
+        setTimeout(function() {
+        startSurvey(bot, incoming)
+        }, 2000)
+      }, 2000)
+    }, 1000)
+  });
 
   controller.on('message_received', function(bot, incoming) {
 
@@ -62,11 +74,8 @@ function welcomeMessage(bot, incoming){
   setTimeout(function() {
     bot.reply(incoming, {text: "In this short survey, we are seeking to understand your approach towards technology and related products. As with all of our studies, your responses will remain entirely confidential and will be reported on an aggregate basis only. None of your personal data will be shared or used for marketing purposes."});
     setTimeout(function() {
-      bot.reply(incoming, {text: "Please choose to agree or disagree with the following statements."});
-      setTimeout(function() {
-        startSurvey(bot, incoming)
-      }, 1000)
-    }, 6000)
+      bot.reply(incoming, {text: "Sound good?", quick_replies: [{"content_type": "text","title": "Yes Continue","payload": "Yes Continue"}]});
+    }, 5000)
   }, 1000)
 }
 
