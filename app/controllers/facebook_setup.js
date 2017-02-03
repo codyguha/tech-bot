@@ -47,6 +47,11 @@ module.exports = function (controller) {
         'type': 'postback',
         'title': 'Restart',
         'payload': 'Restart'
+      },
+      {
+        'type': 'postback',
+        'title': 'NPS',
+        'payload': 'NPS'
       }
     ]
   }
