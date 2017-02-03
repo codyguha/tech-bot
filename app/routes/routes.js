@@ -1,6 +1,7 @@
 var facebook_handler = require('../controllers/botkit').handler
 var statementVerify = require('../controllers/botkit').statementVerify
 var getWords = require('../controllers/botkit').getWords
+var end = require('../controllers/botkit').end
 
 module.exports = function (app) {
 
@@ -45,6 +46,16 @@ module.exports = function (app) {
       var randomorder = shuffle(wordlist)
       res.render('words', {id: req.params.id, list: randomorder});
   });
+  app.get('/activities/:id',
+    function(req, res){
+      activitylist =  ["withdraw or deposit money","check my account balance","transfer money between accounts","make a payment to someone I’ve paid before","make a payment to someone new","pay a bill","schedule a payment or set up direct debit","set up or active an account or service","enquire or look for info about an existing account / loan /card or service", "search or enquire about specific transactions or payments","obtain or request copy of statements","change or modify an existing product","use calculator or tools","activate a card","resolve a problem", "enquire or look for information about a new account / loan /card or service","apply for or open a new account / loan /card or service","closed an account / loan /card","made a complaint","changed personal details","reported a card lost or stolen","investigate fraud on an account","don’t recall" ,"I haven’t had any interactions with ACME in the last week"]
+      var randomorder = shuffle(activitylist)
+      res.render('activities', {id: req.params.id, list: randomorder});
+  });
+  app.post('/activities',function(req,res){
+    var facebook_id = req.body.fb_id
+    end(facebook_id)
+  })
   app.post('/statement',function(req,res){
     var facebook_id = req.body.fb_id
     var statement = req.body.statement

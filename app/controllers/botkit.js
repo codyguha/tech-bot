@@ -196,6 +196,10 @@ var getWords = function (id, words){
     }, 3000)
   }, 3000)
 }
+var end = function (id){
+  bot.say({text: "Thanks for your time.", channel: id});
+}
+exports.end = end
 exports.handler = handler
 exports.statementVerify = statementVerify
 exports.getWords = getWords

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<% include ./partials/head %>
+
+<body>
+  <div class="description z-depth-2">  <p>Which of the following interactions have you had with ACME in the last week?</p></div>
+
+  <div class="content">
+    <form id="wordList" method="post" action="/activities">
+      <input id="facebook_id" type="hidden" name='fb_id'>
+
+      <% for(var i=0; i<list.length; i++) {%>
+        <div class="sugarbutton">
+          <label>
+            <input type="checkbox" name='<%= list[i] %>'><span><%= list[i] %></span>
+          </label>
+        </div>
+      <% } %>
+
+      <div id="submit-final" class="fixed-action-btn">
+        <a class="btn-floating btn-large blue">
+          <i class="material-icons">send</i>
+         </a>
+     </div>
+    </form>
+  </div>
+<script>
+
+window.extAsyncInit = function() {
+  var check = MessengerExtensions.isInExtension();
+  console.log(check)
+  if (check === false) {
+    $("#facebook_id").val(<%= id %>)
+  } else {
+    MessengerExtensions.getUserID(function success(uids) {
+         var psid = uids.psid.toString();
+         $("#facebook_id").val(psid)
+       }, function error(err) {
+
+       });
+  }
+};
+
+var iosDragDropShim = { enableEnterLeave: true }
+
+// $('input').on('change', function(evt) {
+//   var clicked = $("#wordList :checked").length;
+//   console.log(clicked)
+//   if (clicked > 3) {
+//     this.checked = false;
+//     $.toast({
+//       text : "oops... you can only select 3.",
+//       showHideTransition : 'plain',     // It can be plain, fade or slide
+//       bgColor : '#FFA500',              // Background color for toast
+//       textColor : 'white',              // text color
+//       allowToastClose : false,          // Show the close button or not
+//       hideAfter : false,                // `false` to make it sticky or time in miliseconds to hide after
+//       stack : false,                    // `fakse` to show one stack at a time count showing the number of toasts that can be shown at once
+//       textAlign : 'left',               // Alignment of text i.e. left, right, center
+//       position : 'bottom-left'          // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values to position the toast on page
+//     })
+//     window.setTimeout(toastSubmit, 1000)
+//   }
+// });
+
+$('#submit-final').click(function (evt) {
+    $('form').submit();
+    evt.preventDefault();
+    MessengerExtensions.requestCloseBrowser(function success() {}, function error(err) {});
+    setTimeout(function() {
+          window.close();
+    }, 1000);
+});
+
+
+</script>
+<script src="/js/ios-drag-drop.js"></script>
+</body>
