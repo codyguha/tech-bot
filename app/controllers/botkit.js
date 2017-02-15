@@ -246,11 +246,11 @@ function question002(id) {
 function startQuestion003(id) {
     bot.say({text: "This part is a bit long but you can do it!  Do these statements sound like you?", channel: id});
     setTimeout(function() {
-      question003(id)
+      firstPartOfQuestion003(id)
     }, 1000)
 }
 
-function question003(id) {
+function firstPartOfQuestion003(id) {
     bot.say({text: "I love trying out new things", channel: id,
       quick_replies: [
           {

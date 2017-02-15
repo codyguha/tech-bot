@@ -541,3 +541,5 @@ function activity(bot, incoming){
   }});
 }
 }
+
+exports.endQuestion002 = endQuestion002
