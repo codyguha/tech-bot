@@ -57,7 +57,15 @@ module.exports = function (controller) {
   // });
 
   controller.on('message_received', function(bot, incoming) {
+    console.log(JSON.stringify(incoming))
+  });
 
+  controller.on('facebook_postback', function(bot, incoming) {
+    if (incoming.payload === "Q_02") {
+      question002(bot, incoming)
+    } else if (incoming.payload === "Q_03") {
+      question003(bot, incoming)
+    }
   });
 
 function welcomeMessage(bot, incoming){
@@ -141,6 +149,87 @@ function question001(bot, incoming) {
   }
 }
 
+function question002(bot, incoming) {
+  bot.reply(incoming, {text: "YES! Question one and done.  🙌 ");
+  setTimeout(function() {
+    bot.reply(incoming, {text: "Let's continue shall we..."});
+    setTimeout(function() {
+      bot.reply(incoming, {text: "Whats next?"});
+      setTimeout(function() {
+        bot.reply(incoming, {text: "Oh wait thats my job. LOL 😂"});
+        setTimeout(function() {
+          bot.reply(incoming, {text: "Here is your next question."});
+          setTimeout(function() {
+            question002List(bot, incoming)
+          }, 1000)
+        }, 1000)
+      }, 1000)
+    }, 1000)
+  }, 1000)
+}
+
+function question002List(bot, incoming){
+  bot.reply(incoming, {"attachment":{
+    "type":"template",
+    "payload":{
+      "template_type":"button",
+      "text":"Imagine you had unlimited funding and never had to work. 🏝  😎  Which TWO of these listed items would you do?  HINT: click the "Show me" button to see the list.",
+      "buttons":[
+        {
+          "type":"web_url",
+          "url":"https://gentle-earth-80429.herokuapp.com/unlimited-funding/"+ incoming.user,
+          "title":"Show Me The List",
+          "messenger_extensions": true,
+          "webview_height_ratio": "tall"
+        }
+      ]
+    }
+  }});
+}
+
+function endQuestion002(id) {
+  bot.reply({
+    text: "What a wonderous set of selections.  When you win the lottery dont forget about me.",
+    channel: id});
+    setTimeout(function() {
+      bot.reply({
+        "channel": id,
+        "attachment":{
+        "type":"template",
+        "payload":{
+          "template_type":"button",
+          "text":"No, seriously... besties for life right?  🤓",
+          "buttons":[
+            {
+              "type":"postback",
+              "title": "Next Question",
+              "payload": "Q_03"
+            }
+          ]
+        }
+      }});
+    }, 2000)
+  }, 1000)
+}
+
+function question003(bot, incoming) {
+  bot.reply(incoming, {text: "OK OK OK OK ... lets stay focused.");
+  setTimeout(function() {
+    bot.reply(incoming, {text: "I'm still eager to learn about you though.  Lets play with some get to know you phrases... "});
+    setTimeout(function() {
+      bot.reply(incoming, {
+        text: "I'll say a phrase and you tell me if its a fair description .  Sound fun?",
+        quick_replies: [
+            {
+                "content_type": "text",
+                "title": "Sure let's do it",
+                "payload": "Q_03",
+            }
+        ]
+      });
+    }, 1000)
+  }, 1000)
+}
 function startSurvey(bot, incoming){
   var score = 0
   var questions = [ "My friends and family often ask me for advice when purchasing technology",
