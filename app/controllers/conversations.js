@@ -212,7 +212,7 @@ function endQuestion002(id) {
 }
 
 function question003(bot, incoming) {
-  bot.reply(incoming, {text: "OK OK OK OK ... lets stay focused.");
+  bot.reply(incoming, {text: "OK OK OK OK ... lets stay focused."});
   setTimeout(function() {
     bot.reply(incoming, {text: "I'm still eager to learn about you though.  Lets play with some get to know you phrases... "});
     setTimeout(function() {
@@ -229,6 +229,7 @@ function question003(bot, incoming) {
     }, 1000)
   }, 1000)
 }
+
 function startSurvey(bot, incoming){
   var score = 0
   var questions = [ "My friends and family often ask me for advice when purchasing technology",
