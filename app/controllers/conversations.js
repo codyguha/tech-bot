@@ -516,8 +516,8 @@ function activity(bot, incoming){
     }
   }});
 }
-}
-var endQuestion002 = function(id) { bot.reply({
+var endQuestion002 = function(id) {
+  bot.reply({
   text: "What a wonderous set of selections.  When you win the lottery dont forget about me.",
   channel: id});
   setTimeout(function() {
@@ -539,5 +539,4 @@ var endQuestion002 = function(id) { bot.reply({
     }});
   }, 1000)
 };
-
-exports.endQuestion002 = endQuestion002;
+}

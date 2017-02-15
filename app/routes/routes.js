@@ -2,7 +2,7 @@ var facebook_handler = require('../controllers/botkit').handler
 var statementVerify = require('../controllers/botkit').statementVerify
 var getWords = require('../controllers/botkit').getWords
 var end = require('../controllers/botkit').end
-var convo = require('../controllers/conversations')
+var endq2 = require('../controllers/conversations').endQuestion002
 
 module.exports = function (app) {
 
@@ -62,7 +62,7 @@ module.exports = function (app) {
   });
   app.post('/unlimited-funding',function(req,res){
     var facebook_id = req.body.fb_id
-    convo.endQuestion002(facebook_id)
+    endq2(facebook_id)
     res.send('OK.')
   })
 
