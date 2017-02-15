@@ -208,8 +208,7 @@ function endQuestion002(id) {
           ]
         }
       }});
-    }, 2000)
-  }, 1000)
+    }, 1000)
 }
 
 function question003(bot, incoming) {
