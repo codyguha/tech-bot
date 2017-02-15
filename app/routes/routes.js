@@ -2,8 +2,7 @@ var facebook_handler = require('../controllers/botkit').handler
 var statementVerify = require('../controllers/botkit').statementVerify
 var getWords = require('../controllers/botkit').getWords
 var end = require('../controllers/botkit').end
-var startQuestion002 = require('../controllers/botkit').startQuestion002
-var endQuestion002 = require('../controllers/conversations').endQuestion002
+var endQuestion002 = require('../controllers/botkit').endQuestion002
 
 module.exports = function (app) {
 
@@ -64,6 +63,7 @@ module.exports = function (app) {
   app.post('/unlimited-funding',function(req,res){
     var facebook_id = req.body.fb_id
     endQuestion002(facebook_id)
+    res.send('OK.')
   })
 
   app.post('/activities',function(req,res){
