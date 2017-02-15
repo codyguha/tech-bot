@@ -150,7 +150,7 @@ function question001(bot, incoming) {
 }
 
 function question002(bot, incoming) {
-  bot.reply(incoming, {text: "YES! Question one and done.  🙌 ");
+  bot.reply(incoming, {text: "YES! Question one and done.  🙌 "});
   setTimeout(function() {
     bot.reply(incoming, {text: "Let's continue shall we..."});
     setTimeout(function() {
