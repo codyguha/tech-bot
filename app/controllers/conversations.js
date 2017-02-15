@@ -187,30 +187,6 @@ function question002List(bot, incoming){
   }});
 }
 
-function endQuestion002(id) {
-  bot.reply({
-    text: "What a wonderous set of selections.  When you win the lottery dont forget about me.",
-    channel: id});
-    setTimeout(function() {
-      bot.reply({
-        "channel": id,
-        "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"button",
-          "text":"No, seriously... besties for life right?  🤓",
-          "buttons":[
-            {
-              "type":"postback",
-              "title": "Next Question",
-              "payload": "Q_03"
-            }
-          ]
-        }
-      }});
-    }, 1000)
-}
-
 function question003(bot, incoming) {
   bot.reply(incoming, {text: "OK OK OK OK ... lets stay focused."});
   setTimeout(function() {
@@ -541,29 +517,27 @@ function activity(bot, incoming){
   }});
 }
 }
+var endQuestion002 = function(id) { bot.reply({
+  text: "What a wonderous set of selections.  When you win the lottery dont forget about me.",
+  channel: id});
+  setTimeout(function() {
+    bot.reply({
+      "channel": id,
+      "attachment":{
+      "type":"template",
+      "payload":{
+        "template_type":"button",
+        "text":"No, seriously... besties for life right?  🤓",
+        "buttons":[
+          {
+            "type":"postback",
+            "title": "Next Question",
+            "payload": "Q_03"
+          }
+        ]
+      }
+    }});
+  }, 1000)
+};
 
-function endQuestion002(id) {
-  bot.reply({
-    text: "What a wonderous set of selections.  When you win the lottery dont forget about me.",
-    channel: id});
-    setTimeout(function() {
-      bot.reply({
-        "channel": id,
-        "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"button",
-          "text":"No, seriously... besties for life right?  🤓",
-          "buttons":[
-            {
-              "type":"postback",
-              "title": "Next Question",
-              "payload": "Q_03"
-            }
-          ]
-        }
-      }});
-    }, 1000)
-}
-
-exports.endQuestion002 = endQuestion002
+exports.endQuestion002 = endQuestion002;
