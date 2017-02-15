@@ -173,7 +173,7 @@ function question002List(bot, incoming){
     "type":"template",
     "payload":{
       "template_type":"button",
-      "text":"Imagine you had unlimited funding and never had to work. 🏝  😎  Which TWO of these listed items would you do?  HINT: click the "Show me" button to see the list.",
+      "text":'Imagine you had unlimited funding and never had to work. 🏝  😎  Which TWO of these listed items would you do?  HINT: click the "Show me" button to see the list.',
       "buttons":[
         {
           "type":"web_url",
