@@ -2,7 +2,7 @@ var facebook_handler = require('../controllers/botkit').handler
 var statementVerify = require('../controllers/botkit').statementVerify
 var getWords = require('../controllers/botkit').getWords
 var end = require('../controllers/botkit').end
-var endQuestion002 = require('../controllers/botkit').endQuestion002
+var endQuestion002 = require('../controllers/conversations').endQuestion002
 
 module.exports = function (app) {
 
