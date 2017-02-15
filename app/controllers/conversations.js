@@ -43,18 +43,18 @@ module.exports = function (controller) {
   controller.hears(['help'], 'message_received', function(bot, message) {
       bot.reply(message, "type 'hi'");
   });
-  controller.hears(['Continue ➡'], 'message_received', function(bot, incoming) {
-    bot.reply(incoming, {text: "Ok let's kick off part one."});
-    setTimeout(function() {
-      bot.reply(incoming, {text: "In this section we are going to present you with a handful of statements.  Your job is to choose a selection form our 'agree' or 'disagree' responses."});
-      setTimeout(function() {
-        bot.reply(incoming, {text: "Here is our first statement"});
-        setTimeout(function() {
-        startSurvey(bot, incoming)
-        }, 2000)
-      }, 5000)
-    }, 1000)
-  });
+  // controller.hears(['Continue ➡'], 'message_received', function(bot, incoming) {
+  //   bot.reply(incoming, {text: "Ok let's kick off part one."});
+  //   setTimeout(function() {
+  //     bot.reply(incoming, {text: "In this section we are going to present you with a handful of statements.  Your job is to choose a selection form our 'agree' or 'disagree' responses."});
+  //     setTimeout(function() {
+  //       bot.reply(incoming, {text: "Here is our first statement"});
+  //       setTimeout(function() {
+  //       startSurvey(bot, incoming)
+  //       }, 2000)
+  //     }, 5000)
+  //   }, 1000)
+  // });
 
   controller.on('message_received', function(bot, incoming) {
 
@@ -70,13 +70,75 @@ function welcomeMessage(bot, incoming){
       controller.storage.users.save({id: id})
     }
   })
-  bot.reply(incoming, {text: "Welcome!"});
+  bot.reply(incoming, {text: "Awesome, thanks for coming along..."});
   setTimeout(function() {
-    bot.reply(incoming, {text: "In this short survey, we are seeking to understand your approach towards technology and related products. As with all of our studies, your responses will remain entirely confidential and will be reported on an aggregate basis only. None of your personal data will be shared or used for marketing purposes."});
+    bot.reply(incoming, {text: "To kick things off lets keep things light."});
     setTimeout(function() {
-      bot.reply(incoming, {text: "Sound good?", quick_replies: [{"content_type": "text","title": "Continue ➡","payload": "Continue ➡"}]});
-    }, 5000)
+      bot.reply(incoming, {text: "Here is your first question...."});
+      setTimeout(function() {
+        bot.reply(incoming, {text: "Which of the following items in the list below would you consider a favorite thing to do in your spare time? (Pick 1)"});
+        setTimeout(function() {
+          question001(bot, incoming)
+        }, 1000)
+      }, 1000)
+    }, 4000)
   }, 1000)
+}
+
+function question001(bot, incoming) {
+  var carousel_items = [
+    {
+    "title": "Spend time outdoors",
+    "image_url": "http://imagizer.imageshack.us/600x398f/924/t86bdh.jpg"
+    },{
+    "title": "Watch movies or TV at home",
+    "image_url": "http://imagizer.imageshack.us/600x399f/924/8hYvD2.jpg"
+    },{
+    "title": "Go out to dinner or bars",
+    "image_url": "http://imagizer.imageshack.us/600x400f/924/V7TYMT.jpg"
+    },{
+    "title": "Play video games",
+    "image_url": "http://imagizer.imageshack.us/600x337f/924/yrh5gF.jpg"
+    },{
+    "title": "Play Sports",
+    "image_url": "http://imagizer.imageshack.us/512x384f/922/PN9m2J.jpg"
+    },{
+    "title": "Read a good book",
+    "image_url": "http://imagizer.imageshack.us/600x337f/924/UzBc8d.jpg"
+    },{
+    "title": "Cook",
+    "image_url": "http://imagizer.imageshack.us/600x316f/924/eoGJW8.jpg"
+    },{
+    "title": "Other Stuff",
+    "image_url": "http://imagizer.imageshack.us/600x315f/921/ksKOP9.png"
+    }]
+  var menu_items = []
+  for (i = 0; i <= carousel_items.length; ++i) {
+    if (i === carousel_items.length){
+      bot.reply(incoming, {
+        "attachment":{
+          "type":"template",
+          "payload":{
+            "template_type":"generic",
+            "elements": menu_items
+          }
+        }
+      })
+    } else {
+      var menu_item = {
+        "title": carousel_items[i].title,
+        "image_url": carousel_items[i].image_url,
+        "buttons":[
+          {
+            "type":"postback",
+            "title": "Select",
+            "payload": "Q_02"
+          }
+        ]
+      }
+      menu_items.push(menu_item);
+    }
+  }
 }
 
 function startSurvey(bot, incoming){
@@ -221,10 +283,12 @@ function lastQuestion(bot, incoming) {
     lastQuestion2(bot, incoming);
   }, 1000)
 }
+
 function lastQuestion2(bot, incoming) {
   bot.reply(incoming, {"attachment":{
     "type":"template",
     "payload":{
+                "title": "😒 Not likely",
       "template_type":"button",
       "text":"Finally, I want to understand you even further. Choose three words from a list to capture what you’re all about.",
       "buttons":[
@@ -326,6 +390,7 @@ function unhappyProbe(bot, incoming){
     });
   });
 }
+
 function unhappyProbe2(bot, incoming){
   bot.startConversation(incoming, function(err, convo) {
     convo.ask({
@@ -387,3 +452,4 @@ function activity(bot, incoming){
   }});
 }
 }
+exports.question003 = question003

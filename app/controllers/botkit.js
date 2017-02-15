@@ -16,6 +16,7 @@ require('./facebook_setup')(controller)
 
 // Conversation logic
 require('./conversations')(controller)
+var question003 = require('./conversations').question003
 
 // this function processes the POST request to the webhook
 var handler = function (obj) {
@@ -199,6 +200,88 @@ var getWords = function (id, words){
 var end = function (id){
   bot.say({text: "Thanks for your time.", channel: id});
 }
+function startQuestion002(id) {
+    bot.say({text: "Ok good work on that first exercise.  Lets continue shall we...", channel: id});
+    setTimeout(function() {
+      bot.say({text: "In this next exercise we will use the same interaction of showing you options in a separate browser window.", channel: id});
+      setTimeout(function() {
+        bot.say({text: "Here is your question.",channel: id});
+        setTimeout(function() {
+          question002(id)
+        }, 1000)
+      }, 1000)
+    }, 1000)
+}
+
+function question002(id) {
+  bot.reply({
+    "channel": id,
+    "attachment":{
+    "type":"template",
+    "payload":{
+      "template_type":"button",
+      "text":"Imagine you had unlimited funding and never had to work. Which TWO of these would you do?",
+      "buttons":[
+        {
+          "type":"web_url",
+          "url":"https://gentle-earth-80429.herokuapp.com/unlimited-funding/"+ incoming.user,
+          "title":"Show me the options",
+          "messenger_extensions": true,
+          "webview_height_ratio": "tall"
+        },
+        {
+          "type":"postback",
+          "title":"Next Question",
+          "payload":"Question003"
+        },
+        {
+          "type":"postback",
+          "title":"Jump to End",
+          "payload":"EndSurvey"
+        }
+      ]
+    }
+  }});
+}
+function startQuestion003(id) {
+    bot.say({text: "This part is a bit long but you can do it!  Do these statements sound like you?", channel: id});
+    setTimeout(function() {
+      question003(id)
+    }, 1000)
+}
+
+function question003(id) {
+    bot.say({text: "I love trying out new things", channel: id,
+      quick_replies: [
+          {
+              "content_type": "text",
+              "title": "Definitely me!",
+              "payload": "Q003",
+          },
+          {
+              "content_type": "text",
+              "title": "Sort of me",
+              "payload": "Q003",
+          },
+          {
+              "content_type": "text",
+              "title": "Not sure",
+              "payload": "Q003",
+          },
+          {
+              "content_type": "text",
+              "title": "Not really me",
+              "payload": "Q003",
+          },
+          {
+              "content_type": "text",
+              "title": "Not me at all!",
+              "payload": "Q003",
+          }
+      ]
+    });
+}
+exports.startQuestion002 = startQuestion002
 exports.end = end
 exports.handler = handler
 exports.statementVerify = statementVerify

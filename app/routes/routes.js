@@ -2,6 +2,7 @@ var facebook_handler = require('../controllers/botkit').handler
 var statementVerify = require('../controllers/botkit').statementVerify
 var getWords = require('../controllers/botkit').getWords
 var end = require('../controllers/botkit').end
+var startQuestion002 = require('../controllers/botkit').startQuestion002
 
 module.exports = function (app) {
 
@@ -52,6 +53,26 @@ module.exports = function (app) {
       var randomorder = shuffle(activitylist)
       res.render('activities', {id: req.params.id, list: randomorder});
   });
+  app.get('/spare-time/:id',
+    function(req, res){
+      activitylist =  ["Spend time outdoors","Watch movies or tv at home","Go out to dinner or bars","Play video games","Spend time with friends and family","Volunteer","Play sports","Read","Cook", "Other stuff"]
+      var randomorder = shuffle(activitylist)
+      res.render('spare-time', {id: req.params.id, list: randomorder});
+  });
+  app.get('/unlimited-funding/:id',
+    function(req, res){
+      activitylist =  ["Build computer games","Tinker with my tools in the garage","Hike a different national park every week","Go on a never-ending winery tour","Start my own business","Go into politics","Volunteer for charities","Stay in bed and read all day","Watch TV and eat junk food"]
+      var randomorder = shuffle(activitylist)
+      res.render('unlimited-funding', {id: req.params.id, list: randomorder});
+  });
+  app.post('/unlimited-funding',function(req,res){
+    var facebook_id = req.body.fb_id
+    startQuestion003(facebook_id)
+  })
+  app.post('/spare-time',function(req,res){
+    var facebook_id = req.body.fb_id
+    startQuestion002(facebook_id)
+  })
   app.post('/activities',function(req,res){
     var facebook_id = req.body.fb_id
     end(facebook_id)
