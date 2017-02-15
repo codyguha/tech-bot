@@ -452,4 +452,3 @@ function activity(bot, incoming){
   }});
 }
 }
-exports.question003 = question003
