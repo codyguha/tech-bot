@@ -89,7 +89,7 @@ function welcomeMessage(bot, incoming){
           question001(bot, incoming)
         }, 1000)
       }, 1000)
-    }, 4000)
+    }, 1000)
   }, 1000)
 }
 
@@ -163,7 +163,7 @@ function question002(bot, incoming) {
             question002List(bot, incoming)
           }, 1000)
         }, 1000)
-      }, 1000)
+      }, 5000)
     }, 1000)
   }, 1000)
 }
