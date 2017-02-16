@@ -4,7 +4,9 @@ module.exports = function (controller) {
   controller.on('facebook_optin', function (bot, message) {
     welcomeMessage(bot, message)
   })
-
+  controller.hears(['Q5'], 'message_received', function (bot, message) {
+    question005(bot, message)
+  });
   // user said hello
   controller.hears(['hi', 'hello', 'Hi'], 'message_received', function (bot, message) {
     welcomeMessage(bot, message)
@@ -303,7 +305,6 @@ function question003(bot, incoming) {
   });
 }
 
-
 function question003end(bot, incoming) {
   bot.reply(incoming, {text: "Annnd we are done."});
   setTimeout(function() {
@@ -342,11 +343,11 @@ function question004start(bot, incoming) {
 
 function question004(bot, incoming) {
   var questions = [ {text: "I would rather read a...", option1: "Paperback Book", option2: "eBook"},
-                    {text: "I would rather keep a diary...", option1: "in a notebook", option2: "on a computer"},
+                    {text: "I would rather keep a diary...", option1: "In a notebook", option2: "On a computer"},
                     {text: "I would rather...", option1: "Watch TV", option2: "Watch YouTube or Vimeo"},
-                    {text: "I would rather read...", option1: "a paper newspaper", option2: "a digital newspaper"},
-                    {text: "I would rather create a poster...", option1: "with paper and scissors", option2: "digitally"},
-                    {text: "I would rather play...", option1: "a board game", option2: "a computer game"},
+                    {text: "I would rather read...", option1: "A paper newspaper", option2: "A digital newspaper"},
+                    {text: "I would rather create a poster...", option1: "With paper and scissors", option2: "Digitally"},
+                    {text: "I would rather play a...", option1: "Board game", option2: "Computer game"},
                     {text: "I would rather...", option1: "Write a letter to a friend", option2: "Send an email to a friend"},
                     {text: "I would rather...", option1: "Telephone a friend", option2: "Send a text message to a friend"},
                     {text: "I would rather...", option1: "Go to the bank", option2: "Do my banking online"},
@@ -428,6 +429,31 @@ function question004end(bot, incoming) {
     });
   }, 1000)
 }
+
+function question005(bot, incoming) {
+  var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"} ]
+  bot.reply(incoming, {
+    "attachment":{
+      "type":"image",
+      "payload":{
+        "url":"http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"
+      },
+      "quick_replies":[
+        {
+          "content_type":"text",
+          "title":"Own it",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
+        },
+        {
+          "content_type":"text",
+          "title":"Don't own it",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+        }
+      ]
+    }
+  });
+}
+
 function segmentation(bot, incoming){
   bot.reply(incoming, {"attachment":{
     "type":"template",
