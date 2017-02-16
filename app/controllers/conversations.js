@@ -57,13 +57,7 @@ module.exports = function (controller) {
   // });
 
   controller.on('message_received', function(bot, incoming) {
-    if (incoming.quick_reply) {
-      if (incoming.quick_reply.payload === "Q_04") {
-        question004(bot, incoming)
-      }
-    } else {
 
-    }
   });
 
   controller.on('facebook_postback', function(bot, incoming) {
@@ -71,6 +65,8 @@ module.exports = function (controller) {
       question002(bot, incoming)
     } else if (incoming.payload === "Q_03") {
       question003(bot, incoming)
+    } else if (incoming.payload === "Q_04") {
+      question004(bot, incoming)
     }
   });
 
@@ -199,14 +195,20 @@ function question003(bot, incoming) {
     bot.reply(incoming, {text: "I'm still eager to learn about you though.  Let's play with some get to know you phrases... "});
     setTimeout(function() {
       bot.reply(incoming, {
-        text: "I'll say a phrase and you tell me if its a fair description .  Sound fun?",
-        quick_replies: [
-            {
-                "content_type": "text",
+        "attachment":{
+          "type":"template",
+          "payload":{
+            "template_type":"button",
+            "text":"I'll say a phrase and you tell me if its a fair description .  Sound fun?",
+            "buttons":[
+              {
+                "type":"postback",
                 "title": "Sure let's do it",
-                "payload": "Q_04",
-            }
-        ]
+                "payload": "Q_04"
+              }
+            ]
+          }
+        }
       });
     }, 1000)
   }, 1000)
