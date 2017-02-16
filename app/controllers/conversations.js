@@ -64,9 +64,13 @@ module.exports = function (controller) {
     if (incoming.payload === "Q_02") {
       question002(bot, incoming)
     } else if (incoming.payload === "Q_03") {
+      question003start(bot, incoming)
+    } else if (incoming.payload === "Q_03start") {
       question003(bot, incoming)
     } else if (incoming.payload === "Q_04") {
-      question004(bot, incoming)
+      question004start(bot, incoming)
+    } else if (incoming.payload === "Q_05") {
+      question005start(bot, incoming)
     }
   });
 
@@ -189,7 +193,7 @@ function question002List(bot, incoming){
   }});
 }
 
-function question003(bot, incoming) {
+function question003start(bot, incoming) {
   bot.reply(incoming, {text: "OK OK OK OK... lets stay focused."});
   setTimeout(function() {
     bot.reply(incoming, {text: "I'm still eager to learn about you though.  Let's play with some get to know you phrases... "});
@@ -204,7 +208,7 @@ function question003(bot, incoming) {
               {
                 "type":"postback",
                 "title": "Sure let's do it",
-                "payload": "Q_04"
+                "payload": "Q_03start"
               }
             ]
           }
@@ -214,7 +218,7 @@ function question003(bot, incoming) {
   }, 1000)
 }
 
-function question004(bot, incoming) {
+function question003(bot, incoming) {
   var questions = [ "I love trying out new things",
                     "I like to do a lot of research before buying new things",
                     "New technology has gotten out of control",
@@ -234,32 +238,32 @@ function question004(bot, incoming) {
               {
                   "content_type": "text",
                   "title": "Definitely me!",
-                  "payload": "Q_05",
+                  "payload": "PAYLOAD_",
               },
               {
                   "content_type": "text",
                   "title": "Sort of me",
-                  "payload": "Q_05",
+                  "payload": "PAYLOAD_",
               },
               {
                   "content_type": "text",
                   "title": "Not sure",
-                  "payload": "Q_05",
+                  "payload": "PAYLOAD_",
               },
               {
                   "content_type": "text",
                   "title": "Not really me",
-                  "payload": "Q_05",
+                  "payload": "PAYLOAD_",
               },
               {
                   "content_type": "text",
                   "title": "Not me at all!",
-                  "payload": "Q_05",
+                  "payload": "PAYLOAD_",
               }
           ]
         }, function(response, convo) {
           convo.stop()
-          question004end(bot, incoming)
+          question003end(bot, incoming)
         });
       } else {
         convo.ask({
@@ -268,27 +272,27 @@ function question004(bot, incoming) {
               {
                   "content_type": "text",
                   "title": "Definitely me!",
-                  "payload": "Q_05",
+                  "payload": "PAYLOAD_",
               },
               {
                   "content_type": "text",
                   "title": "Sort of me",
-                  "payload": "Q_05",
+                  "payload": "PAYLOAD_",
               },
               {
                   "content_type": "text",
                   "title": "Not sure",
-                  "payload": "Q_05",
+                  "payload": "PAYLOAD_",
               },
               {
                   "content_type": "text",
                   "title": "Not really me",
-                  "payload": "Q_05",
+                  "payload": "PAYLOAD_",
               },
               {
                   "content_type": "text",
                   "title": "Not me at all!",
-                  "payload": "Q_05",
+                  "payload": "PAYLOAD_",
               }
           ]
         }, function(response, convo) {
@@ -299,120 +303,131 @@ function question004(bot, incoming) {
   });
 }
 
-function startSurvey(bot, incoming){
-  var score = 0
-  var questions = [ "My friends and family often ask me for advice when purchasing technology",
-                    "I rarely buy off the shelf Consumer Electronic products, I like to assemble my Consumer Electronics products and customize the functionality",
-                    "I am a risk taker",
-                    "I’m the kind of person who knows what I want and how to achieve it ",
-                    "I seek out the Consumer Electronics products with the most advanced features",
-                    "I am the first among my friends and family to experience something new",
-                    "I like having technology that is different, cutting-edge, and sets me apart from the crowd",
-                    "I’m often multi-tasking with more than one device (tablet, computer or phone)",
-                    "I want devices that say a lot about who I am",
-                    "I feel confident in my views and choices" ]
+
+function question003end(bot, incoming) {
+  bot.reply(incoming, {text: "Annnd we are done."});
+  setTimeout(function() {
+    bot.reply(incoming, {text: "Great work! You knocked of 10 in a row like it was no big deal."});
+    setTimeout(function() {
+      bot.reply(incoming, {
+        "attachment":{
+          "type":"template",
+          "payload":{
+            "template_type":"button",
+            "text":" lets keep pushing forward.",
+            "buttons":[
+              {
+                "type":"postback",
+                "title": "Continue",
+                "payload": "Q_04"
+              }
+            ]
+          }
+        }
+      });
+    }, 1000)
+  }, 1000)
+}
+
+function question004start(bot, incoming) {
+  bot.reply(incoming, {text: "Next up is a series of THIS or THAT style questions."});
+  setTimeout(function() {
+    bot.reply(incoming, {text: "Your job is to pick the option that aligns best with your personal taste and interests."});
+    setTimeout(function() {
+      bot.reply(incoming, {text: "Let's do it... I'm all ears. 👂"});
+      question004(bot, incoming)
+    }, 1000)
+  }, 1000)
+}
+
+function question004(bot, incoming) {
+  var questions = [ {text: "I would rather read a...", option1: "Paperback Book", option2: "eBook"},
+                    {text: "I would rather keep a diary...", option1: "in a notebook", option2: "on a computer"},
+                    {text: "I would rather...", option1: "Watch TV", option2: "Watch YouTube or Vimeo"},
+                    {text: "I would rather read...", option1: "a paper newspaper", option2: "a digital newspaper"},
+                    {text: "I would rather create a poster...", option1: "with paper and scissors", option2: "digitally"},
+                    {text: "I would rather play...", option1: "a board game", option2: "a computer game"},
+                    {text: "I would rather...", option1: "Write a letter to a friend", option2: "Send an email to a friend"},
+                    {text: "I would rather...", option1: "Telephone a friend", option2: "Send a text message to a friend"},
+                    {text: "I would rather...", option1: "Go to the bank", option2: "Do my banking online"},
+                  ]
   bot.startConversation(incoming, function(err, convo) {
     for (i = 0; i < questions.length; ++i) {
       if (i === (questions.length-1)) {
         convo.ask({
-          text: questions[i],
-          quick_replies: [
-              {
-                  "content_type": "text",
-                  "title": "Strongly Agree",
-                  "payload": "5",
-              },
-              {
-                  "content_type": "text",
-                  "title": "Somewhat Agree",
-                  "payload": "4",
-              },
-              {
-                  "content_type": "text",
-                  "title": "Neither",
-                  "payload": "3",
-              },
-              {
-                  "content_type": "text",
-                  "title": "Somewhat Disagree",
-                  "payload": "2",
-              },
-              {
-                  "content_type": "text",
-                  "title": "Strongly Disagree",
-                  "payload": "1",
-              }
-          ]
+          "attachment":{
+            "type":"template",
+            "payload":{
+              "template_type":"button",
+              "text": questions[i].text,
+              "buttons":[
+                {
+                  "type":"postback",
+                  "title": questions[i].option1,
+                  "payload": "PAYLOAD_"
+                },
+                {
+                  "type":"postback",
+                  "title": questions[i].option2,
+                  "payload": "PAYLOAD_"
+                }
+              ]
+            }
+          }
         }, function(response, convo) {
-          score += +response.payload
           convo.stop()
-          giveResults(bot, incoming, score)
+          question004end(bot, incoming)
         });
       } else {
         convo.ask({
-          text: questions[i],
-          quick_replies: [
-              {
-                  "content_type": "text",
-                  "title": "Strongly Agree",
-                  "payload": "5",
-              },
-              {
-                  "content_type": "text",
-                  "title": "Somewhat Agree",
-                  "payload": "4",
-              },
-              {
-                  "content_type": "text",
-                  "title": "Neither",
-                  "payload": "3",
-              },
-              {
-                  "content_type": "text",
-                  "title": "Somewhat Disagree",
-                  "payload": "2",
-              },
-              {
-                  "content_type": "text",
-                  "title": "Strongly Disagree",
-                  "payload": "1",
-              }
-          ]
-        }, function(response, convo) {
-          if (response.payload){
-            score += +response.payload
-            convo.next();
-          }else {
-            convo.stop()
+          "attachment":{
+            "type":"template",
+            "payload":{
+              "template_type":"button",
+              "text": questions[i].text,
+              "buttons":[
+                {
+                  "type":"postback",
+                  "title": questions[i].option1,
+                  "payload": "PAYLOAD_"
+                },
+                {
+                  "type":"postback",
+                  "title": questions[i].option2,
+                  "payload": "PAYLOAD_"
+                }
+              ]
+            }
           }
+        }, function(response, convo) {
+            convo.next();
         });
       }
     }
   });
 }
 
-function giveResults(bot, incoming, user_score) {
-  var saavy;
-  if (user_score === 50){
-    saavy = "Extremely Tech Saavy"
-  } else if (user_score >= 35 && user_score < 50){
-    saavy = "Very Tech Saavy"
-  } else if (user_score >= 25 && user_score < 35){
-    saavy = "Somewhat Tech Saavy"
-  } else if (user_score < 25){
-    saavy = "Not Very Tech Saavy"
-  }
-  controller.storage.users.get(incoming.user, function (err, user) {
-    user.score = user_score
-    user.saavy = saavy
-    controller.storage.users.save(user)
-  })
-  bot.reply(incoming, {text: "Nice! Your score was "+user_score+"/50.  I'm going to rank you as: '"+saavy+"'."});
+function question004end(bot, incoming) {
+  bot.reply(incoming, {text: "Alrighty, up next I'm going to run you through a list of different technology gadgets."});
   setTimeout(function() {
-    segmentation(bot, incoming)
+    bot.reply(incoming, {
+      "attachment":{
+        "type":"template",
+        "payload":{
+          "template_type":"button",
+          "text":'This activity is based on me presenting you with an example of a specific gadget and you telling me whether you "own it", "want it", "use it", or "dont use it".',
+          "buttons":[
+            {
+              "type":"postback",
+              "title": "Let's do it",
+              "payload": "Q_05"
+            }
+          ]
+        }
+      }
+    });
   }, 1000)
 }
-
 function segmentation(bot, incoming){
   bot.reply(incoming, {"attachment":{
     "type":"template",
