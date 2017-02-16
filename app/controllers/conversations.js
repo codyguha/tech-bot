@@ -431,32 +431,79 @@ function question004end(bot, incoming) {
 }
 
 function question005(bot, incoming) {
-  var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"} ]
-  bot.reply(incoming, {
-      text: questions[0].device_title,
+  var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
+                    {device_title:"Smart Watch2", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
+                    {device_title:"Smart Watch3", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"}
+                  ]
+  bot.startConversation(incoming, function(err, convo) {
+    for (i = 0; i < questions.length; ++i) {
+      if (i === (questions.length-1)) {
+        console.log("DONE")
+      } else {
+        convo.say(questions[i].device_title)
+        setTimeout(function() {
+          convo.ask({
+            "attachment":{
+              "type":"image",
+              "payload":{
+                "url": questions[0].device_img
+              }
+            },
+            "quick_replies": [
+                {
+                    "content_type": "text",
+                    "title": "Own it!",
+                    "payload": "PAYLOAD_",
+                },
+                {
+                    "content_type": "text",
+                    "title": "Don't own it",
+                    "payload": "PAYLOAD_",
+                }
+            ]
+          }, function(response, convo) {
+              if (respose.text === "Own it!") {
+                convo.ask({
+                  text: "... and what about your usage?"
+                  "quick_replies": [
+                      {
+                          "content_type": "text",
+                          "title": "Use it"
+                          "payload": "PAYLOAD_",
+                      },
+                      {
+                          "content_type": "text",
+                          "title": "Don't use it",
+                          "payload": "PAYLOAD_",
+                      }
+                  ]
+                }, function(response, convo) {
+                  convo.next()
+                });
+              } else {
+                convo.ask({
+                  text: "... and what about your usage?"
+                  "quick_replies": [
+                      {
+                          "content_type": "text",
+                          "title": "Want it!"
+                          "payload": "PAYLOAD_",
+                      },
+                      {
+                          "content_type": "text",
+                          "title": "Don't want it!",
+                          "payload": "PAYLOAD_",
+                      }
+                  ]
+                }, function(response, convo) {
+                  convo.next()
+                });
+              }
+          });
+        }, 500)
+      }
+    }
   });
-  setTimeout(function() {
-    bot.reply(incoming, {
-      "attachment":{
-        "type":"image",
-        "payload":{
-          "url": questions[0].device_img
-        }
-      },
-      "quick_replies": [
-          {
-              "content_type": "text",
-              "title": "Own it!",
-              "payload": "PAYLOAD_",
-          },
-          {
-              "content_type": "text",
-              "title": "Don't own it",
-              "payload": "PAYLOAD_",
-          }
-      ]
-    });
-  }, 1000)
 }
 
 
