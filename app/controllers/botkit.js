@@ -280,6 +280,31 @@ function firstPartOfQuestion003(id) {
       ]
     });
 }
+
+var endQuestion002 = function(id) {
+  bot.reply({
+  text: "What a wonderous set of selections.  When you win the lottery dont forget about me.",
+  channel: id});
+  setTimeout(function() {
+    bot.reply({
+      "channel": id,
+      "attachment":{
+      "type":"template",
+      "payload":{
+        "template_type":"button",
+        "text":"No, seriously... besties for life right?  🤓",
+        "buttons":[
+          {
+            "type":"postback",
+            "title": "Next Question",
+            "payload": "Q_03"
+          }
+        ]
+      }
+    }});
+  }, 1000)
+};
+exports.endQuestion002 = endQuestion002
 exports.startQuestion002 = startQuestion002
 exports.end = end
 exports.handler = handler
