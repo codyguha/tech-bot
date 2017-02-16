@@ -433,34 +433,43 @@ function question004end(bot, incoming) {
 function question005(bot, incoming) {
   var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"} ]
   bot.reply(incoming, {
-      text: `Smart Watch`,
+    "attachment":{
+      "type":"image",
+      "payload":{
+        "url":"http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"
+      }
   });
   setTimeout(function() {
     bot.reply(incoming, {
-      "attachment":{
-        "type":"image",
-        "payload":{
-          "url":"http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"
-        }
-    });
-    setTimeout(function() {
-      bot.reply(incoming, {
-        "quick_replies":[
+      quick_replies: [
           {
-            "content_type":"text",
-            "title":"Own it",
-            "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
+              "content_type": "text",
+              "title": "Definitely me!",
+              "payload": "PAYLOAD_",
           },
           {
-            "content_type":"text",
-            "title":"Don't own it",
-            "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+              "content_type": "text",
+              "title": "Sort of me",
+              "payload": "PAYLOAD_",
+          },
+          {
+              "content_type": "text",
+              "title": "Not sure",
+              "payload": "PAYLOAD_",
+          },
+          {
+              "content_type": "text",
+              "title": "Not really me",
+              "payload": "PAYLOAD_",
+          },
+          {
+              "content_type": "text",
+              "title": "Not me at all!",
+              "payload": "PAYLOAD_",
           }
-        ]
-      });
-    }, 1000)
+      ]
+    })
   }, 1000)
-
 }
 
 
