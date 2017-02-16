@@ -57,8 +57,12 @@ module.exports = function (controller) {
   // });
 
   controller.on('message_received', function(bot, incoming) {
-    if (incoming.quick_reply.payload === "Q_04") {
-      question004(bot, incoming)
+    if (incoming.quick_reply) {
+      if (incoming.quick_reply.payload === "Q_04") {
+        question004(bot, incoming)
+      }
+    } else {
+
     }
   });
 
