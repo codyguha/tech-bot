@@ -57,7 +57,9 @@ module.exports = function (controller) {
   // });
 
   controller.on('message_received', function(bot, incoming) {
-    console.log(JSON.stringify(incoming))
+    if (incoming.quick_reply.payload === "Q_04") {
+      question004(bot, incoming)
+    }
   });
 
   controller.on('facebook_postback', function(bot, incoming) {
@@ -188,9 +190,9 @@ function question002List(bot, incoming){
 }
 
 function question003(bot, incoming) {
-  bot.reply(incoming, {text: "OK OK OK OK ... lets stay focused."});
+  bot.reply(incoming, {text: "OK OK OK OK... lets stay focused."});
   setTimeout(function() {
-    bot.reply(incoming, {text: "I'm still eager to learn about you though.  Lets play with some get to know you phrases... "});
+    bot.reply(incoming, {text: "I'm still eager to learn about you though.  Let's play with some get to know you phrases... "});
     setTimeout(function() {
       bot.reply(incoming, {
         text: "I'll say a phrase and you tell me if its a fair description .  Sound fun?",
@@ -198,12 +200,97 @@ function question003(bot, incoming) {
             {
                 "content_type": "text",
                 "title": "Sure let's do it",
-                "payload": "Q_03",
+                "payload": "Q_04",
             }
         ]
       });
     }, 1000)
   }, 1000)
+}
+
+function question004(bot, incoming) {
+  var questions = [ "I love trying out new things",
+                    "I like to do a lot of research before buying new things",
+                    "New technology has gotten out of control",
+                    "I won’t need a new phone for at least five years",
+                    "I’ve often got two or more tech devices open in front of me",
+                    "People always ask me for advice when they’re deciding what new tech to buy",
+                    "I know more about technology than the people covering the help phonelines",
+                    "My friends and family tell me I’m addicted to my tech devices",
+                    "I don’t get all the excitement people have about new technology",
+                    "I’ve got so many ideas for building new phone apps" ]
+  bot.startConversation(incoming, function(err, convo) {
+    for (i = 0; i < questions.length; ++i) {
+      if (i === (questions.length-1)) {
+        convo.ask({
+          text: questions[i],
+          quick_replies: [
+              {
+                  "content_type": "text",
+                  "title": "Definitely me!",
+                  "payload": "Q_05",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Sort of me",
+                  "payload": "Q_05",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Not sure",
+                  "payload": "Q_05",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Not really me",
+                  "payload": "Q_05",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Not me at all!",
+                  "payload": "Q_05",
+              }
+          ]
+        }, function(response, convo) {
+          convo.stop()
+          question004end(bot, incoming)
+        });
+      } else {
+        convo.ask({
+          text: questions[i],
+          quick_replies: [
+              {
+                  "content_type": "text",
+                  "title": "Definitely me!",
+                  "payload": "Q_05",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Sort of me",
+                  "payload": "Q_05",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Not sure",
+                  "payload": "Q_05",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Not really me",
+                  "payload": "Q_05",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Not me at all!",
+                  "payload": "Q_05",
+              }
+          ]
+        }, function(response, convo) {
+            convo.next();
+        });
+      }
+    }
+  });
 }
 
 function startSurvey(bot, incoming){
@@ -292,7 +379,6 @@ function startSurvey(bot, incoming){
           }else {
             convo.stop()
           }
-
         });
       }
     }
