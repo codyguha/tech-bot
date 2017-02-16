@@ -453,12 +453,12 @@ function question005(bot, incoming) {
                 {
                     "content_type": "text",
                     "title": "Own it!",
-                    "payload": "PAYLOAD_",
+                    "payload": "PAYLOAD_"
                 },
                 {
                     "content_type": "text",
                     "title": "Don't own it",
-                    "payload": "PAYLOAD_",
+                    "payload": "PAYLOAD_"
                 }
             ]
           }, function(response, convo) {
@@ -469,12 +469,12 @@ function question005(bot, incoming) {
                       {
                           "content_type": "text",
                           "title": "Use it"
-                          "payload": "PAYLOAD_",
+                          "payload": "PAYLOAD_"
                       },
                       {
                           "content_type": "text",
                           "title": "Don't use it",
-                          "payload": "PAYLOAD_",
+                          "payload": "PAYLOAD_"
                       }
                   ]
                 }, function(response, convo) {
@@ -487,12 +487,12 @@ function question005(bot, incoming) {
                       {
                           "content_type": "text",
                           "title": "Yes I want it!"
-                          "payload": "PAYLOAD_",
+                          "payload": "PAYLOAD_"
                       },
                       {
                           "content_type": "text",
                           "title": "No I don't want it",
-                          "payload": "PAYLOAD_",
+                          "payload": "PAYLOAD_"
                       }
                   ]
                 }, function(response, convo) {
