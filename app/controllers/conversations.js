@@ -464,7 +464,7 @@ function question005(bot, incoming) {
           }, function(response, convo) {
               if (respose.text === "Own it!") {
                 convo.ask({
-                  text: "... and what about your usage?"
+                  text: "... and what about your usage?",
                   "quick_replies": [
                       {
                           "content_type": "text",
@@ -482,16 +482,16 @@ function question005(bot, incoming) {
                 });
               } else {
                 convo.ask({
-                  text: "... and what about your usage?"
+                  text: "Ok, you dont own it... but do you want to own it?",
                   "quick_replies": [
                       {
                           "content_type": "text",
-                          "title": "Want it!"
+                          "title": "Yes I want it!"
                           "payload": "PAYLOAD_",
                       },
                       {
                           "content_type": "text",
-                          "title": "Don't want it!",
+                          "title": "No I don't want it",
                           "payload": "PAYLOAD_",
                       }
                   ]
