@@ -461,7 +461,7 @@ function question005(bot, incoming) {
                 }
             ]
           }, function(response, convo) {
-              if (respose.text === "Own it!") {
+              if (response.text === "Own it!") {
                 convo.ask({
                   text: "... and what about your usage?",
                   "quick_replies": [
