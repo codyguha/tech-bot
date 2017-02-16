@@ -177,7 +177,7 @@ function question002List(bot, incoming){
       "buttons":[
         {
           "type":"web_url",
-          "url":"https://gentle-earth-80429.herokuapp.com/unlimited-funding/"+ incoming.user,
+          "url":"https://gentle-earth-80429.herokuapp.com/unlimited-funding/" + incoming.user,
           "title":"Show Me The List",
           "messenger_extensions": true,
           "webview_height_ratio": "tall"
@@ -516,27 +516,5 @@ function activity(bot, incoming){
     }
   }});
 }
-var endQuestion002 = function(id) {
-  bot.reply({
-  text: "What a wonderous set of selections.  When you win the lottery dont forget about me.",
-  channel: id});
-  setTimeout(function() {
-    bot.reply({
-      "channel": id,
-      "attachment":{
-      "type":"template",
-      "payload":{
-        "template_type":"button",
-        "text":"No, seriously... besties for life right?  🤓",
-        "buttons":[
-          {
-            "type":"postback",
-            "title": "Next Question",
-            "payload": "Q_03"
-          }
-        ]
-      }
-    }});
-  }, 1000)
-};
+
 }

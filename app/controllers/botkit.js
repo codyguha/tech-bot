@@ -282,11 +282,11 @@ function firstPartOfQuestion003(id) {
 }
 
 var endQuestion002 = function(id) {
-  bot.reply({
+  bot.say({
   text: "What a wonderous set of selections.  When you win the lottery dont forget about me.",
   channel: id});
   setTimeout(function() {
-    bot.reply({
+    bot.say({
       "channel": id,
       "attachment":{
       "type":"template",
