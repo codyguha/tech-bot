@@ -16,7 +16,6 @@ require('./facebook_setup')(controller)
 
 // Conversation logic
 require('./conversations')(controller)
-var question003 = require('./conversations').question003
 
 // this function processes the POST request to the webhook
 var handler = function (obj) {
