@@ -438,6 +438,7 @@ function question005(bot, incoming) {
       "payload":{
         "url":"http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"
       }
+    }
   });
   setTimeout(function() {
     bot.reply(incoming, {
