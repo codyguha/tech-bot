@@ -468,7 +468,7 @@ function question005(bot, incoming) {
                   "quick_replies": [
                       {
                           "content_type": "text",
-                          "title": "Use it"
+                          "title": "Use it",
                           "payload": "PAYLOAD_"
                       },
                       {
@@ -486,7 +486,7 @@ function question005(bot, incoming) {
                   "quick_replies": [
                       {
                           "content_type": "text",
-                          "title": "Yes I want it!"
+                          "title": "Yes I want it!",
                           "payload": "PAYLOAD_"
                       },
                       {
