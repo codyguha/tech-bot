@@ -433,26 +433,36 @@ function question004end(bot, incoming) {
 function question005(bot, incoming) {
   var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"} ]
   bot.reply(incoming, {
-    "attachment":{
-      "type":"image",
-      "payload":{
-        "url":"http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"
-      },
-      "quick_replies":[
-        {
-          "content_type":"text",
-          "title":"Own it",
-          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
-        },
-        {
-          "content_type":"text",
-          "title":"Don't own it",
-          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
-        }
-      ]
-    }
+      text: `Smart Watch`,
   });
+  setTimeout(function() {
+    bot.reply(incoming, {
+      "attachment":{
+        "type":"image",
+        "payload":{
+          "url":"http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"
+        }
+    });
+    setTimeout(function() {
+      bot.reply(incoming, {
+        "quick_replies":[
+          {
+            "content_type":"text",
+            "title":"Own it",
+            "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
+          },
+          {
+            "content_type":"text",
+            "title":"Don't own it",
+            "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+          }
+        ]
+      });
+    }, 1000)
+  }, 1000)
+
 }
+
 
 function segmentation(bot, incoming){
   bot.reply(incoming, {"attachment":{
