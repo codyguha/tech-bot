@@ -63,7 +63,6 @@ module.exports = function (app) {
   app.post('/unlimited-funding',function(req,res){
     var facebook_id = req.body.fb_id
     endq2(facebook_id)
-    res.send('OK.')
   })
 
   app.post('/activities',function(req,res){
