@@ -441,7 +441,6 @@ function question005(bot, incoming) {
         console.log("DONE")
       } else {
         convo.say(questions[i].device_title)
-        setTimeout(function() {
           convo.ask({
             "attachment":{
               "type":"image",
@@ -500,7 +499,6 @@ function question005(bot, incoming) {
                 });
               }
           });
-        }, 500)
       }
     }
   });
