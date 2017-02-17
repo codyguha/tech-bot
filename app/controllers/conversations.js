@@ -145,21 +145,27 @@ function question001(bot, incoming) {
 }
 
 function question002(bot, incoming) {
-  bot.reply(incoming, {text: "YES! Question one and done.  🙌 "});
+  bot.reply(incoming, {text: "NICE! One question down 6 more to go.  🙌"});
   setTimeout(function() {
-    bot.reply(incoming, {text: "Let's continue shall we..."});
+    bot.reply(incoming, {text: "Whats next?"});
     setTimeout(function() {
-      bot.reply(incoming, {text: "Whats next?"});
+      bot.reply(incoming, {text: "Oh wait thats my job. LOL"});
       setTimeout(function() {
-        bot.reply(incoming, {text: "Oh wait thats my job. LOL 😂"});
+        bot.reply(incoming, {
+            "attachment":{
+              "type":"image",
+              "payload":{
+                "url": "https://gentle-earth-80429.herokuapp.com/images/supporting_emojiis/laughing.png"
+              }
+            });
         setTimeout(function() {
           bot.reply(incoming, {text: "Here is your next question."});
           setTimeout(function() {
             question002List(bot, incoming)
           }, 1000)
         }, 1000)
-      }, 5000)
-    }, 1000)
+      }, 1000)
+    }, 5000)
   }, 1000)
 }
 
@@ -183,16 +189,16 @@ function question002List(bot, incoming){
 }
 
 function question003start(bot, incoming) {
-  bot.reply(incoming, {text: "OK OK OK OK... lets stay focused."});
+  bot.reply(incoming, {text: "You're doing awesome. We've already landed at question 3 of 6."});
   setTimeout(function() {
-    bot.reply(incoming, {text: "I'm still eager to learn about you though.  Let's play with some get to know you phrases... "});
+    bot.reply(incoming, {text: 'Next up we are going to try out some "get to know you phrases."'});
     setTimeout(function() {
       bot.reply(incoming, {
         "attachment":{
           "type":"template",
           "payload":{
             "template_type":"button",
-            "text":"I'll say a phrase and you tell me if its a fair description .  Sound fun?",
+            "text":"I'll say a phrase and you tell me if its a fair description of your personality.",
             "buttons":[
               {
                 "type":"postback",
@@ -254,6 +260,109 @@ function question003(bot, incoming) {
           convo.stop()
           question003end(bot, incoming)
         });
+      } else if (i === 0) {
+        convo.say('Here is our first of ten phrases')
+        convo.ask({
+          text: questions[i],
+          quick_replies: [
+              {
+                  "content_type": "text",
+                  "title": "Definitely me!",
+                  "payload": "PAYLOAD_",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Sort of me",
+                  "payload": "PAYLOAD_",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Not sure",
+                  "payload": "PAYLOAD_",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Not really me",
+                  "payload": "PAYLOAD_",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Not me at all!",
+                  "payload": "PAYLOAD_",
+              }
+          ]
+        }, function(response, convo) {
+            convo.next();
+        });
+      } else if (i === 1) {
+        convo.say('You got it.');
+        convo.say('Next phrase...')
+        convo.ask({
+          text: questions[i],
+          quick_replies: [
+              {
+                  "content_type": "text",
+                  "title": "Definitely me!",
+                  "payload": "PAYLOAD_",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Sort of me",
+                  "payload": "PAYLOAD_",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Not sure",
+                  "payload": "PAYLOAD_",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Not really me",
+                  "payload": "PAYLOAD_",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Not me at all!",
+                  "payload": "PAYLOAD_",
+              }
+          ]
+        }, function(response, convo) {
+            convo.next();
+        });
+      }  else if (i === 4) {
+        convo.say('Keep going you are killing it!');
+        convo.ask({
+          text: questions[i],
+          quick_replies: [
+              {
+                  "content_type": "text",
+                  "title": "Definitely me!",
+                  "payload": "PAYLOAD_",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Sort of me",
+                  "payload": "PAYLOAD_",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Not sure",
+                  "payload": "PAYLOAD_",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Not really me",
+                  "payload": "PAYLOAD_",
+              },
+              {
+                  "content_type": "text",
+                  "title": "Not me at all!",
+                  "payload": "PAYLOAD_",
+              }
+          ]
+        }, function(response, convo) {
+            convo.next();
+        });
       } else {
         convo.ask({
           text: questions[i],
@@ -295,24 +404,33 @@ function question003(bot, incoming) {
 function question003end(bot, incoming) {
   bot.reply(incoming, {text: "Annnd we are done."});
   setTimeout(function() {
-    bot.reply(incoming, {text: "Great work! You knocked of 10 in a row like it was no big deal."});
+    bot.reply(incoming, {text: "Great work! You knocked out all 10 like nobodies business."});
     setTimeout(function() {
       bot.reply(incoming, {
-        "attachment":{
-          "type":"template",
-          "payload":{
-            "template_type":"button",
-            "text":" lets keep pushing forward.",
-            "buttons":[
-              {
-                "type":"postback",
-                "title": "Continue",
-                "payload": "Q_04"
-              }
-            ]
+          "attachment":{
+            "type":"image",
+            "payload":{
+              "url": "https://gentle-earth-80429.herokuapp.com/images/supporting_emojiis/hangloose.png"
+            }
+          });
+      setTimeout(function() {
+        bot.reply(incoming, {
+          "attachment":{
+            "type":"template",
+            "payload":{
+              "template_type":"button",
+              "text":" Lets keep going.",
+              "buttons":[
+                {
+                  "type":"postback",
+                  "title": "Continue",
+                  "payload": "Q_04"
+                }
+              ]
+            }
           }
-        }
-      });
+        });
+      }, 1000)
     }, 1000)
   }, 1000)
 }
