@@ -5,7 +5,7 @@ module.exports = function (controller) {
     welcomeMessage(bot, message)
   })
   controller.hears(['Q5'], 'message_received', function (bot, message) {
-    question005(bot, message)
+    question005test(bot, message)
   });
   // user said hello
   controller.hears(['hi', 'hello', 'Hi'], 'message_received', function (bot, message) {
@@ -429,78 +429,78 @@ function question004end(bot, incoming) {
     });
   }, 1000)
 }
-
-function question005(bot, incoming) {
-  var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
-                    {device_title:"Smart Watch2", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
-                    {device_title:"Smart Watch3", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"}
-                  ]
-  bot.startConversation(incoming, function(err, convo) {
-    for (i = 0; i < questions.length; ++i) {
-        convo.say(questions[i].device_title)
-        convo.ask({
-            "attachment":{
-              "type":"image",
-              "payload":{
-                "url": questions[0].device_img
-              }
-            },
-            "quick_replies": [
-                {
-                    "content_type": "text",
-                    "title": "Own it!",
-                    "payload": "PAYLOAD_"
-                },
-                {
-                    "content_type": "text",
-                    "title": "Don't own it",
-                    "payload": "PAYLOAD_"
-                }
-            ]
-          }, function(response, convo) {
-              if (response.text === "Own it!") {
-                convo.ask({
-                  text: "... and what about your usage?",
-                  "quick_replies": [
-                      {
-                          "content_type": "text",
-                          "title": "Use it",
-                          "payload": "PAYLOAD_"
-                      },
-                      {
-                          "content_type": "text",
-                          "title": "Don't use it",
-                          "payload": "PAYLOAD_"
-                      }
-                  ]
-                }, function(response, convo) {
-                  convo.next()
-                });
-                convo.next()
-              } else {
-                convo.ask({
-                  text: "Ok, you dont own it... but do you want to own it?",
-                  "quick_replies": [
-                      {
-                          "content_type": "text",
-                          "title": "Yes I want it!",
-                          "payload": "PAYLOAD_"
-                      },
-                      {
-                          "content_type": "text",
-                          "title": "No I don't want it",
-                          "payload": "PAYLOAD_"
-                      }
-                  ]
-                }, function(response, convo) {
-                  convo.next()
-                });
-              }
-          });
-      }
-    }
-  });
-}
+//
+// function question005(bot, incoming) {
+//   var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
+//                     {device_title:"Smart Watch2", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
+//                     {device_title:"Smart Watch3", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"}
+//                   ]
+//   bot.startConversation(incoming, function(err, convo) {
+//     for (i = 0; i < questions.length; ++i) {
+//         convo.say(questions[i].device_title)
+//         convo.ask({
+//             "attachment":{
+//               "type":"image",
+//               "payload":{
+//                 "url": questions[0].device_img
+//               }
+//             },
+//             "quick_replies": [
+//                 {
+//                     "content_type": "text",
+//                     "title": "Own it!",
+//                     "payload": "PAYLOAD_"
+//                 },
+//                 {
+//                     "content_type": "text",
+//                     "title": "Don't own it",
+//                     "payload": "PAYLOAD_"
+//                 }
+//             ]
+//           }, function(response, convo) {
+//               if (response.text === "Own it!") {
+//                 convo.ask({
+//                   text: "... and what about your usage?",
+//                   "quick_replies": [
+//                       {
+//                           "content_type": "text",
+//                           "title": "Use it",
+//                           "payload": "PAYLOAD_"
+//                       },
+//                       {
+//                           "content_type": "text",
+//                           "title": "Don't use it",
+//                           "payload": "PAYLOAD_"
+//                       }
+//                   ]
+//                 }, function(response, convo) {
+//                   convo.next()
+//                 });
+//                 convo.next()
+//               } else {
+//                 convo.ask({
+//                   text: "Ok, you dont own it... but do you want to own it?",
+//                   "quick_replies": [
+//                       {
+//                           "content_type": "text",
+//                           "title": "Yes I want it!",
+//                           "payload": "PAYLOAD_"
+//                       },
+//                       {
+//                           "content_type": "text",
+//                           "title": "No I don't want it",
+//                           "payload": "PAYLOAD_"
+//                       }
+//                   ]
+//                 }, function(response, convo) {
+//                   convo.next()
+//                 });
+//               }
+//           });
+//       }
+//     }
+//   });
+// }
 
 function question005test(bot, incoming) {
   var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
@@ -551,7 +551,7 @@ function question005test(bot, incoming) {
             });
 
           } else {
-            
+
           }
       });
     }
