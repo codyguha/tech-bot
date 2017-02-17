@@ -431,7 +431,7 @@ function question004end(bot, incoming) {
 }
 
 function stepper(bot, message, i){
-  if (i = 9) {
+  if (i === 9) {
     bot.reply(message, {text: "DONE!!!!!!!"});
   } else {
     i++
