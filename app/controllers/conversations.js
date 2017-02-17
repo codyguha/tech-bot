@@ -562,12 +562,12 @@ function question005(bot, message, i){
                     {device_title:"Voice Controlled Personal Assistant", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/alexa.jpg"}
                   ]
   var doYouOwnit = function(err, convo) {
-    convo.say("attachment":{
+    convo.say({"attachment":{
       "type":"image",
       "payload":{
         "url": questions[i].device_img
       }
-    })
+    }});
     convo.ask({
         "text": questions[i].device_title;,
         "quick_replies": [
