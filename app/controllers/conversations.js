@@ -459,40 +459,40 @@ function question004end(bot, incoming) {
 //             ]
 //           }, function(response, convo) {
 //               if (response.text === "Own it!") {
-//                 convo.ask({
-//                   text: "... and what about your usage?",
-//                   "quick_replies": [
-//                       {
-//                           "content_type": "text",
-//                           "title": "Use it",
-//                           "payload": "PAYLOAD_"
-//                       },
-//                       {
-//                           "content_type": "text",
-//                           "title": "Don't use it",
-//                           "payload": "PAYLOAD_"
-//                       }
-//                   ]
-//                 }, function(response, convo) {
+                // convo.ask({
+                //   text: "... and what about your usage?",
+                //   "quick_replies": [
+                //       {
+                //           "content_type": "text",
+                //           "title": "Use it",
+                //           "payload": "PAYLOAD_"
+                //       },
+                //       {
+                //           "content_type": "text",
+                //           "title": "Don't use it",
+                //           "payload": "PAYLOAD_"
+                //       }
+                //   ]
+                // }, function(response, convo) {
 //                   convo.next()
 //                 });
 //                 convo.next()
 //               } else {
-//                 convo.ask({
-//                   text: "Ok, you dont own it... but do you want to own it?",
-//                   "quick_replies": [
-//                       {
-//                           "content_type": "text",
-//                           "title": "Yes I want it!",
-//                           "payload": "PAYLOAD_"
-//                       },
-//                       {
-//                           "content_type": "text",
-//                           "title": "No I don't want it",
-//                           "payload": "PAYLOAD_"
-//                       }
-//                   ]
-//                 }, function(response, convo) {
+                // convo.ask({
+                //   text: "Ok, you dont own it... but do you want to own it?",
+                //   "quick_replies": [
+                //       {
+                //           "content_type": "text",
+                //           "title": "Yes I want it!",
+                //           "payload": "PAYLOAD_"
+                //       },
+                //       {
+                //           "content_type": "text",
+                //           "title": "No I don't want it",
+                //           "payload": "PAYLOAD_"
+                //       }
+                //   ]
+                // }, function(response, convo) {
 //                   convo.next()
 //                 });
 //               }
@@ -541,7 +541,9 @@ controller.hears(['pizzatime'], 'message_received', function(bot,message) {
                     {device_title:"Smart Watch2", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
                     {device_title:"Smart Watch3", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"}
                   ]
+                  
     var doYouOwnit = function(err, convo) {
+      convo.say(questions[i].device_title);
       convo.ask({
           "attachment":{
             "type":"image",
@@ -562,31 +564,48 @@ controller.hears(['pizzatime'], 'message_received', function(bot,message) {
               }
           ]
         }, function(response, convo) {
-        convo.say('Awesome.');
-        doYouWantit(response, convo);
+        ownOrNOt(response, convo);
         convo.next();
       });
     };
-    var doYouWantit = function(response, convo) {
+    var ownOrNot = function(response, convo) {
       if (response.text === "Own it!"){
-        convo.ask('What size do you want?', function(response, convo) {
-          convo.say('Ok.')
-          askWhereDeliver(response, convo);
+        convo.ask({
+          text: "... and what about your usage?",
+          "quick_replies": [
+              {
+                  "content_type": "text",
+                  "title": "Use it",
+                  "payload": "PAYLOAD_"
+              },
+              {
+                  "content_type": "text",
+                  "title": "Don't use it",
+                  "payload": "PAYLOAD_"
+              }
+          ]
+        }, function(response, convo) {
           convo.next();
         });
       } else {
-        convo.ask('What size doNT you want?', function(response, convo) {
-          convo.say('Ok.')
-          askWhereDeliver(response, convo);
+        convo.ask({
+          text: "Ok, you dont own it... but do you want to own it?",
+          "quick_replies": [
+              {
+                  "content_type": "text",
+                  "title": "Yes I want it!",
+                  "payload": "PAYLOAD_"
+              },
+              {
+                  "content_type": "text",
+                  "title": "No I don't want it",
+                  "payload": "PAYLOAD_"
+              }
+          ]
+        }, function(response, convo) {
           convo.next();
         });
       }
-    };
-    var askWhereDeliver = function(response, convo) {
-      convo.ask('So where do you want it delivered?', function(response, convo) {
-        convo.say('Ok! Good bye.');
-        convo.next();
-      });
     };
 
     bot.startConversation(message, doYouOwnit);
