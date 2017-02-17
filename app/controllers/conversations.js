@@ -157,7 +157,8 @@ function question002(bot, incoming) {
               "payload":{
                 "url": "https://gentle-earth-80429.herokuapp.com/images/supporting_emojiis/laughing.png"
               }
-            });
+            }
+          });
         setTimeout(function() {
           bot.reply(incoming, {text: "Here is your next question."});
           setTimeout(function() {
