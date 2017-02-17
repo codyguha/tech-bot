@@ -436,6 +436,7 @@ function stepper(bot, message, i){
     testQ5(bot, message, index)
   } else {
     console.log("DONE!")
+    bot.reply(message, {text: "DONE!!!!!!!"});
   }
 }
 
