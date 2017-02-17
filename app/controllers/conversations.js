@@ -530,9 +530,6 @@ function question005test(bot, incoming) {
               }
           ]
         },function(response,convo) {
-          convo.next()
-          if (response.text === "Own it!") {
-            convo.say('Cool, you said: ' + response.text);
             convo.ask({
               text: "... and what about your usage?",
               "quick_replies": [
@@ -547,13 +544,9 @@ function question005test(bot, incoming) {
                       "payload": "PAYLOAD_"
                   }
               ]
-            }, function(response, convo) {
+            }, function(response2, convo) {
               convo.next()
             });
-
-          } else {
-
-          }
       });
     }
   });
