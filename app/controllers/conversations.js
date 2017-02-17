@@ -164,7 +164,7 @@ function question002(bot, incoming) {
           setTimeout(function() {
             question002List(bot, incoming)
           }, 1000)
-        }, 1000)
+        }, 2000)
       }, 1000)
     }, 5000)
   }, 1000)
