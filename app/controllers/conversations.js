@@ -451,11 +451,11 @@ function question004start(bot, incoming) {
 function question004(bot, incoming) {
   var questions = shuffle([ {text: "I would rather read a...", option1: "Paperback Book", option2: "eBook"},
                     {text: "I would rather keep a diary...", option1: "In a notebook", option2: "On a computer"},
-                    {text: "I would ratherwatch...", option1: "TV", option2: "YouTube or Vimeo"},
+                    {text: "I would rather watch...", option1: "TV", option2: "YouTube or Vimeo"},
                     {text: "I would rather read...", option1: "A paper newspaper", option2: "A digital newspaper"},
-                    {text: "I would rather create a poster with...", option1: "Paper and scissors", option2: "Digitally"},
+                    {text: "I would rather create a poster with...", option1: "Paper and scissors", option2: "Software"},
                     {text: "I would rather play a...", option1: "Board game", option2: "Computer game"},
-                    {text: "I would rather write a letter to a friend...", option1: "Paper and Pen", option2: "Email"},
+                    {text: "I would rather write a letter to a friend with...", option1: "A Pen and Paper", option2: "An Email"},
                     {text: "I would rather contact a friend with a...", option1: "Telephone call", option2: "Text message"},
                     {text: "I would rather...", option1: "Go to the bank", option2: "Do my banking online"},
                   ])
