@@ -108,8 +108,15 @@ function question001(bot, incoming) {
   for (i = 0; i <= carousel_items.length; ++i) {
     if (i === carousel_items.length){
       menu_items.push({
-      "title": "Other Stuff",
-      "image_url": "https://gentle-earth-80429.herokuapp.com/images/Question1/other_stuff.png"
+        "title": "Other Stuff",
+        "image_url": "https://gentle-earth-80429.herokuapp.com/images/Question1/other_stuff.png",
+        "buttons":[
+          {
+            "type":"postback",
+            "title": "Select",
+            "payload": "Q_02"
+          }
+        ]
       });
       bot.reply(incoming, {
         "attachment":{
