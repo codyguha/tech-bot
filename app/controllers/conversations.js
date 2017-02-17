@@ -145,7 +145,7 @@ function question001(bot, incoming) {
 }
 
 function question002(bot, incoming) {
-  bot.reply(incoming, {text: "NICE! One question down 6 more to go.  🙌"});
+  bot.reply(incoming, {text: "NICE! One question down, 6 more to go.  🙌"});
   setTimeout(function() {
     bot.reply(incoming, {text: "Whats next?"});
     setTimeout(function() {
@@ -630,7 +630,7 @@ function question005(bot, message){
 function question006start(bot, incoming) {
   bot.reply(incoming, {text: "Nice job on the gadgets.  We are now at the second to last question."});
   setTimeout(function() {
-    bot.reply(incoming, {text: "This ones about software.  I'm going to mention a piece of software.  All you need to do is tell me if you use it or not."});
+    bot.reply(incoming, {text: "This ones about software and programming language.  I'm going to mention a name.  All you need to do is tell me if you use it or not."});
     setTimeout(function() {
       bot.reply(incoming, {text: "Here we go..."});
       question006(bot, incoming)

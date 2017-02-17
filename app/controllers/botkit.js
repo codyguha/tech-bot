@@ -134,156 +134,13 @@ var create_user_if_new = function (id, ts) {
 
 controller.on('tick', function(bot, event) { });
 
-var statementVerify = function (id, s){
-  var segment;
-  if (s === "1"){
-    segment = "Innovator"
-  } else if  (s === "2"){
-    segment = "Early Adopter"
-  } else if (s === "3"){
-    segment = "Early Majority"
-  } else if (s === "4"){
-    segment = "Late Majority"
-  } else {
-    segment = "Laggard"
-  }
-  controller.storage.users.get(id, function (err, user) {
-    user.segment = segment
-    controller.storage.users.save(user)
-  })
-  bot.say({
-      text: "Thanks for that... I have put you in the "+segment+" segment. :) Is that ok?",
-      channel: id,
-      quick_replies: [
-          {
-              "content_type": "text",
-              "title": "Yes",
-              "payload": segment,
-          },
-          {
-              "content_type": "text",
-              "title": "No",
-              "payload": segment,
-          }
-      ]
-  });
-}
-
-var getWords = function (id, words){
-  controller.storage.users.get(id, function (err, user) {
-    bot.say({text: "Alright! We are done. Thanks for your time today… You are being saved to the database as a "+words[0]+", "+words[1]+", "+words[2]+", "+user.saavy+" "+user.segment+".",
-     channel: id});
-  })
-  setTimeout(function() {
-    bot.say({text: "We hope you enjoyed the activity. Here’s a fun question for you… True or false?", channel: id});
-    setTimeout(function() {
-      bot.say({
-          text: "There are enough credit cards in circulation to span the earth over 3.5 times.",
-          channel: id,
-          quick_replies: [
-              {
-                  "content_type": "text",
-                  "title": "True",
-                  "payload": "credit",
-              },
-              {
-                  "content_type": "text",
-                  "title": "False",
-                  "payload": "credit",
-              }
-          ]
-      });
-    }, 3000)
-  }, 3000)
-}
 var end = function (id){
   bot.say({text: "Thanks for your time.", channel: id});
-}
-function startQuestion002(id) {
-    bot.say({text: "Ok good work on that first exercise.  Lets continue shall we...", channel: id});
-    setTimeout(function() {
-      bot.say({text: "In this next exercise we will use the same interaction of showing you options in a separate browser window.", channel: id});
-      setTimeout(function() {
-        bot.say({text: "Here is your question.",channel: id});
-        setTimeout(function() {
-          question002(id)
-        }, 1000)
-      }, 1000)
-    }, 1000)
-}
-
-function question002(id) {
-  bot.reply({
-    "channel": id,
-    "attachment":{
-    "type":"template",
-    "payload":{
-      "template_type":"button",
-      "text":"Imagine you had unlimited funding and never had to work. Which TWO of these would you do?",
-      "buttons":[
-        {
-          "type":"web_url",
-          "url":"https://gentle-earth-80429.herokuapp.com/unlimited-funding/"+ incoming.user,
-          "title":"Show me the options",
-          "messenger_extensions": true,
-          "webview_height_ratio": "tall"
-        },
-        {
-          "type":"postback",
-          "title":"Next Question",
-          "payload":"Question003"
-        },
-        {
-          "type":"postback",
-          "title":"Jump to End",
-          "payload":"EndSurvey"
-        }
-      ]
-    }
-  }});
-}
-function startQuestion003(id) {
-    bot.say({text: "This part is a bit long but you can do it!  Do these statements sound like you?", channel: id});
-    setTimeout(function() {
-      firstPartOfQuestion003(id)
-    }, 1000)
-}
-
-function firstPartOfQuestion003(id) {
-    bot.say({text: "I love trying out new things", channel: id,
-      quick_replies: [
-          {
-              "content_type": "text",
-              "title": "Definitely me!",
-              "payload": "Q003",
-          },
-          {
-              "content_type": "text",
-              "title": "Sort of me",
-              "payload": "Q003",
-          },
-          {
-              "content_type": "text",
-              "title": "Not sure",
-              "payload": "Q003",
-          },
-          {
-              "content_type": "text",
-              "title": "Not really me",
-              "payload": "Q003",
-          },
-          {
-              "content_type": "text",
-              "title": "Not me at all!",
-              "payload": "Q003",
-          }
-      ]
-    });
 }
 
 var endQuestion002 = function(id) {
   bot.say({
-  text: "What a wonderous set of selections.  When you win the lottery dont forget about me.",
+  text: "That's a wonderous set of selections.  When you win the lottery dont forget about me.",
   channel: id});
   setTimeout(function() {
     bot.say({
@@ -304,9 +161,7 @@ var endQuestion002 = function(id) {
     }});
   }, 1000)
 };
+
 exports.endQuestion002 = endQuestion002
-exports.startQuestion002 = startQuestion002
 exports.end = end
 exports.handler = handler
-exports.statementVerify = statementVerify
-exports.getWords = getWords
