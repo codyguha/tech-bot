@@ -413,7 +413,8 @@ function question003end(bot, incoming) {
             "payload":{
               "url": "https://gentle-earth-80429.herokuapp.com/images/supporting_emojiis/hangloose.png"
             }
-          });
+          }
+        });
       setTimeout(function() {
         bot.reply(incoming, {
           "attachment":{
