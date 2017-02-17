@@ -11,14 +11,7 @@ module.exports = function (controller) {
   controller.hears(['NPS'], 'message_received', function (bot, message) {
     npsSurveyStart(bot, message)
   });
-  controller.hears(['Yes', 'No'], 'message_received', function (bot, incoming) {
-    controller.storage.users.get(incoming.user, function (err, user) {
-      bot.reply(incoming, "Excellent!  So far I have you pinned as a "+user.saavy+" "+user.segment+".");
-      setTimeout(function() {
-        lastQuestion(bot, incoming)
-      }, 1000)
-    })
-  });
+
   controller.hears(['True', 'False'], 'message_received', function(bot, incoming) {
     bot.reply(incoming, {text: "We’re not sure either, but from what we hear…"});
     setTimeout(function() {
@@ -649,6 +642,53 @@ function question007(bot, incoming){
   })
 }
 
+function segmentation(bot, incoming){
+  bot.reply(incoming, {"attachment":{
+    "type":"template",
+    "payload":{
+      "template_type":"button",
+      "text":"Now I want to understand you a little bit further... I am going to present you with 5 statements. Choose the statement that best describes you",
+      "buttons":[
+        {
+          "type":"web_url",
+          "url":"https://gentle-earth-80429.herokuapp.com/statements/" + incoming.user,
+          "title":"Show Me The Statements",
+          "messenger_extensions": true,
+          "webview_height_ratio": "tall"
+        }
+      ]
+    }
+  }});
+}
+
+function lastQuestion(bot, incoming) {
+  bot.reply(incoming, {
+      text: `You’re almost done!`,
+  });
+  setTimeout(function() {
+    lastQuestion2(bot, incoming);
+  }, 1000)
+}
+
+function lastQuestion2(bot, incoming) {
+  bot.reply(incoming, {"attachment":{
+    "type":"template",
+    "payload":{
+                "title": "😒 Not likely",
+      "template_type":"button",
+      "text":"Finally, I want to understand you even further. Choose three words from a list to capture what you’re all about.",
+      "buttons":[
+        {
+          "type":"web_url",
+          "url":"https://gentle-earth-80429.herokuapp.com/words/"+ incoming.user,
+          "title":"Show Me The Words",
+          "messenger_extensions": true,
+          "webview_height_ratio": "tall"
+        }
+      ]
+    }
+  }});
+}
 
 function npsSurveyStart(bot, incoming) {
   bot.startConversation(incoming, function(err, convo) {
