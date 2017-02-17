@@ -461,6 +461,7 @@ function question005(bot, incoming) {
                 }
             ]
           }, function(response, convo) {
+              console.log("TEXT>>>>>>>>>>>>>" + response.text)
               if (response.text === "Own it!") {
                 convo.ask({
                   text: "... and what about your usage?",
