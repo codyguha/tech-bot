@@ -480,6 +480,7 @@ function question005(bot, incoming) {
                 }, function(response, convo) {
                   convo.next()
                 });
+                convo.next()
               } else {
                 convo.ask({
                   text: "Ok, you dont own it... but do you want to own it?",
