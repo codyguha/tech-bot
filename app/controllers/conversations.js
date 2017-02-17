@@ -431,7 +431,7 @@ function question004end(bot, incoming) {
 }
 
 function stepper(bot, message, i){
-  if (index <= 9) {
+  if (i <= 9) {
     i++
     console.log("INDEX>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!" + i)
     testQ5(bot, message, i)
