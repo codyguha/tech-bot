@@ -84,28 +84,28 @@ function question001(bot, incoming) {
   var carousel_items = [
     {
     "title": "Spend time outdoors",
-    "image_url": "http://imagizer.imageshack.us/600x398f/924/t86bdh.jpg"
+    "image_url": "https://gentle-earth-80429.herokuapp.com/images/Question1/outdoors.jpg"
     },{
     "title": "Watch movies or TV at home",
-    "image_url": "http://imagizer.imageshack.us/600x399f/924/8hYvD2.jpg"
+    "image_url": "https://gentle-earth-80429.herokuapp.com/images/Question1/movies_TV.jpg"
     },{
     "title": "Go out to dinner or bars",
-    "image_url": "http://imagizer.imageshack.us/600x400f/924/V7TYMT.jpg"
+    "image_url": "https://gentle-earth-80429.herokuapp.com/images/Question1/dinner_bar.jpg"
     },{
     "title": "Play video games",
-    "image_url": "http://imagizer.imageshack.us/600x337f/924/yrh5gF.jpg"
+    "image_url": "https://gentle-earth-80429.herokuapp.com/images/Question1/video_games.jpg"
     },{
     "title": "Play Sports",
-    "image_url": "http://imagizer.imageshack.us/512x384f/922/PN9m2J.jpg"
+    "image_url": "https://gentle-earth-80429.herokuapp.com/images/Question1/play_sports.jpg"
     },{
     "title": "Read a good book",
-    "image_url": "http://imagizer.imageshack.us/600x337f/924/UzBc8d.jpg"
+    "image_url": "https://gentle-earth-80429.herokuapp.com/images/Question1/reading_book.jpg"
     },{
     "title": "Cook",
-    "image_url": "http://imagizer.imageshack.us/600x316f/924/eoGJW8.jpg"
+    "image_url": "https://gentle-earth-80429.herokuapp.com/images/Question1/cook.jpg"
     },{
     "title": "Other Stuff",
-    "image_url": "http://imagizer.imageshack.us/600x315f/921/ksKOP9.png"
+    "image_url": "https://gentle-earth-80429.herokuapp.com/images/Question1/other_stuff.png"
     }]
   var menu_items = []
   for (i = 0; i <= carousel_items.length; ++i) {
@@ -419,16 +419,16 @@ function stepper(bot, message, i){
 }
 
 function question005(bot, message, i){
-  var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
-                    {device_title:"Virtual Reality Headset", device_img: "http://imagizer.imageshack.us/1190x595f/923/S1Y30r.png"},
-                    {device_title:"Smart TV - connected to the internet", device_img: "http://imagizer.imageshack.us/1500x1008f/922/dXxnrw.jpg"},
-                    {device_title:"Landline Telephone", device_img: "http://imagizer.imageshack.us/1500x1200f/923/17xZOd.jpg"},
-                    {device_title:"DVD Player", device_img: "http://imagizer.imageshack.us/400x400f/922/3cQrHt.jpg"},
-                    {device_title:"Record Player", device_img: "http://imagizer.imageshack.us/1200x750f/923/yMyvY0.jpg"},
-                    {device_title:"Fitness device for your wrist", device_img: "http://imagizer.imageshack.us/1130x753f/923/Wf3H23.jpg"},
-                    {device_title:"Smart home device", device_img: "http://imagizer.imageshack.us/673x399f/922/Bqdn4R.jpg"},
-                    {device_title:"Drone", device_img: "http://imagizer.imageshack.us/920x557f/923/w8eWhH.jpg"},
-                    {device_title:"Voice Controlled Personal Assistant", device_img: "http://imagizer.imageshack.us/930x465f/924/Nvjg4y.jpg"}
+  var questions = [ {device_title:"Smart Watch", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/smart_watch.jpg"},
+                    {device_title:"Virtual Reality Headset", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/vr_headset.jpg"},
+                    {device_title:"Smart TV - connected to the internet", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/smart_tv.jpg"},
+                    {device_title:"Landline Telephone", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/telephone_landline.jpg"},
+                    {device_title:"DVD Player", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/dvd_player.jpg"},
+                    {device_title:"Record Player", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/record_player.jpg"},
+                    {device_title:"Fitness device for your wrist", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/fitness_tracker.jpg"},
+                    {device_title:"Smart home device", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/smart_home_device.jpg"},
+                    {device_title:"Drone", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/drone.jpg"},
+                    {device_title:"Voice Controlled Personal Assistant", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/alexa.jpg"}
                   ]
   var doYouOwnit = function(err, convo) {
     convo.say(questions[i].device_title);
@@ -583,7 +583,7 @@ function question007(bot, incoming){
         "elements": [
           {
             "title":"Loved it",
-            "image_url":"https://dncache-mauganscorp.netdna-ssl.com/thumbseg/1617/1617038-bigthumbnail.jpg",
+            "image_url":"https://gentle-earth-80429.herokuapp.com/images/Question7/love.png",
             "buttons":[
               {
                 "type":"postback",
@@ -594,7 +594,7 @@ function question007(bot, incoming){
           },
           {
             "title":"Liked it",
-            "image_url":"https://dncache-mauganscorp.netdna-ssl.com/thumbseg/1617/1617038-bigthumbnail.jpg",
+            "image_url":"https://gentle-earth-80429.herokuapp.com/images/Question7/like.png",
             "buttons":[
               {
                 "type":"postback",
@@ -605,7 +605,7 @@ function question007(bot, incoming){
           },
           {
             "title":"It was OK",
-            "image_url":"https://dncache-mauganscorp.netdna-ssl.com/thumbseg/1617/1617038-bigthumbnail.jpg",
+            "image_url":"https://gentle-earth-80429.herokuapp.com/images/Question7/ok.png",
             "buttons":[
               {
                 "type":"postback",
@@ -616,7 +616,7 @@ function question007(bot, incoming){
           },
           {
             "title":"Didn't like it",
-            "image_url":"https://dncache-mauganscorp.netdna-ssl.com/thumbseg/1617/1617038-bigthumbnail.jpg",
+            "image_url":"https://gentle-earth-80429.herokuapp.com/images/Question7/nolike.png",
             "buttons":[
               {
                 "type":"postback",
@@ -627,7 +627,7 @@ function question007(bot, incoming){
           },
           {
             "title":"Hated it",
-            "image_url":"https://dncache-mauganscorp.netdna-ssl.com/thumbseg/1617/1617038-bigthumbnail.jpg",
+            "image_url":"https://gentle-earth-80429.herokuapp.com/images/Question7/hate.png",
             "buttons":[
               {
                 "type":"postback",
