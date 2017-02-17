@@ -4,9 +4,6 @@ module.exports = function (controller) {
   controller.on('facebook_optin', function (bot, message) {
     welcomeMessage(bot, message)
   })
-  controller.hears(['Q5'], 'message_received', function (bot, message) {
-    testQ5(bot, message, 0)
-  });
   // user said hello
   controller.hears(['hi', 'hello', 'Hi'], 'message_received', function (bot, message) {
     welcomeMessage(bot, message)
@@ -45,22 +42,6 @@ module.exports = function (controller) {
   controller.hears(['help'], 'message_received', function(bot, message) {
       bot.reply(message, "type 'hi'");
   });
-  // controller.hears(['Continue ➡'], 'message_received', function(bot, incoming) {
-  //   bot.reply(incoming, {text: "Ok let's kick off part one."});
-  //   setTimeout(function() {
-  //     bot.reply(incoming, {text: "In this section we are going to present you with a handful of statements.  Your job is to choose a selection form our 'agree' or 'disagree' responses."});
-  //     setTimeout(function() {
-  //       bot.reply(incoming, {text: "Here is our first statement"});
-  //       setTimeout(function() {
-  //       startSurvey(bot, incoming)
-  //       }, 2000)
-  //     }, 5000)
-  //   }, 1000)
-  // });
-
-  controller.on('message_received', function(bot, incoming) {
-
-  });
 
   controller.on('facebook_postback', function(bot, incoming) {
     if (incoming.payload === "Q_02") {
@@ -72,7 +53,9 @@ module.exports = function (controller) {
     } else if (incoming.payload === "Q_04") {
       question004start(bot, incoming)
     } else if (incoming.payload === "Q_05") {
-      question005start(bot, incoming)
+      question005(bot, incoming, 0)
+    } else if (incoming.payload === "Q_07") {
+      sayThanks(bot, incoming)
     }
   });
 
@@ -99,6 +82,9 @@ function welcomeMessage(bot, incoming){
       }, 1000)
     }, 1000)
   }, 1000)
+}
+function sayThanks(bot, incoming){
+  bot.reply(incoming, {text: "Thanks for taking the time to participate in this questionaire.  We appreciate your input."});
 }
 
 function question001(bot, incoming) {
@@ -432,15 +418,14 @@ function question004end(bot, incoming) {
 
 function stepper(bot, message, i){
   if (i === 9) {
-    bot.reply(message, {text: "DONE!!!!!!!"});
+    question006start(bot, message)
   } else {
     i++
-    console.log("INDEX>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!" + i)
-    testQ5(bot, message, i)
+    question005(bot, message, i)
   }
 }
 
-function testQ5(bot, message, i){
+function question005(bot, message, i){
   var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
                     {device_title:"Virtual Reality Headset", device_img: "http://imagizer.imageshack.us/1190x595f/923/S1Y30r.png"},
                     {device_title:"Smart TV - connected to the internet", device_img: "http://imagizer.imageshack.us/1500x1008f/922/dXxnrw.jpg"},
@@ -523,42 +508,32 @@ function testQ5(bot, message, i){
   bot.startConversation(message, doYouOwnit);
 }
 
-controller.hears(['pizzatime'], 'message_received', function(bot,message) {
-  var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
-                    {device_title:"Smart Watch2", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
-                    {device_title:"Smart Watch3", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"}
-                  ]
+function question006start(bot, incoming) {
+  bot.reply(incoming, {text: "Nice job on the gadgets.  We are now at the second to last question."});
+  setTimeout(function() {
+    bot.reply(incoming, {text: "This ones about software.  I'm going to mention a piece of software.  All you need to do is tell me if you use it or not."});
+    setTimeout(function() {
+      bot.reply(incoming, {text: "Here we go..."});
+      question006(bot, incoming)
+    }, 1000)
+  }, 1000)
+}
 
-    var doYouOwnit = function(err, convo) {
-      convo.say(questions[0].device_title);
-      convo.ask({
-          "attachment":{
-            "type":"image",
-            "payload":{
-              "url": questions[0].device_img
-            }
-          },
-          "quick_replies": [
-              {
-                  "content_type": "text",
-                  "title": "Own it!",
-                  "payload": "PAYLOAD_"
-              },
-              {
-                  "content_type": "text",
-                  "title": "Don't own it",
-                  "payload": "PAYLOAD_"
-              }
-          ]
-        }, function(response, convo) {
-        ownOrNot(response, convo);
-        convo.next();
-      });
-    };
-    var ownOrNot = function(response, convo) {
-      if (response.text === "Own it!"){
+function question006(bot, incoming) {
+  var questions = [ "Photoshop",
+                    "Garage band",
+                    "Snap Chat",
+                    "Excel",
+                    "Twitter",
+                    "Google Go",
+                    "HTML",
+                    "Java"
+                  ]
+  bot.startConversation(incoming, function(err, convo) {
+    for (i = 0; i < questions.length; ++i) {
+      if (i === (questions.length-1)) {
         convo.ask({
-          text: "... and what about your usage?",
+          text: questions[i],
           "quick_replies": [
               {
                   "content_type": "text",
@@ -572,79 +547,108 @@ controller.hears(['pizzatime'], 'message_received', function(bot,message) {
               }
           ]
         }, function(response, convo) {
-          convo.next();
+          convo.stop()
+          question006end(bot, incoming)
         });
       } else {
         convo.ask({
-          text: "Ok, you dont own it... but do you want to own it?",
+          text: questions[i],
           "quick_replies": [
               {
                   "content_type": "text",
-                  "title": "Yes I want it!",
+                  "title": "Use it",
                   "payload": "PAYLOAD_"
               },
               {
                   "content_type": "text",
-                  "title": "No I don't want it",
+                  "title": "Don't use it",
                   "payload": "PAYLOAD_"
               }
           ]
         }, function(response, convo) {
-          convo.next();
+            convo.next();
         });
       }
-    };
-
-    bot.startConversation(message, doYouOwnit);
-});
-
-function segmentation(bot, incoming){
-  bot.reply(incoming, {"attachment":{
-    "type":"template",
-    "payload":{
-      "template_type":"button",
-      "text":"Now I want to understand you a little bit further... I am going to present you with 5 statements. Choose the statement that best describes you",
-      "buttons":[
-        {
-          "type":"web_url",
-          "url":"https://gentle-earth-80429.herokuapp.com/statements/" + incoming.user,
-          "title":"Show Me The Statements",
-          "messenger_extensions": true,
-          "webview_height_ratio": "tall"
-        }
-      ]
     }
-  }});
+  });
 }
 
-function lastQuestion(bot, incoming) {
-  bot.reply(incoming, {
-      text: `You’re almost done!`,
-  });
+function question006end(bot, incoming) {
+  bot.reply(incoming, {text: "Oustanding work!"});
   setTimeout(function() {
-    lastQuestion2(bot, incoming);
+    bot.reply(incoming, {text: "You made it to end.  Here is your last question..."});
+    question007(bot, incoming)
   }, 1000)
 }
 
-function lastQuestion2(bot, incoming) {
-  bot.reply(incoming, {"attachment":{
-    "type":"template",
-    "payload":{
-                "title": "😒 Not likely",
-      "template_type":"button",
-      "text":"Finally, I want to understand you even further. Choose three words from a list to capture what you’re all about.",
-      "buttons":[
-        {
-          "type":"web_url",
-          "url":"https://gentle-earth-80429.herokuapp.com/words/"+ incoming.user,
-          "title":"Show Me The Words",
-          "messenger_extensions": true,
-          "webview_height_ratio": "tall"
-        }
-      ]
+function question007(bot, incoming){
+  bot.reply(incoming, {
+    "attachment":{
+      "type":"template",
+      "payload":{
+        "template_type":"generic",
+        "elements": [
+          {
+            "title":"Loved it",
+            "image_url":"https://dncache-mauganscorp.netdna-ssl.com/thumbseg/1617/1617038-bigthumbnail.jpg",
+            "buttons":[
+              {
+                "type":"postback",
+                "title":"Loved it",
+                "payload":"Q_07"
+              }
+            ]
+          },
+          {
+            "title":"Liked it",
+            "image_url":"https://dncache-mauganscorp.netdna-ssl.com/thumbseg/1617/1617038-bigthumbnail.jpg",
+            "buttons":[
+              {
+                "type":"postback",
+                "title":"Liked it",
+                "payload":"Q_07"
+              }
+            ]
+          },
+          {
+            "title":"It was OK",
+            "image_url":"https://dncache-mauganscorp.netdna-ssl.com/thumbseg/1617/1617038-bigthumbnail.jpg",
+            "buttons":[
+              {
+                "type":"postback",
+                "title":"It was OK",
+                "payload":"Q_07"
+              }
+            ]
+          },
+          {
+            "title":"Didn't like it",
+            "image_url":"https://dncache-mauganscorp.netdna-ssl.com/thumbseg/1617/1617038-bigthumbnail.jpg",
+            "buttons":[
+              {
+                "type":"postback",
+                "title":"Didn't like it",
+                "payload":"Q_07"
+              }
+            ]
+          },
+          {
+            "title":"Hated it",
+            "image_url":"https://dncache-mauganscorp.netdna-ssl.com/thumbseg/1617/1617038-bigthumbnail.jpg",
+            "buttons":[
+              {
+                "type":"postback",
+                "title":"Hated it",
+                "payload":"Q_07"
+              }
+            ]
+          }
+        ]
+      }
     }
-  }});
+  })
 }
+
 
 function npsSurveyStart(bot, incoming) {
   bot.startConversation(incoming, function(err, convo) {
