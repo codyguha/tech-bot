@@ -698,7 +698,12 @@ function question006end(bot, incoming) {
   bot.reply(incoming, {text: "Oustanding work!"});
   setTimeout(function() {
     bot.reply(incoming, {text: "You made it to end.  Here is your last question..."});
-    question007(bot, incoming)
+    setTimeout(function() {
+      bot.reply(incoming, {text: "What did you think of this questionnaire?"});
+      setTimeout(function() {
+        question007(bot, incoming)
+      }, 2000)
+    }, 1000)
   }, 1000)
 }
 
