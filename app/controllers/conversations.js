@@ -5,7 +5,7 @@ module.exports = function (controller) {
     welcomeMessage(bot, message)
   })
   controller.hears(['Q5'], 'message_received', function (bot, message) {
-    question005test(bot, message)
+    testQ5(bot, message, 0)
   });
   // user said hello
   controller.hears(['hi', 'hello', 'Hi'], 'message_received', function (bot, message) {
@@ -536,6 +536,88 @@ function question005test(bot, incoming) {
   });
 
 }
+
+function stepper(bot, message, i){
+  i++
+  testQ5(bot, message, i)
+}
+
+function testQ5(bot, message, i){
+  var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
+                    {device_title:"Smart Watch2", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
+                    {device_title:"Smart Watch3", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"}
+                  ]
+  var doYouOwnit = function(err, convo) {
+    convo.say(questions[i].device_title);
+    convo.ask({
+        "attachment":{
+          "type":"image",
+          "payload":{
+            "url": questions[i].device_img
+          }
+        },
+        "quick_replies": [
+            {
+                "content_type": "text",
+                "title": "Own it!",
+                "payload": "PAYLOAD_"
+            },
+            {
+                "content_type": "text",
+                "title": "Don't own it",
+                "payload": "PAYLOAD_"
+            }
+        ]
+      }, function(response, convo) {
+      ownOrNot(response, convo);
+      convo.next();
+    });
+  };
+  var ownOrNot = function(response, convo) {
+    if (response.text === "Own it!"){
+      convo.ask({
+        text: "... and what about your usage?",
+        "quick_replies": [
+            {
+                "content_type": "text",
+                "title": "Use it",
+                "payload": "PAYLOAD_"
+            },
+            {
+                "content_type": "text",
+                "title": "Don't use it",
+                "payload": "PAYLOAD_"
+            }
+        ]
+      }, function(response, convo) {
+        stepper(bot, message, i)
+        convo.next();
+      });
+    } else {
+      convo.ask({
+        text: "Ok, you dont own it... but do you want to own it?",
+        "quick_replies": [
+            {
+                "content_type": "text",
+                "title": "Yes I want it!",
+                "payload": "PAYLOAD_"
+            },
+            {
+                "content_type": "text",
+                "title": "No I don't want it",
+                "payload": "PAYLOAD_"
+            }
+        ]
+      }, function(response, convo) {
+        stepper(bot, message, i)
+        convo.next();
+      });
+    }
+  };
+
+  bot.startConversation(message, doYouOwnit);
+}
+
 controller.hears(['pizzatime'], 'message_received', function(bot,message) {
   var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
                     {device_title:"Smart Watch2", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
