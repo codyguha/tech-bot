@@ -5,7 +5,7 @@ module.exports = function (controller) {
     welcomeMessage(bot, message)
   })
   // user said hello
-  controller.hears(['hi', 'hello', 'Hi'], 'message_received', function (bot, message) {
+  controller.hears(['start'], 'message_received', function (bot, message) {
     welcomeMessage(bot, message)
   });
   controller.hears(['NPS'], 'message_received', function (bot, message) {
@@ -81,7 +81,7 @@ function sayThanks(bot, incoming){
 }
 
 function question001(bot, incoming) {
-  var carousel_items = [
+  var carousel_items = shuffle([
     {
     "title": "Spend time outdoors",
     "image_url": "https://gentle-earth-80429.herokuapp.com/images/Question1/outdoors.jpg"
@@ -103,13 +103,14 @@ function question001(bot, incoming) {
     },{
     "title": "Cook",
     "image_url": "https://gentle-earth-80429.herokuapp.com/images/Question1/cook.jpg"
-    },{
-    "title": "Other Stuff",
-    "image_url": "https://gentle-earth-80429.herokuapp.com/images/Question1/other_stuff.png"
-    }]
+  }])
   var menu_items = []
   for (i = 0; i <= carousel_items.length; ++i) {
     if (i === carousel_items.length){
+      menu_items.push({
+      "title": "Other Stuff",
+      "image_url": "https://gentle-earth-80429.herokuapp.com/images/Question1/other_stuff.png"
+      });
       bot.reply(incoming, {
         "attachment":{
           "type":"template",
@@ -200,7 +201,7 @@ function question003start(bot, incoming) {
 }
 
 function question003(bot, incoming) {
-  var questions = [ "I love trying out new things",
+  var questions = shuffle([ "I love trying out new things",
                     "I like to do a lot of research before buying new things",
                     "New technology has gotten out of control",
                     "I won’t need a new phone for at least five years",
@@ -209,7 +210,7 @@ function question003(bot, incoming) {
                     "I know more about technology than the people covering the help phonelines",
                     "My friends and family tell me I’m addicted to my tech devices",
                     "I don’t get all the excitement people have about new technology",
-                    "I’ve got so many ideas for building new phone apps" ]
+                    "I’ve got so many ideas for building new phone apps" ])
   bot.startConversation(incoming, function(err, convo) {
     for (i = 0; i < questions.length; ++i) {
       if (i === (questions.length-1)) {
@@ -321,7 +322,7 @@ function question004start(bot, incoming) {
 }
 
 function question004(bot, incoming) {
-  var questions = [ {text: "I would rather read a...", option1: "Paperback Book", option2: "eBook"},
+  var questions = shuffle([ {text: "I would rather read a...", option1: "Paperback Book", option2: "eBook"},
                     {text: "I would rather keep a diary...", option1: "In a notebook", option2: "On a computer"},
                     {text: "I would rather...", option1: "Watch TV", option2: "Watch YouTube or Vimeo"},
                     {text: "I would rather read...", option1: "A paper newspaper", option2: "A digital newspaper"},
@@ -330,7 +331,7 @@ function question004(bot, incoming) {
                     {text: "I would rather...", option1: "Write a letter to a friend", option2: "Send an email to a friend"},
                     {text: "I would rather...", option1: "Telephone a friend", option2: "Send a text message to a friend"},
                     {text: "I would rather...", option1: "Go to the bank", option2: "Do my banking online"},
-                  ]
+                  ])
   bot.startConversation(incoming, function(err, convo) {
     for (i = 0; i < questions.length; ++i) {
       if (i === (questions.length-1)) {
@@ -508,12 +509,12 @@ function question006start(bot, incoming) {
     setTimeout(function() {
       bot.reply(incoming, {text: "Here we go..."});
       question006(bot, incoming)
-    }, 1000)
+    }, 4000)
   }, 1000)
 }
 
 function question006(bot, incoming) {
-  var questions = [ "Photoshop",
+  var questions = shuffle([ "Photoshop",
                     "Garage band",
                     "Snap Chat",
                     "Excel",
@@ -521,7 +522,7 @@ function question006(bot, incoming) {
                     "Google Go",
                     "HTML",
                     "Java"
-                  ]
+                  ])
   bot.startConversation(incoming, function(err, convo) {
     for (i = 0; i < questions.length; ++i) {
       if (i === (questions.length-1)) {
@@ -838,4 +839,23 @@ function activity(bot, incoming){
   }});
 }
 
+}
+function shuffle(array) {
+    let counter = array.length;
+
+    // While there are elements in the array
+    while (counter > 0) {
+        // Pick a random index
+        let index = Math.floor(Math.random() * counter);
+
+        // Decrease counter by 1
+        counter--;
+
+        // And swap the last element with it
+        let temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+    }
+
+    return array;
 }
