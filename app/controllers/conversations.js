@@ -46,7 +46,7 @@ module.exports = function (controller) {
     } else if (incoming.payload === "Q_04") {
       question004start(bot, incoming)
     } else if (incoming.payload === "Q_05") {
-      question005(bot, incoming, 0)
+      question005(bot, incoming)
     } else if (incoming.payload === "Q_07") {
       sayThanks(bot, incoming)
     }
@@ -537,100 +537,95 @@ function question004end(bot, incoming) {
   }, 1000)
 }
 
-function stepper(bot, message, i){
-  if (i === 2) {
-    question006start(bot, message)
-  } else if (i === 0) {
-    i++
-    question005(bot, message, i)
-  } else {
-    i++
-    question005(bot, message, i)
-  }
-}
-
-function question005(bot, message, i){
-  var questions = [ {device_title:"Smart Watch", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/smart_watch.jpg"},
+function question005(bot, message){
+  var questions = shuffle([ {device_title:"Smart Watch", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/smart_watch.jpg"},
                     {device_title:"Virtual Reality Headset", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/vr_headset.jpg"},
-                    {device_title:"Smart TV - connected to the internet", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/smart_tv.jpg"},
                     {device_title:"Landline Telephone", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/telephone_landline.jpg"},
                     {device_title:"DVD Player", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/dvd_player.jpg"},
                     {device_title:"Record Player", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/record_player.jpg"},
-                    {device_title:"Fitness device for your wrist", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/fitness_tracker.jpg"},
-                    {device_title:"Smart home device", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/smart_home_device.jpg"},
-                    {device_title:"Drone", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/drone.jpg"},
-                    {device_title:"Voice Controlled Personal Assistant", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/alexa.jpg"}
-                  ]
-  var doYouOwnit = function(err, convo) {
-    convo.say({"attachment":{
-      "type":"image",
-      "payload":{
-        "url": questions[i].device_img
-      }
-    }});
-    convo.ask({
-        "text": questions[i].device_title,
-        "quick_replies": [
-            {
-                "content_type": "text",
-                "title": "Own it!",
-                "payload": "PAYLOAD_"
-            },
-            {
-                "content_type": "text",
-                "title": "Don't own it",
-                "payload": "PAYLOAD_"
-            }
-        ]
-      }, function(response, convo) {
-      ownOrNot(response, convo);
-      convo.next();
-    });
-  };
-  var ownOrNot = function(response, convo) {
-    if (response.text === "Own it!"){
-      convo.ask({
-        text: "... and what about your usage?",
-        "quick_replies": [
-            {
-                "content_type": "text",
-                "title": "Use it",
-                "payload": "PAYLOAD_"
-            },
-            {
-                "content_type": "text",
-                "title": "Don't use it",
-                "payload": "PAYLOAD_"
-            }
-        ]
-      }, function(response, convo) {
-        stepper(bot, message, i)
-        convo.next();
-      });
+                  ])
+  function stepper(bot, message, i){
+    if (i === 4) {
+      question006start(bot, message)
     } else {
+      i++
+      question005question(bot, message, i)
+    }
+  }
+  function question005question(bot, message, i){
+    var doYouOwnit = function(err, convo) {
+      convo.say({"attachment":{
+        "type":"image",
+        "payload":{
+          "url": questions[i].device_img
+        }
+      }});
       convo.ask({
-        text: "Ok, you dont own it... but do you want to own it?",
-        "quick_replies": [
-            {
-                "content_type": "text",
-                "title": "Yes I want it!",
-                "payload": "PAYLOAD_"
-            },
-            {
-                "content_type": "text",
-                "title": "No I don't want it",
-                "payload": "PAYLOAD_"
-            }
-        ]
-      }, function(response, convo) {
-        stepper(bot, message, i)
+          "text": questions[i].device_title,
+          "quick_replies": [
+              {
+                  "content_type": "text",
+                  "title": "Own it!",
+                  "payload": "PAYLOAD_"
+              },
+              {
+                  "content_type": "text",
+                  "title": "Don't own it",
+                  "payload": "PAYLOAD_"
+              }
+          ]
+        }, function(response, convo) {
+        ownOrNot(response, convo);
         convo.next();
       });
-    }
-  };
+    };
+    var ownOrNot = function(response, convo) {
+      if (response.text === "Own it!"){
+        convo.ask({
+          text: "... and what about your usage?",
+          "quick_replies": [
+              {
+                  "content_type": "text",
+                  "title": "Use it",
+                  "payload": "PAYLOAD_"
+              },
+              {
+                  "content_type": "text",
+                  "title": "Don't use it",
+                  "payload": "PAYLOAD_"
+              }
+          ]
+        }, function(response, convo) {
+          stepper(bot, message, i)
+          convo.next();
+        });
+      } else {
+        convo.ask({
+          text: "Ok, you dont own it... but do you want to own it?",
+          "quick_replies": [
+              {
+                  "content_type": "text",
+                  "title": "Yes I want it!",
+                  "payload": "PAYLOAD_"
+              },
+              {
+                  "content_type": "text",
+                  "title": "No I don't want it",
+                  "payload": "PAYLOAD_"
+              }
+          ]
+        }, function(response, convo) {
+          stepper(bot, message, i)
+          convo.next();
+        });
+      }
+    };
 
-  bot.startConversation(message, doYouOwnit);
+    bot.startConversation(message, doYouOwnit);
+  }
+  question005question(bot, message, 0);
 }
+
 
 function question006start(bot, incoming) {
   bot.reply(incoming, {text: "Nice job on the gadgets.  We are now at the second to last question."});
