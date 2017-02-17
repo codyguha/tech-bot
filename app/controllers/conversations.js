@@ -451,12 +451,12 @@ function question004start(bot, incoming) {
 function question004(bot, incoming) {
   var questions = shuffle([ {text: "I would rather read a...", option1: "Paperback Book", option2: "eBook"},
                     {text: "I would rather keep a diary...", option1: "In a notebook", option2: "On a computer"},
-                    {text: "I would rather...", option1: "Watch TV", option2: "Watch YouTube or Vimeo"},
+                    {text: "I would ratherwatch...", option1: "TV", option2: "YouTube or Vimeo"},
                     {text: "I would rather read...", option1: "A paper newspaper", option2: "A digital newspaper"},
-                    {text: "I would rather create a poster...", option1: "With paper and scissors", option2: "Digitally"},
+                    {text: "I would rather create a poster with...", option1: "Paper and scissors", option2: "Digitally"},
                     {text: "I would rather play a...", option1: "Board game", option2: "Computer game"},
-                    {text: "I would rather...", option1: "Write a letter to a friend", option2: "Send an email to a friend"},
-                    {text: "I would rather...", option1: "Telephone a friend", option2: "Send a text message to a friend"},
+                    {text: "I would rather write a letter to a friend...", option1: "Paper and Pen", option2: "Email"},
+                    {text: "I would rather contact a friend with a...", option1: "Telephone call", option2: "Text message"},
                     {text: "I would rather...", option1: "Go to the bank", option2: "Do my banking online"},
                   ])
   bot.startConversation(incoming, function(err, convo) {
@@ -538,7 +538,7 @@ function question004end(bot, incoming) {
 }
 
 function stepper(bot, message, i){
-  if (i === 9) {
+  if (i === 2) {
     question006start(bot, message)
   } else {
     i++
@@ -546,7 +546,7 @@ function stepper(bot, message, i){
   }
 }
 
-function question005(bot, message, i){
+function question005(bot, message, i, text, image){
   var questions = [ {device_title:"Smart Watch", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/smart_watch.jpg"},
                     {device_title:"Virtual Reality Headset", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/vr_headset.jpg"},
                     {device_title:"Smart TV - connected to the internet", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/smart_tv.jpg"},
