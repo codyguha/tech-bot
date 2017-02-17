@@ -541,7 +541,7 @@ controller.hears(['pizzatime'], 'message_received', function(bot,message) {
                     {device_title:"Smart Watch2", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
                     {device_title:"Smart Watch3", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"}
                   ]
-                  
+
     var doYouOwnit = function(err, convo) {
       convo.say(questions[i].device_title);
       convo.ask({
@@ -564,7 +564,7 @@ controller.hears(['pizzatime'], 'message_received', function(bot,message) {
               }
           ]
         }, function(response, convo) {
-        ownOrNOt(response, convo);
+        ownOrNot(response, convo);
         convo.next();
       });
     };
