@@ -540,13 +540,16 @@ function question004end(bot, incoming) {
 function stepper(bot, message, i){
   if (i === 2) {
     question006start(bot, message)
+  } else if (i === 0) {
+    i++
+    question005(bot, message, i)
   } else {
     i++
     question005(bot, message, i)
   }
 }
 
-function question005(bot, message, i, text, image){
+function question005(bot, message, i){
   var questions = [ {device_title:"Smart Watch", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/smart_watch.jpg"},
                     {device_title:"Virtual Reality Headset", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/vr_headset.jpg"},
                     {device_title:"Smart TV - connected to the internet", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/smart_tv.jpg"},
@@ -559,14 +562,14 @@ function question005(bot, message, i, text, image){
                     {device_title:"Voice Controlled Personal Assistant", device_img: "https://gentle-earth-80429.herokuapp.com/images/Question5/alexa.jpg"}
                   ]
   var doYouOwnit = function(err, convo) {
-    convo.say(questions[i].device_title);
+    convo.say("attachment":{
+      "type":"image",
+      "payload":{
+        "url": questions[i].device_img
+      }
+    })
     convo.ask({
-        "attachment":{
-          "type":"image",
-          "payload":{
-            "url": questions[i].device_img
-          }
-        },
+        "text": questions[i].device_title;,
         "quick_replies": [
             {
                 "content_type": "text",
