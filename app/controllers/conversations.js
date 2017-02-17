@@ -530,28 +530,68 @@ function question005test(bot, incoming) {
               }
           ]
         },function(response,convo) {
-            convo.ask({
-              text: "... and what about your usage?",
-              "quick_replies": [
-                  {
-                      "content_type": "text",
-                      "title": "Use it",
-                      "payload": "PAYLOAD_"
-                  },
-                  {
-                      "content_type": "text",
-                      "title": "Don't use it",
-                      "payload": "PAYLOAD_"
-                  }
-              ]
-            }, function(response2, convo) {
-              convo.next()
-            });
+
       });
     }
   });
 
 }
+controller.hears(['pizzatime'], 'message_received', function(bot,message) {
+  var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
+                    {device_title:"Smart Watch2", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
+                    {device_title:"Smart Watch3", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"}
+                  ]
+    var doYouOwnit = function(err, convo) {
+      convo.ask({
+          "attachment":{
+            "type":"image",
+            "payload":{
+              "url": questions[0].device_img
+            }
+          },
+          "quick_replies": [
+              {
+                  "content_type": "text",
+                  "title": "Own it!",
+                  "payload": "PAYLOAD_"
+              },
+              {
+                  "content_type": "text",
+                  "title": "Don't own it",
+                  "payload": "PAYLOAD_"
+              }
+          ]
+        }, function(response, convo) {
+        convo.say('Awesome.');
+        doYouWantit(response, convo);
+        convo.next();
+      });
+    };
+    var doYouWantit = function(response, convo) {
+      if (response.text === "Own it!"){
+        convo.ask('What size do you want?', function(response, convo) {
+          convo.say('Ok.')
+          askWhereDeliver(response, convo);
+          convo.next();
+        });
+      } else {
+        convo.ask('What size doNT you want?', function(response, convo) {
+          convo.say('Ok.')
+          askWhereDeliver(response, convo);
+          convo.next();
+        });
+      }
+    };
+    var askWhereDeliver = function(response, convo) {
+      convo.ask('So where do you want it delivered?', function(response, convo) {
+        convo.say('Ok! Good bye.');
+        convo.next();
+      });
+    };
+
+    bot.startConversation(message, doYouOwnit);
+});
+
 function segmentation(bot, incoming){
   bot.reply(incoming, {"attachment":{
     "type":"template",
