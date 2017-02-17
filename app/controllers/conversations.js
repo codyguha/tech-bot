@@ -155,7 +155,7 @@ function question002(bot, incoming) {
             "attachment":{
               "type":"image",
               "payload":{
-                "url": "https://gentle-earth-80429.herokuapp.com/images/supporting_emojiis/laughing.png"
+                "url": "https://gentle-earth-80429.herokuapp.com/images/supporting_emojis/laughing.png"
               }
             }
           });
@@ -411,7 +411,7 @@ function question003end(bot, incoming) {
           "attachment":{
             "type":"image",
             "payload":{
-              "url": "https://gentle-earth-80429.herokuapp.com/images/supporting_emojiis/hangloose.png"
+              "url": "https://gentle-earth-80429.herokuapp.com/images/supporting_emojis/hangloose.png"
             }
           }
         });
