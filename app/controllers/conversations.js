@@ -530,6 +530,7 @@ function question005test(bot, incoming) {
               }
           ]
         },function(response,convo) {
+          convo.next()
           if (response.text === "Own it!") {
             convo.say('Cool, you said: ' + response.text);
             convo.ask({
