@@ -429,123 +429,27 @@ function question004end(bot, incoming) {
     });
   }, 1000)
 }
-//
-// function question005(bot, incoming) {
-//   var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
-//                     {device_title:"Smart Watch2", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
-//                     {device_title:"Smart Watch3", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"}
-//                   ]
-//   bot.startConversation(incoming, function(err, convo) {
-//     for (i = 0; i < questions.length; ++i) {
-//         convo.say(questions[i].device_title)
-//         convo.ask({
-//             "attachment":{
-//               "type":"image",
-//               "payload":{
-//                 "url": questions[0].device_img
-//               }
-//             },
-//             "quick_replies": [
-//                 {
-//                     "content_type": "text",
-//                     "title": "Own it!",
-//                     "payload": "PAYLOAD_"
-//                 },
-//                 {
-//                     "content_type": "text",
-//                     "title": "Don't own it",
-//                     "payload": "PAYLOAD_"
-//                 }
-//             ]
-//           }, function(response, convo) {
-//               if (response.text === "Own it!") {
-                // convo.ask({
-                //   text: "... and what about your usage?",
-                //   "quick_replies": [
-                //       {
-                //           "content_type": "text",
-                //           "title": "Use it",
-                //           "payload": "PAYLOAD_"
-                //       },
-                //       {
-                //           "content_type": "text",
-                //           "title": "Don't use it",
-                //           "payload": "PAYLOAD_"
-                //       }
-                //   ]
-                // }, function(response, convo) {
-//                   convo.next()
-//                 });
-//                 convo.next()
-//               } else {
-                // convo.ask({
-                //   text: "Ok, you dont own it... but do you want to own it?",
-                //   "quick_replies": [
-                //       {
-                //           "content_type": "text",
-                //           "title": "Yes I want it!",
-                //           "payload": "PAYLOAD_"
-                //       },
-                //       {
-                //           "content_type": "text",
-                //           "title": "No I don't want it",
-                //           "payload": "PAYLOAD_"
-                //       }
-                //   ]
-                // }, function(response, convo) {
-//                   convo.next()
-//                 });
-//               }
-//           });
-//       }
-//     }
-//   });
-// }
-
-function question005test(bot, incoming) {
-  var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
-                    {device_title:"Smart Watch2", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
-                    {device_title:"Smart Watch3", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"}
-                  ]
-  bot.startConversation(incoming, function(err, convo) {
-    for (i = 0; i < questions.length; ++i) {
-      convo.say(questions[i].device_title)
-      convo.ask({
-          "attachment":{
-            "type":"image",
-            "payload":{
-              "url": questions[0].device_img
-            }
-          },
-          "quick_replies": [
-              {
-                  "content_type": "text",
-                  "title": "Own it!",
-                  "payload": "PAYLOAD_"
-              },
-              {
-                  "content_type": "text",
-                  "title": "Don't own it",
-                  "payload": "PAYLOAD_"
-              }
-          ]
-        },function(response,convo) {
-
-      });
-    }
-  });
-
-}
 
 function stepper(bot, message, i){
-  i++
-  testQ5(bot, message, i)
+  if (i <= 9) {
+    i++
+    testQ5(bot, message, i)
+  } else {
+    console.log("DONE!")
+  }
 }
 
 function testQ5(bot, message, i){
   var questions = [ {device_title:"Smart Watch", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
-                    {device_title:"Smart Watch2", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"},
-                    {device_title:"Smart Watch3", device_img: "http://imagizer.imageshack.us/1240x826f/922/httanx.jpg"}
+                    {device_title:"Virtual Reality Headset", device_img: "http://imagizer.imageshack.us/1190x595f/923/S1Y30r.png"},
+                    {device_title:"Smart TV - connected to the internet", device_img: "http://imagizer.imageshack.us/1500x1008f/922/dXxnrw.jpg"},
+                    {device_title:"Landline Telephone", device_img: "http://imagizer.imageshack.us/1500x1200f/923/17xZOd.jpg"},
+                    {device_title:"DVD Player", device_img: "http://imagizer.imageshack.us/400x400f/922/3cQrHt.jpg"},
+                    {device_title:"Record Player", device_img: "http://imagizer.imageshack.us/1200x750f/923/yMyvY0.jpg"},
+                    {device_title:"Fitness device for your wrist", device_img: "http://imagizer.imageshack.us/1130x753f/923/Wf3H23.jpg"},
+                    {device_title:"Smart home device", device_img: "http://imagizer.imageshack.us/673x399f/922/Bqdn4R.jpg"},
+                    {device_title:"Drone", device_img: "http://imagizer.imageshack.us/920x557f/923/w8eWhH.jpg"},
+                    {device_title:"Voice Controlled Personal Assistant", device_img: "http://imagizer.imageshack.us/930x465f/924/Nvjg4y.jpg"}
                   ]
   var doYouOwnit = function(err, convo) {
     convo.say(questions[i].device_title);
