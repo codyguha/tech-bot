@@ -543,7 +543,7 @@ controller.hears(['pizzatime'], 'message_received', function(bot,message) {
                   ]
 
     var doYouOwnit = function(err, convo) {
-      convo.say(questions[i].device_title);
+      convo.say(questions[0].device_title);
       convo.ask({
           "attachment":{
             "type":"image",
