@@ -569,7 +569,7 @@ function question005(bot, message, i){
       }
     }});
     convo.ask({
-        "text": questions[i].device_title;,
+        "text": questions[i].device_title,
         "quick_replies": [
             {
                 "content_type": "text",
