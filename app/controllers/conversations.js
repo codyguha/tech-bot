@@ -3,7 +3,8 @@ module.exports = function (controller) {
   // this is triggered when a user clicks the send-to-messenger plugin
   controller.on('facebook_optin', function (bot, message) {
     // getRefPrarams(bot, message)
-    console.log("oooooo a referral from somewhere>>>>>>>>>>>>>>>" + message.toString())
+    var str = JSON.stringify(message, null, 4);
+    console.log("oooooo a referral from somewhere>>>>>>>>>>>>>>>" + str)
     // welcomeMessage(bot, message)
   })
   controller.on('facebook_referral', function(bot, message) {
