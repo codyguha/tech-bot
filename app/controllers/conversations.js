@@ -2,21 +2,20 @@
 module.exports = function (controller) {
   // this is triggered when a user clicks the send-to-messenger plugin
   controller.on('facebook_optin', function (bot, message) {
+    var id = message.user
     if (message.ref) {
       var ref = message.ref
       var ref_values = ref.split(",")
       var fedResId = ref_values[0].substring(ref_values[0].indexOf("=") + 1)
       var pId = ref_values[1].substring(ref_values[1].indexOf("=") + 1)
-      bot.reply(message, {text: "oooooo a referral from somewhere :)"});
-      setTimeout(function() {
-        bot.reply(message, {text: "your fedResponse Id is: " + fedResId});
-        setTimeout(function() {
-          bot.reply(message, {text: "your P Id is: " + pId});
-          setTimeout(function() {
-            bot.reply(message, {text: "and finally, here is that magic link back from whence you came: http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+fedResId+"&PID="+pId});
-          }, 2000)
-        }, 2000)
-      }, 2000)
+      controller.storage.users.get(id, function (err, user) {
+        if (err) {
+          console.log(err)
+        } else if (!user) {
+          controller.storage.users.save({id: id, fedResponseId: fedResId, pId: pId})
+        }
+        referralMsg(bot, message, fedResId, pId)
+      })
     } else {
       welcomeMessage(bot, message)
     }
@@ -93,7 +92,7 @@ function referralMsg(bot, incoming, frid, pid){
     setTimeout(function() {
       bot.reply(incoming, {text: "your P Id is: " + pid});
       setTimeout(function() {
-        bot.reply(incoming, {text: "and finally, here is that magic link back from whence you came: http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+fedResId+"&PID="+pId});
+        bot.reply(incoming, {text: "and finally, here is that magic link back from whence you came: http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+frid+"&PID="+pid});
       }, 2000)
     }, 2000)
   }, 2000)
