@@ -9,10 +9,13 @@ module.exports = function (controller) {
   controller.on('facebook_referral', function(bot, message) {
     console.log('the referral code is ' + message.referral.ref)
     var ref = message.referral.ref
-    var result = JSON.parse('{"' + decodeURI(ref).replace(/"/g, '\\"').replace(/=/g,'":"') + '"}')
-    console.log('the referral object is ' + result)
-
+    var ref_values = ref.split(",");
+    var pId = ref_values[1]
+    var fedResId = ref_values[0]
+    console.log('the referral pId is ' + pId)
+    console.log('the referral fedResId is ' + fedResId)
   });
+  
   // user said hello
   controller.hears(['start'], 'message_received', function (bot, message) {
     welcomeMessage(bot, message)
