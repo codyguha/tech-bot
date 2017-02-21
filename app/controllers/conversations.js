@@ -1,11 +1,11 @@
 
 module.exports = function (controller) {
   // this is triggered when a user clicks the send-to-messenger plugin
-  // controller.on('facebook_optin', function (bot, message) {
-  //   // getRefPrarams(bot, message)
-  //   console.log(message)
-  //   // welcomeMessage(bot, message)
-  // })
+  controller.on('facebook_optin', function (bot, message) {
+    // getRefPrarams(bot, message)
+    console.log("oooooo a referral from somewhere>>>>>>>>>>>>>>>" + message.postback.referral.ref)
+    // welcomeMessage(bot, message)
+  })
   controller.on('facebook_referral', function(bot, message) {
     console.log('the referral code is ' + message.referral.ref)
     var ref = message.referral.ref
@@ -18,7 +18,7 @@ module.exports = function (controller) {
       setTimeout(function() {
         bot.reply(message, {text: "your P Id is: " + pId});
         setTimeout(function() {
-          bot.reply(message, {text: "here is that magic link back from once you came: http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+fedResId+"&PID="+pId});
+          bot.reply(message, {text: "and finally, here is that magic link back from once you came: http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+fedResId+"&PID="+pId});
         }, 4000)
       }, 2000)
     }, 2000)
