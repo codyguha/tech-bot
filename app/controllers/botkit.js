@@ -67,12 +67,23 @@ var handler = function (obj) {
         // When a user clicks on "Send to Messenger"
         else if (facebook_message.optin ||
                 (facebook_message.postback && facebook_message.postback.payload === 'optin')) {
-          message = {
-            optin: facebook_message.optin,
-            user: facebook_message.sender.id,
-            channel: facebook_message.sender.id,
-            timestamp: facebook_message.timestamp
-          }
+                  if (facebook_message.postback.referral) {
+                    message = {
+                      optin: facebook_message.optin,
+                      user: facebook_message.sender.id,
+                      channel: facebook_message.sender.id,
+                      timestamp: facebook_message.timestamp,
+                      ref: facebook_message.postback.referral.ref
+                    }
+                  } else {
+                    message = {
+                      optin: facebook_message.optin,
+                      user: facebook_message.sender.id,
+                      channel: facebook_message.sender.id,
+                      timestamp: facebook_message.timestamp
+                    }
+                  }
+
 
             // save if user comes from "Send to Messenger"
           create_user_if_new(facebook_message.sender.id, facebook_message.timestamp)
