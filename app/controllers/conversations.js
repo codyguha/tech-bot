@@ -12,10 +12,10 @@ module.exports = function (controller) {
     var ref_values = ref.split(",")
     var fedResId = ref_values[0].substring(ref_values[0].indexOf("=") + 1)
     var pId = ref_values[1].substring(ref_values[1].indexOf("=") + 1)
-    bot.reply(incoming, {text: "ooo a facebook referral :)"});
-    bot.reply(incoming, {text: "your fedResponse Id is: " + fedResId});
-    bot.reply(incoming, {text: "your P Id is: " + pId});
-    bot.reply(incoming, {text: "here is that magic link back http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+fedResId+"&PID="+pId});
+    bot.reply(message, {text: "ooo a facebook referral :)"});
+    bot.reply(message, {text: "your fedResponse Id is: " + fedResId});
+    bot.reply(message, {text: "your P Id is: " + pId});
+    bot.reply(message, {text: "here is that magic link back http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+fedResId+"&PID="+pId});
   });
 
   // user said hello
