@@ -112,8 +112,15 @@ var handler = function (obj) {
           }
 
           controller.trigger('message_delivered', [bot, message])
-        }
-        else {
+        } else if (facebook_message.referral) {
+                          var message = {
+                              user: facebook_message.sender.id,
+                              channel: facebook_message.sender.id,
+                              timestamp: facebook_message.timestamp,
+                              referral: facebook_message.referral,
+                          };
+          controller.trigger('facebook_referral', [bot, message]);
+        } else {
           controller.log('Got an unexpected message from Facebook: ', facebook_message)
         }
       }
