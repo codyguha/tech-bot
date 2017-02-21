@@ -88,11 +88,11 @@ module.exports = function (controller) {
 function referralMsg(bot, incoming, frid, pid){
   bot.reply(incoming, {text: "oooooo a referral from somewhere :)"});
   setTimeout(function() {
-    bot.reply(incoming, {text: "your fedResponse Id is: " + frid});
+    bot.reply(incoming, {text: "your FRID is: " + frid});
     setTimeout(function() {
-      bot.reply(incoming, {text: "your P Id is: " + pid});
+      bot.reply(incoming, {text: "and your PID is: " + pid});
       setTimeout(function() {
-        bot.reply(incoming, {text: "and finally, here is that magic link back from whence you came: http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+frid+"&PID="+pid});
+        bot.reply(incoming, {text: "and finally, here is that magic link with the FRID and PID appended: http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+frid+"&PID="+pid});
       }, 2000)
     }, 2000)
   }, 2000)
