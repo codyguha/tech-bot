@@ -2,13 +2,27 @@
 module.exports = function (controller) {
   // this is triggered when a user clicks the send-to-messenger plugin
   controller.on('facebook_optin', function (bot, message) {
-    // getRefPrarams(bot, message)
-    var str = JSON.stringify(message, null, 4);
-    console.log("oooooo a referral from somewhere>>>>>>>>>>>>>>>" + str)
-    // welcomeMessage(bot, message)
+    if (message.ref) {
+      var ref = message.ref
+      var ref_values = ref.split(",")
+      var fedResId = ref_values[0].substring(ref_values[0].indexOf("=") + 1)
+      var pId = ref_values[1].substring(ref_values[1].indexOf("=") + 1)
+      bot.reply(message, {text: "oooooo a referral from somewhere :)"});
+      setTimeout(function() {
+        bot.reply(message, {text: "your fedResponse Id is: " + fedResId});
+        setTimeout(function() {
+          bot.reply(message, {text: "your P Id is: " + pId});
+          setTimeout(function() {
+            bot.reply(message, {text: "and finally, here is that magic link back from whence you came: http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+fedResId+"&PID="+pId});
+          }, 2000)
+        }, 2000)
+      }, 2000)
+    } else {
+      welcomeMessage(bot, message)
+    }
   })
+
   controller.on('facebook_referral', function(bot, message) {
-    console.log('the referral code is ' + message.referral.ref)
     var ref = message.referral.ref
     var ref_values = ref.split(",")
     var fedResId = ref_values[0].substring(ref_values[0].indexOf("=") + 1)
@@ -19,8 +33,8 @@ module.exports = function (controller) {
       setTimeout(function() {
         bot.reply(message, {text: "your P Id is: " + pId});
         setTimeout(function() {
-          bot.reply(message, {text: "and finally, here is that magic link back from once you came: http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+fedResId+"&PID="+pId});
-        }, 4000)
+          bot.reply(message, {text: "and finally, here is that magic link back from whence you came: http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+fedResId+"&PID="+pId});
+        }, 2000)
       }, 2000)
     }, 2000)
   });
