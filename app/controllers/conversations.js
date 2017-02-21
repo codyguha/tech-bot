@@ -10,10 +10,12 @@ module.exports = function (controller) {
     console.log('the referral code is ' + message.referral.ref)
     var ref = message.referral.ref
     var ref_values = ref.split(",")
-    var pId = ref_values[1].substring(ref_values[1].indexOf("=") + 1)
     var fedResId = ref_values[0].substring(ref_values[0].indexOf("=") + 1)
-    console.log('the referral pId is ' + pId)
-    console.log('the referral fedResId is ' + fedResId)
+    var pId = ref_values[1].substring(ref_values[1].indexOf("=") + 1)
+    bot.reply(incoming, {text: "ooo a facebook referral :)"});
+    bot.reply(incoming, {text: "your fedResponse Id is: " + fedResId});
+    bot.reply(incoming, {text: "your P Id is: " + pId});
+    bot.reply(incoming, {text: "here is that magic link back http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+fedResId+"&PID="+pId});
   });
 
   // user said hello
