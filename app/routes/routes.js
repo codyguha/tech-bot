@@ -26,6 +26,11 @@ module.exports = function (app) {
       res.render('activities', {id: req.params.id, list: randomorder});
   });
 
+  app.get('/email/:id',
+    function(req, res){
+      res.render('email', {id: req.params.id});
+  });
+
   app.get('/unlimited-funding/:id',
     function(req, res){
       activitylist =  ["Build computer games","Tinker with my tools in the garage","Hike a different national park every week","Go on a never-ending winery tour","Start my own business","Go into politics","Volunteer for charities","Stay in bed and read all day","Watch TV and eat junk food"]
