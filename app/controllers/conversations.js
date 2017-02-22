@@ -65,8 +65,23 @@ module.exports = function (controller) {
       bot.reply(message, "You can share with me your views and opinions about technology!");
   });
 
-  controller.hears(['help'], 'message_received', function(bot, message) {
-      bot.reply(message, "type 'hi'");
+  controller.hears(['help'], 'message_received', function(bot, incoming) {
+    bot.reply(incoming, {"attachment":{
+      "type":"template",
+      "payload":{
+        "template_type":"button",
+        "text":'Contact support@angusreidforum.com for help or suggestions',
+        "buttons":[
+          {
+            "type":"web_url",
+            "url":"https://gentle-earth-80429.herokuapp.com/email/" + incoming.user,
+            "title":"Email now!",
+            "messenger_extensions": true,
+            "webview_height_ratio": "tall"
+          }
+        ]
+      }
+    }});
   });
 
   controller.on('facebook_postback', function(bot, incoming) {
