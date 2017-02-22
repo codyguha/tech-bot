@@ -14,8 +14,7 @@ module.exports = function (controller) {
         } else if (!user) {
           controller.storage.users.save({id: id, fedResponseId: fedResId, pId: pId})
         }
-        // referralMsg(bot, message, fedResId, pId)
-        welcomeMessage(bot, message)
+        referralMsg(bot, message, fedResId, pId)
       })
     } else {
       welcomeMessage(bot, message)
@@ -68,21 +67,6 @@ module.exports = function (controller) {
 
   controller.hears(['help'], 'message_received', function(bot, message) {
       bot.reply(message, "type 'hi'");
-      bot.reply(incoming, {
-        "attachment":{
-          "type":"template",
-          "payload":{
-            "template_type":"button",
-            "text": "Contact \"support@angusreidforum.com\" to get help",
-            "buttons":[
-              {
-                "type":"postback",
-                "title": "Email \"support@angusreidforum.com\"",
-                "payload": "email"
-              }
-            ]
-          }
-        }
   });
 
   controller.on('facebook_postback', function(bot, incoming) {
@@ -106,9 +90,9 @@ function referralMsg(bot, incoming, frid, pid){
   setTimeout(function() {
     bot.reply(incoming, {text: "your FRID is: " + frid});
     setTimeout(function() {
-      bot.reply(incoming, {text: "and your PID is: " + pid});
+      bot.reply(incoming, {text: "your PID is: " + pid});
       setTimeout(function() {
-        bot.reply(incoming, {text: "and finally, here is that magic link with the FRID and PID appended: http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+frid+"&PID="+pid});
+        bot.reply(incoming, {text: "and finally, here is that magic link with the values appended: http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+frid+"&PID="+pid});
       }, 2000)
     }, 2000)
   }, 2000)
