@@ -128,22 +128,14 @@ function sayThanks(bot, incoming){
   controller.storage.users.get(incoming.user, function (err, user) {
     var frid = user.fedResponseId;
     var pid = user.pId;
-  bot.reply(incoming, {"attachment":{
-      "type":"template",
-      "payload":{
-        "template_type":"button",
-        "text":'Thanks for taking the time to participate in this questionaire.  We appreciate your input.',
-        "buttons":[
-          {
-            "type":"web_url",
-            "url":"http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+frid+"&PID="+pid,
-            "title":"🎁 Claim your prize!",
-            "messenger_extensions": true,
-            "webview_height_ratio": "full"
-          }
-        ]
-      }
-    }});
+    bot.reply(incoming, {
+      text: "Thanks for taking the time to participate in this questionaire.  We appreciate your input."
+    });
+    setTimeout(function() {
+      bot.reply(incoming, {
+        text: "Follow this link http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+frid+"&PID="+pid+" to claim your prize! 🎁"
+      });
+    }, 1000)
   });
 }
 
