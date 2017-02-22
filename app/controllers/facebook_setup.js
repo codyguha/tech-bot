@@ -48,11 +48,11 @@ module.exports = function (controller) {
         'title': 'Restart',
         'payload': 'Restart'
       }
-      // ,{
-      //   'type': 'postback',
-      //   'title': 'NPS',
-      //   'payload': 'NPS'
-      // }
+      ,{
+        'type': 'postback',
+        'title': 'Help',
+        'payload': 'Help'
+      }
     ]
   }
 

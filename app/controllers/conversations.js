@@ -68,6 +68,21 @@ module.exports = function (controller) {
 
   controller.hears(['help'], 'message_received', function(bot, message) {
       bot.reply(message, "type 'hi'");
+      bot.reply(incoming, {
+        "attachment":{
+          "type":"template",
+          "payload":{
+            "template_type":"button",
+            "text": "Contact \"support@angusreidforum.com\" to get help",
+            "buttons":[
+              {
+                "type":"postback",
+                "title": "Email \"support@angusreidforum.com\"",
+                "payload": "email"
+              }
+            ]
+          }
+        }
   });
 
   controller.on('facebook_postback', function(bot, incoming) {
