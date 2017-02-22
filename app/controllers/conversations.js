@@ -75,9 +75,9 @@ module.exports = function (controller) {
           {
             "type":"web_url",
             "url":"https://gentle-earth-80429.herokuapp.com/email/" + incoming.user,
-            "title":"Email now!",
+            "title":"📧 Email now!",
             "messenger_extensions": true,
-            "webview_height_ratio": "tall"
+            "webview_height_ratio": "compact"
           }
         ]
       }
