@@ -1,3 +1,4 @@
+var moment = require('moment');
 
 module.exports = function (controller) {
   // this is triggered when a user clicks the send-to-messenger plugin
@@ -100,6 +101,7 @@ function referralMsg(bot, incoming, frid, pid){
 }
 
 function welcomeMessage(bot, incoming){
+  var timeInMs = Date.now();
   var id = incoming.user
   controller.storage.users.get(id, function (err, user) {
     if (err) {
@@ -107,6 +109,9 @@ function welcomeMessage(bot, incoming){
     }
     else if (!user) {
       controller.storage.users.save({id: id})
+    }
+    else {
+      user.start_time = timeInMs
     }
   })
   bot.reply(incoming, {text: "Awesome, thanks for coming along..."});
