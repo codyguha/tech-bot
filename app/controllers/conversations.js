@@ -14,7 +14,8 @@ module.exports = function (controller) {
         } else if (!user) {
           controller.storage.users.save({id: id, fedResponseId: fedResId, pId: pId})
         }
-        referralMsg(bot, message, fedResId, pId)
+        // referralMsg(bot, message, fedResId, pId)
+        welcomeMessage(bot, message)
       })
     } else {
       welcomeMessage(bot, message)
