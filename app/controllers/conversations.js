@@ -125,7 +125,7 @@ function welcomeMessage(bot, incoming){
 }
 
 function sayThanks(bot, incoming){
-  controller.storage.users.get(id, function (err, user) {
+  controller.storage.users.get(incoming.user, function (err, user) {
     var frid = user.fedResponseId;
     var pid = user.pId;
   bot.reply(incoming, {"attachment":{
