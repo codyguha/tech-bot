@@ -108,10 +108,11 @@ function welcomeMessage(bot, incoming){
       console.log(err)
     }
     else if (!user) {
-      controller.storage.users.save({id: id})
+      controller.storage.users.save({id: id, start_time: timeInMs})
     }
     else {
       user.start_time = timeInMs
+      controller.storage.users.save(user)
     }
   })
   bot.reply(incoming, {text: "Awesome, thanks for coming along..."});
