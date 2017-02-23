@@ -136,18 +136,31 @@ function sayThanks(bot, incoming){
     user.end_time = end_time
     total_time = end_time - user.start_time
     var min = (total_time/1000/60) << 0
-    var sec = (total_time/1000) % 60;
-    user.total_time = min + ':' + sec
+    var sec = (total_time/1000) % 60
+    user.total_time = min + ':' + Math.ceil(sec);
     controller.storage.users.save(user)
     var frid = user.fedResponseId;
     var pid = user.pId;
     bot.reply(incoming, {
-      text: "Thanks for taking the time to participate in this questionaire.  We appreciate your input."
+      text: "The messager part of this survey is finished – thanks!"
     });
     setTimeout(function() {
-      bot.reply(incoming, {
-        text: "Follow this link http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+frid+"&PID="+pid+" to claim your prize! 🎁"
-      });
+      bot.reply(incoming, {"attachment":{
+        "type":"template",
+        "payload":{
+          "template_type":"button",
+          "text":'Click DONE and you will go back to ARF where we have a few final questions you need to answer earn your survey points.',
+          "buttons":[
+            {
+              "type":"web_url",
+              "url":"http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+frid+"&PID="+pid,
+              "title":"Done",
+              "messenger_extensions": true,
+              "webview_height_ratio": "full"
+            }
+          ]
+        }
+      }});
     }, 1000)
   });
 }
@@ -287,186 +300,199 @@ function question003start(bot, incoming) {
 }
 
 function question003(bot, incoming) {
-  var questions = shuffle([ "I love trying out new things",
-                    "I like to do a lot of research before buying new things",
-                    "New technology has gotten out of control",
-                    "I won’t need a new phone for at least five years",
-                    "I’ve often got two or more tech devices open in front of me",
-                    "People always ask me for advice when they’re deciding what new tech to buy",
-                    "I know more about technology than the people covering the help phonelines",
-                    "My friends and family tell me I’m addicted to my tech devices",
-                    "I don’t get all the excitement people have about new technology",
-                    "I’ve got so many ideas for building new phone apps" ])
+  var questions = shuffle([
+                    {text:"I love trying out new things", payloads:["1","2","3","4","5"]},
+                    {text:"I like to do a lot of research before buying new things", payloads:["0","0","0","0","0"]},
+                    {text:"New technology has gotten out of control", payloads:["0","0","0","0","0"]},
+                    {text:"I won’t need a new phone for at least five years", payloads:["0","0","0","0","0"]},
+                    {text:"I’ve often got two or more tech devices open in front of me", payloads:["1","2","3","4","5"]},
+                    {text:"People always ask me for advice when they’re deciding what new tech to buy", payloads:["0","0","0","0","0"]},
+                    {text:"I know more about technology than the people covering the help phonelines", payloads:["1","2","3","4","5"]},
+                    {text:"My friends and family tell me I’m addicted to my tech devices", payloads:["1","2","3","4","5"]},
+                    {text:"I don’t get all the excitement people have about new technology", payloads:["0","0","0","0","0"]},
+                    {text:"I’ve got so many ideas for building new phone apps", payloads:["1","2","3","4","5"]}
+                  ])
   bot.startConversation(incoming, function(err, convo) {
+    var score = 0
     for (i = 0; i < questions.length; ++i) {
       if (i === (questions.length-1)) {
         convo.ask({
-          text: questions[i],
+          text: questions[i].text,
           quick_replies: [
               {
                   "content_type": "text",
                   "title": "Definitely me!",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[4],
               },
               {
                   "content_type": "text",
                   "title": "Sort of me",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[3],
               },
               {
                   "content_type": "text",
                   "title": "Not sure",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[2],
               },
               {
                   "content_type": "text",
                   "title": "Not really me",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[1],
               },
               {
                   "content_type": "text",
                   "title": "Not me at all!",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[0],
               }
           ]
         }, function(response, convo) {
           convo.stop()
+          score = score + +response.payload
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>FINAL SCORE: "+ score)
           question003end(bot, incoming)
         });
       } else if (i === 0) {
         convo.say('Here is our first of ten phrases')
         convo.ask({
-          text: questions[i],
+          text: questions[i].text,
           quick_replies: [
               {
                   "content_type": "text",
                   "title": "Definitely me!",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[4],
               },
               {
                   "content_type": "text",
                   "title": "Sort of me",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[3],
               },
               {
                   "content_type": "text",
                   "title": "Not sure",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[2],
               },
               {
                   "content_type": "text",
                   "title": "Not really me",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[1],
               },
               {
                   "content_type": "text",
                   "title": "Not me at all!",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[0],
               }
           ]
         }, function(response, convo) {
+            score = score + +response.payload
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SCORE: "+ score)
             convo.next();
         });
       } else if (i === 1) {
         convo.say('You got it.');
         convo.say('Next phrase...')
         convo.ask({
-          text: questions[i],
+          text: questions[i].text,
           quick_replies: [
               {
                   "content_type": "text",
                   "title": "Definitely me!",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[4],
               },
               {
                   "content_type": "text",
                   "title": "Sort of me",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[3],
               },
               {
                   "content_type": "text",
                   "title": "Not sure",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[2],
               },
               {
                   "content_type": "text",
                   "title": "Not really me",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[1],
               },
               {
                   "content_type": "text",
                   "title": "Not me at all!",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[0],
               }
           ]
         }, function(response, convo) {
+          score = score + +response.payload
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SCORE: "+ score)
             convo.next();
         });
       }  else if (i === 4) {
         convo.say('Keep going you are killing it!');
         convo.ask({
-          text: questions[i],
+          text: questions[i].text,
           quick_replies: [
               {
                   "content_type": "text",
                   "title": "Definitely me!",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[4],
               },
               {
                   "content_type": "text",
                   "title": "Sort of me",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[3],
               },
               {
                   "content_type": "text",
                   "title": "Not sure",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[2],
               },
               {
                   "content_type": "text",
                   "title": "Not really me",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[1],
               },
               {
                   "content_type": "text",
                   "title": "Not me at all!",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[0],
               }
           ]
         }, function(response, convo) {
+          score = score + +response.payload
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SCORE: "+ score)
             convo.next();
         });
       } else {
         convo.ask({
-          text: questions[i],
+          text: questions[i].text,
           quick_replies: [
               {
                   "content_type": "text",
                   "title": "Definitely me!",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[4],
               },
               {
                   "content_type": "text",
                   "title": "Sort of me",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[3],
               },
               {
                   "content_type": "text",
                   "title": "Not sure",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[2],
               },
               {
                   "content_type": "text",
                   "title": "Not really me",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[1],
               },
               {
                   "content_type": "text",
                   "title": "Not me at all!",
-                  "payload": "PAYLOAD_",
+                  "payload": questions[i].payloads[0],
               }
           ]
         }, function(response, convo) {
+          score = score + +response.payload
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SCORE: "+ score)
             convo.next();
         });
       }
