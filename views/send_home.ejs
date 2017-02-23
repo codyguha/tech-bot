@@ -44,7 +44,8 @@
 
 <script>
 $( document ).ready(function() {
-  $("#link").href(<%= url %>);
+  var myVar = <%- JSON.stringify(url) %>;
+  $("#link").href(myVar);
 });
 </script>
 </body>
