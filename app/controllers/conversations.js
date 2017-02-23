@@ -637,7 +637,7 @@ function question004(bot, incoming) {
             }
           }
         }, function(response, convo) {
-            score = score + +response.response.text
+            score = score + +response.text
             console.log("SCORE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: " + score)
             convo.next();
         });
