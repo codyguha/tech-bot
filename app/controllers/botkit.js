@@ -181,5 +181,4 @@ var endQuestion002 = function(id) {
 };
 
 exports.endQuestion002 = endQuestion002
-exports.end = end
 exports.handler = handler

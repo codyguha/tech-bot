@@ -1,5 +1,5 @@
 var facebook_handler = require('../controllers/botkit').handler
-var end = require('../controllers/botkit').end
+var end = require('../controllers/botkit').endQuestion002
 
 
 module.exports = function (app) {
@@ -39,7 +39,7 @@ module.exports = function (app) {
   });
   app.post('/unlimited-funding',function(req,res){
     var facebook_id = req.body.fb_id
-    endq2(facebook_id)
+    end(facebook_id)
   })
 
 
