@@ -40,8 +40,8 @@ module.exports = function (controller) {
     })
   });
 
-  controller.hears(['Q3'], 'message_received', function (bot, message) {
-    question003start(bot, message)
+  controller.hears(['Q4'], 'message_received', function (bot, message) {
+    question004(bot, message)
   });
 
   controller.hears(['Restart'], 'message_received', function(bot, incoming) {
@@ -591,18 +591,20 @@ function question004(bot, incoming) {
                 {
                   "type":"postback",
                   "title": questions[i].option1,
-                  "payload": "1"
+                  "payload": "0"
                 },
                 {
                   "type":"postback",
                   "title": questions[i].option2,
-                  "payload": "2"
+                  "payload": "1"
                 }
               ]
             }
           }
         }, function(response, convo) {
-          score = score + +response.payload
+          score = score + +response.text
+          console.log("PAYLOAD!" + response.payload)
+          console.log("TEXT!" + response.text)
           console.log("FINAL SCORE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: " + score)
           convo.stop()
           controller.storage.users.get(incoming.user, function (err, user) {
@@ -639,6 +641,8 @@ function question004(bot, incoming) {
           }
         }, function(response, convo) {
             score = score + +response.payload
+            console.log("PAYLOAD!" + response.payload)
+            console.log("TEXT!" + response.text)
             console.log("SCORE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: " + score)
             convo.next();
         });
