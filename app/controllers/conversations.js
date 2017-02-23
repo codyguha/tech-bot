@@ -87,7 +87,7 @@ module.exports = function (controller) {
         if (err) {
           console.log(err)
         }
-        else if (user.completed !== true) {
+        else if (user.status !== "completed") {
           sayThanks(bot, incoming)
         }
         else {
@@ -126,6 +126,7 @@ function welcomeMessage(bot, incoming){
     }
     else {
       user.start_time = timeInMs
+      user.status = "started"
       controller.storage.users.save(user)
     }
   })
@@ -152,7 +153,7 @@ function sayThanks(bot, incoming){
     var min = (total_time/1000/60) << 0
     var sec = (total_time/1000) % 60
     user.total_time = min + ':' + Math.ceil(sec);
-    user.completed = true
+    user.status = "finished"
     controller.storage.users.save(user)
     var frid = user.fedResponseId;
     var pid = user.pId;
@@ -638,7 +639,6 @@ function question004(bot, incoming) {
           }
         }, function(response, convo) {
             score = score + +response.text
-            console.log("SCORE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: " + score)
             convo.next();
         });
       }
@@ -836,16 +836,16 @@ function question006end(bot, incoming) {
       console.log(err)
     }
     else {
-      if (user.q3_final_score >= 20 && user.q4_final_score >= 12) {
+      if (user.q3_final_score >= 20 && user.q4_final_score >= 6) {
         user_segment = segments[0]
       }
-      else if (user.q3_final_score <= 19 && user.q4_final_score >= 12){
+      else if (user.q3_final_score <= 19 && user.q4_final_score >= 6){
         user_segment = segments[1]
       }
-      else if (user.q3_final_score >= 16 && user.q4_final_score <= 11){
+      else if (user.q3_final_score >= 16 && user.q4_final_score <= 5){
         user_segment = segments[2]
       }
-      else if (user.q3_final_score <= 15 && user.q4_final_score <= 11){
+      else if (user.q3_final_score <= 15 && user.q4_final_score <= 5){
         user_segment = segments[3]
       }
     }
