@@ -20,13 +20,14 @@ module.exports = function (app) {
   })
 
   app.get('/email/:id',
-    function(req, res){
+    function(req, res){s
       res.render('email', {id: req.params.id});
   });
 
-  app.get('/ARF/:url',
+  app.get('/ARF/:frids',
     function(req, res){
-      res.render('send_home', {url: req.params.url});
+      var url = "http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+req.params.frids
+      res.render('send_home', {url: url});
   });
 
   app.get('/unlimited-funding/:id',
