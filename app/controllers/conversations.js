@@ -161,7 +161,6 @@ function sayThanks(bot, incoming){
       text: "The messager part of this survey is finished – thanks!"
     });
     setTimeout(function() {
-
       bot.reply(incoming, {"attachment":{
         "type":"template",
         "payload":{
@@ -170,27 +169,10 @@ function sayThanks(bot, incoming){
           "buttons":[
             {
               "type":"web_url",
-              "url":"https://gentle-earth-80429.herokuapp.com/ARF/"+frid+"/"+pid,
-              "title":"Done",
+              "url":"https://gentle-earth-80429.herokuapp.com/ARF/http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+frid+"&PID="+pid,
+              "title":"DONE",
               "messenger_extensions": true,
               "webview_height_ratio": "full"
-            }
-          ]
-        }
-      }});
-
-      bot.reply(incoming, {"attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"button",
-          "text":'Contact support@angusreidforum.com for help or suggestions',
-          "buttons":[
-            {
-              "type":"web_url",
-              "url":"https://gentle-earth-80429.herokuapp.com/email/" + incoming.user,
-              "title":"📧 Email now!",
-              "messenger_extensions": true,
-              "webview_height_ratio": "compact"
             }
           ]
         }
