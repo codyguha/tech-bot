@@ -27,7 +27,8 @@ module.exports = function (app) {
   app.get('/ARF/:frids',
     function(req, res){
       var frids = req.params.frids
-      res.render('send_home', {frids: frids});
+      var url = "http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+frids
+      res.render('send_home', {url: url});
   });
 
   app.get('/unlimited-funding/:id',
