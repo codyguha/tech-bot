@@ -43,9 +43,9 @@
 <p>Back to <a id="link" href="">ARF</a></p>
 
 <script>
+var myVar = <%- JSON.stringify(url) %>;
 $( document ).ready(function() {
-  var myVar = <%- JSON.stringify(url) %>;
-  $("#link").href(myVar);
+  $("#link").attr("href", myVar);
 });
 </script>
 </body>
