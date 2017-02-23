@@ -591,12 +591,12 @@ function question004(bot, incoming) {
                 {
                   "type":"postback",
                   "title": questions[i].option1,
-                  "payload": "0"
+                  "payload": "1"
                 },
                 {
                   "type":"postback",
                   "title": questions[i].option2,
-                  "payload": "1"
+                  "payload": "2"
                 }
               ]
             }
@@ -627,12 +627,12 @@ function question004(bot, incoming) {
                 {
                   "type":"postback",
                   "title": questions[i].option1,
-                  "payload": "0"
+                  "payload": "1"
                 },
                 {
                   "type":"postback",
                   "title": questions[i].option2,
-                  "payload": "1"
+                  "payload": "2"
                 }
               ]
             }
@@ -837,16 +837,16 @@ function question006end(bot, incoming) {
       console.log(err)
     }
     else {
-      if (user.q3_final_score >= 20 && user.q4_final_score >= 6) {
+      if (user.q3_final_score >= 20 && user.q4_final_score >= 12) {
         user_segment = segments[0]
       }
-      else if (user.q3_final_score <= 19 && user.q4_final_score >= 6){
+      else if (user.q3_final_score <= 19 && user.q4_final_score >= 12){
         user_segment = segments[1]
       }
-      else if (user.q3_final_score >= 16 && user.q4_final_score <= 5){
+      else if (user.q3_final_score >= 16 && user.q4_final_score <= 11){
         user_segment = segments[2]
       }
-      else if (user.q3_final_score <= 15 && user.q4_final_score <= 5){
+      else if (user.q3_final_score <= 15 && user.q4_final_score <= 11){
         user_segment = segments[3]
       }
     }
