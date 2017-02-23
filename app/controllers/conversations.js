@@ -41,7 +41,7 @@ module.exports = function (controller) {
   });
 
   controller.hears(['Q3'], 'message_received', function (bot, message) {
-    question003start(bot, incoming)
+    question003start(bot, message)
   });
 
   controller.hears(['Restart'], 'message_received', function(bot, incoming) {
