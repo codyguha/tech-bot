@@ -134,7 +134,7 @@ function sayThanks(bot, incoming){
   var end_time = Date.now();
   controller.storage.users.get(incoming.user, function (err, user) {
     user.end_time = end_time
-    total_time = user.start_time - end_time
+    total_time = end_time - user.start_time
     var min = (total_time/1000/60) << 0
     var sec = (total_time/1000) % 60;
     user.total_time = min + ':' + sec
