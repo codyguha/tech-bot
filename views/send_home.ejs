@@ -43,7 +43,10 @@
 <p>Back to <a id="link" >ARF</a></p>
 
 <script>
-var url = "http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+<%= frid %>+"&PID="+<%= pid %>
-document.getElementById("link").href= url
+$( document ).ready(function() {
+  var url = "http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+<%= frid %>+"&PID="+<%= pid %>
+  document.getElementById("link").href= url
+});
+
 </script>
 </body>
