@@ -40,8 +40,8 @@ module.exports = function (controller) {
     })
   });
 
-  controller.hears(['NPS'], 'message_received', function (bot, message) {
-    npsSurveyStart(bot, message)
+  controller.hears(['Q3'], 'message_received', function (bot, message) {
+    question003start(bot, incoming)
   });
 
   controller.hears(['Restart'], 'message_received', function(bot, incoming) {
