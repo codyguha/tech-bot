@@ -603,7 +603,7 @@ function question004(bot, incoming) {
           }
         }, function(response, convo) {
           score = score + +response.payload
-          console.log("FINAL SCORE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: " = score)
+          console.log("FINAL SCORE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: " + score)
           convo.stop()
           controller.storage.users.get(incoming.user, function (err, user) {
             if (err) {
@@ -639,7 +639,7 @@ function question004(bot, incoming) {
           }
         }, function(response, convo) {
             score = score + +response.payload
-            console.log("SCORE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: " = score)
+            console.log("SCORE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: " + score)
             convo.next();
         });
       }
