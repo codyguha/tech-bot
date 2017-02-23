@@ -43,10 +43,9 @@
 <p>Back to <a id="link" href="">ARF</a></p>
 
 <script>
-
+$("#link").attr("href", "http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+<%= frids %>);
 $( document ).ready(function() {
-  console.log(<%- frids %>)
-  $("#link").attr("href", "http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+bb);
+
 });
 
 </script>
