@@ -41,9 +41,9 @@
 <body>
 
 <p>Back to <a id="link" href="">ARF</a></p>
-
+<% var bb = <%=frids %> %>
 <script>
-var bb = <%-frids %>
+console.log(bb)
 $( document ).ready(function() {
 
   $("#link").attr("href", "http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+bb);
