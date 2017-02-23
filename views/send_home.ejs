@@ -44,8 +44,7 @@
 
 <script>
 $( document ).ready(function() {
-  var frids = <%= url %>
-  var url = "http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+frids
+  var url = <%= url %>
   $("#link").attr("href", url);
 });
 
