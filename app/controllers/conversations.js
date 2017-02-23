@@ -603,9 +603,6 @@ function question004(bot, incoming) {
           }
         }, function(response, convo) {
           score = score + +response.text
-          console.log("PAYLOAD!" + response.payload)
-          console.log("TEXT!" + response.text)
-          console.log("FINAL SCORE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: " + score)
           convo.stop()
           controller.storage.users.get(incoming.user, function (err, user) {
             if (err) {
@@ -629,20 +626,18 @@ function question004(bot, incoming) {
                 {
                   "type":"postback",
                   "title": questions[i].option1,
-                  "payload": "1"
+                  "payload": "0"
                 },
                 {
                   "type":"postback",
                   "title": questions[i].option2,
-                  "payload": "2"
+                  "payload": "1"
                 }
               ]
             }
           }
         }, function(response, convo) {
-            score = score + +response.payload
-            console.log("PAYLOAD!" + response.payload)
-            console.log("TEXT!" + response.text)
+            score = score + +response.response.text
             console.log("SCORE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: " + score)
             convo.next();
         });
