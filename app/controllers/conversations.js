@@ -83,9 +83,23 @@ module.exports = function (controller) {
     } else if (incoming.payload === "Q_05") {
       question005(bot, incoming)
     } else if (incoming.payload === "Q_07") {
-      sayThanks(bot, incoming)
+      controller.storage.users.get(incoming.user, function (err, user) {
+        if (err) {
+          console.log(err)
+        }
+        else if (user.completed !== true) {
+          sayThanks(bot, incoming)
+        }
+        else {
+          errorResponse(bot, incoming)
+        }
+      })
     }
   });
+
+function errorResponse(bot, incoming){
+  bot.reply(incoming, {text: "😨 oops! You've  already clicked that."});
+}
 
 function referralMsg(bot, incoming, frid, pid){
   bot.reply(incoming, {text: "oooooo a referral from somewhere :)"});
@@ -138,6 +152,7 @@ function sayThanks(bot, incoming){
     var min = (total_time/1000/60) << 0
     var sec = (total_time/1000) % 60
     user.total_time = min + ':' + Math.ceil(sec);
+    user.completed = true
     controller.storage.users.save(user)
     var frid = user.fedResponseId;
     var pid = user.pId;
@@ -348,7 +363,15 @@ function question003(bot, incoming) {
         }, function(response, convo) {
           convo.stop()
           score = score + +response.payload
-          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>FINAL SCORE: "+ score)
+          controller.storage.users.get(incoming.user, function (err, user) {
+            if (err) {
+              console.log(err)
+            }
+            else {
+              user.q3_final_score = score
+              controller.storage.users.save(user)
+            }
+          })
           question003end(bot, incoming)
         });
       } else if (i === 0) {
@@ -384,7 +407,6 @@ function question003(bot, incoming) {
           ]
         }, function(response, convo) {
             score = score + +response.payload
-            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SCORE: "+ score)
             convo.next();
         });
       } else if (i === 1) {
@@ -420,8 +442,7 @@ function question003(bot, incoming) {
               }
           ]
         }, function(response, convo) {
-          score = score + +response.payload
-          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SCORE: "+ score)
+            score = score + +response.payload
             convo.next();
         });
       }  else if (i === 4) {
@@ -456,8 +477,7 @@ function question003(bot, incoming) {
               }
           ]
         }, function(response, convo) {
-          score = score + +response.payload
-          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SCORE: "+ score)
+            score = score + +response.payload
             convo.next();
         });
       } else {
@@ -491,8 +511,7 @@ function question003(bot, incoming) {
               }
           ]
         }, function(response, convo) {
-          score = score + +response.payload
-          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SCORE: "+ score)
+            score = score + +response.payload
             convo.next();
         });
       }
@@ -547,6 +566,7 @@ function question004start(bot, incoming) {
 }
 
 function question004(bot, incoming) {
+  var score = 0
   var questions = shuffle([ {text: "I would rather read a...", option1: "Paperback Book", option2: "eBook"},
                     {text: "I would rather keep a diary...", option1: "In a notebook", option2: "On a computer"},
                     {text: "I would rather watch...", option1: "TV", option2: "YouTube or Vimeo"},
@@ -570,18 +590,28 @@ function question004(bot, incoming) {
                 {
                   "type":"postback",
                   "title": questions[i].option1,
-                  "payload": "PAYLOAD_"
+                  "payload": "0"
                 },
                 {
                   "type":"postback",
                   "title": questions[i].option2,
-                  "payload": "PAYLOAD_"
+                  "payload": "1"
                 }
               ]
             }
           }
         }, function(response, convo) {
+          score = score + +response.payload
           convo.stop()
+          controller.storage.users.get(incoming.user, function (err, user) {
+            if (err) {
+              console.log(err)
+            }
+            else {
+              user.q4_final_score = score
+              controller.storage.users.save(user)
+            }
+          })
           question004end(bot, incoming)
         });
       } else {
@@ -595,17 +625,18 @@ function question004(bot, incoming) {
                 {
                   "type":"postback",
                   "title": questions[i].option1,
-                  "payload": "PAYLOAD_"
+                  "payload": "0"
                 },
                 {
                   "type":"postback",
                   "title": questions[i].option2,
-                  "payload": "PAYLOAD_"
+                  "payload": "1"
                 }
               ]
             }
           }
         }, function(response, convo) {
+            score = score + +response.payload
             convo.next();
         });
       }
@@ -791,15 +822,44 @@ function question006(bot, incoming) {
 }
 
 function question006end(bot, incoming) {
-  bot.reply(incoming, {text: "Oustanding work!"});
+  var segments = [
+    "A Tech Innovator - You pride yourself in having all the latest gadgets, heck you could probably help design them (maybe you do!)",
+    "A Tech Lover - I beat you feel a little panicked when your phone gets below 10% battery – or maybe you never let it get that low",
+    "A Tech Dabbler - Technology is great but also have an appreciation for a book, an in-person interaction or a pen and paper",
+    "Tech Resigned - Mom? Is that you? Kidding! Obviously, you use technology because here you are talking with me but you’re happy to wait and let others test out new things."
+  ]
+  var user_segment;
+  controller.storage.users.get(incoming.user, function (err, user) {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      if (user.q3_final_score >= 20 && user.q4_final_score >= 6) {
+        user_segment = segments[0]
+      }
+      else if (user.q3_final_score <= 19 && user.q4_final_score >= 6){
+        user_segment = segments[1]
+      }
+      else if (user.q3_final_score >= 16 && user.q4_final_score <= 5){
+        user_segment = segments[2]
+      }
+      else if (user.q3_final_score <= 15 && user.q4_final_score <= 5){
+        user_segment = segments[3]
+      }
+    }
+  })
+  bot.reply(incoming, {text: "Oustanding work! Based on the answers you’ve given us we think you are:"});
   setTimeout(function() {
-    bot.reply(incoming, {text: "You made it to end.  Here is your last question..."});
+    bot.reply(incoming, {text: user_segment});
     setTimeout(function() {
-      bot.reply(incoming, {text: "What did you think of this questionnaire?"});
+      bot.reply(incoming, {text: "You made it to the end.  Here is your last question..."});
       setTimeout(function() {
-        question007(bot, incoming)
+        bot.reply(incoming, {text: "What did you think of this questionnaire?"});
+        setTimeout(function() {
+          question007(bot, incoming)
+        }, 1000)
       }, 2000)
-    }, 1000)
+    }, 3000)
   }, 1000)
 }
 
