@@ -566,7 +566,7 @@ function question004start(bot, incoming) {
 }
 
 function question004(bot, incoming) {
-  var score = 0
+
   var questions = shuffle([ {text: "I would rather read a...", option1: "Paperback Book", option2: "eBook"},
                     {text: "I would rather keep a diary...", option1: "In a notebook", option2: "On a computer"},
                     {text: "I would rather watch...", option1: "TV", option2: "YouTube or Vimeo"},
@@ -578,6 +578,7 @@ function question004(bot, incoming) {
                     {text: "I would rather...", option1: "Go to the bank", option2: "Do my banking online"},
                   ])
   bot.startConversation(incoming, function(err, convo) {
+    var score = 0
     for (i = 0; i < questions.length; ++i) {
       if (i === (questions.length-1)) {
         convo.ask({
@@ -602,6 +603,7 @@ function question004(bot, incoming) {
           }
         }, function(response, convo) {
           score = score + +response.payload
+          console.log("FINAL SCORE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: " = score)
           convo.stop()
           controller.storage.users.get(incoming.user, function (err, user) {
             if (err) {
@@ -637,6 +639,7 @@ function question004(bot, incoming) {
           }
         }, function(response, convo) {
             score = score + +response.payload
+            console.log("SCORE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: " = score)
             convo.next();
         });
       }
