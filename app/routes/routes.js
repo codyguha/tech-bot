@@ -24,9 +24,9 @@ module.exports = function (app) {
       res.render('email', {id: req.params.id});
   });
 
-  app.get('/ARF/:frid/:pid',
+  app.get('/ARF/:id',
     function(req, res){
-      res.render('send_home', {frid: req.params.frid, pid: req.params.pid});
+      res.render('send_home', {url: req.params.id});
   });
 
   app.get('/unlimited-funding/:id',
