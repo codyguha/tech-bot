@@ -40,12 +40,13 @@
 
 <body>
 
-<p>Back to <a id="link" href="">ARF</a></p>
+<p>Back to <a id="link">ARF</a></p>
 
 <script>
 $( document ).ready(function() {
-  var url = "http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+<%= url %>
-  document.getElementById("link").href= url
+  var frids = <%= url %>
+  var url = "http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+frids
+  $("#link").attr("href", url);
 });
 
 </script>
