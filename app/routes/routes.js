@@ -20,7 +20,7 @@ module.exports = function (app) {
   })
 
   app.get('/email/:id',
-    function(req, res){s
+    function(req, res){
       res.render('email', {id: req.params.id});
   });
 
