@@ -109,6 +109,7 @@ module.exports = function (controller) {
             }
             else {
               user.satisfaction = incoming.text
+              console.log("INCOMING TEXT>>>>>" + incoming.text)
               controller.storage.users.save(user)
             }
           })
