@@ -102,7 +102,7 @@ module.exports = function (controller) {
         if (err) {
           console.log(err)
         }
-        else if (user.status !== "completed") {
+        else if (user.status !== "finished") {
           controller.storage.users.get(incoming.user, function (err, user) {
             if (err) {
               console.log(err)
