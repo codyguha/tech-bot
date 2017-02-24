@@ -96,7 +96,6 @@ var handler = function (obj) {
           // and a normal message received event.
           // this allows developers to receive postbacks as part of a conversation.
           message = {
-            text: facebook_message.postback.title,
             payload: facebook_message.postback.payload,
             user: facebook_message.sender.id,
             channel: facebook_message.sender.id,

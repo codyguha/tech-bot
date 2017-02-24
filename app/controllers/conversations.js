@@ -97,8 +97,7 @@ module.exports = function (controller) {
       question004start(bot, incoming)
     } else if (incoming.payload === "Q_05") {
       question005(bot, incoming)
-    } else if (incoming.payload === "Q_07") {
-      console.log("INCOMING TEXT>>>>>: " + JSON.stringify(incoming))
+    } else if (incoming.payload === "LOVE" || incoming.payload === "LIKE" || incoming.payload === "OK" || incoming.payload === "NOLIKE" || incoming.payload === "HATE") {
       controller.storage.users.get(incoming.user, function (err, user) {
         if (err) {
           console.log(err)
@@ -109,7 +108,7 @@ module.exports = function (controller) {
               console.log(err)
             }
             else {
-              user.satisfaction = incoming.text
+              user.satisfaction = incoming.payload
               controller.storage.users.save(user)
             }
           })
@@ -908,7 +907,7 @@ function question007(bot, incoming){
               {
                 "type":"postback",
                 "title":"Loved it",
-                "payload":"Q_07"
+                "payload":"LOVE"
               }
             ]
           },
@@ -919,7 +918,7 @@ function question007(bot, incoming){
               {
                 "type":"postback",
                 "title":"Liked it",
-                "payload":"Q_07"
+                "payload":"LIKE"
               }
             ]
           },
@@ -930,7 +929,7 @@ function question007(bot, incoming){
               {
                 "type":"postback",
                 "title":"It was OK",
-                "payload":"Q_07"
+                "payload":"OK"
               }
             ]
           },
@@ -941,7 +940,7 @@ function question007(bot, incoming){
               {
                 "type":"postback",
                 "title":"Didn't like it",
-                "payload":"Q_07"
+                "payload":"NOLIKE"
               }
             ]
           },
@@ -952,7 +951,7 @@ function question007(bot, incoming){
               {
                 "type":"postback",
                 "title":"Hated it",
-                "payload":"Q_07"
+                "payload":"HATE"
               }
             ]
           }
