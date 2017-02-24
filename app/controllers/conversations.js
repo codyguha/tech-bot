@@ -98,6 +98,7 @@ module.exports = function (controller) {
     } else if (incoming.payload === "Q_05") {
       question005(bot, incoming)
     } else if (incoming.payload === "Q_07") {
+      console.log("INCOMING TEXT>>>>>" + incoming.text)
       controller.storage.users.get(incoming.user, function (err, user) {
         if (err) {
           console.log(err)
@@ -109,7 +110,6 @@ module.exports = function (controller) {
             }
             else {
               user.satisfaction = incoming.text
-              console.log("INCOMING TEXT>>>>>" + incoming.text)
               controller.storage.users.save(user)
             }
           })
