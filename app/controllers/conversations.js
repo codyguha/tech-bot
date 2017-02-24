@@ -1,4 +1,4 @@
-var moment = require('moment');
+var request = require('request');
 
 module.exports = function (controller) {
   // this is triggered when a user clicks the send-to-messenger plugin
