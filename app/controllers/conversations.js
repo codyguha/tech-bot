@@ -41,7 +41,7 @@ module.exports = function (controller) {
   });
 
   controller.hears(['Q4'], 'message_received', function (bot, message) {
-    question004(bot, message)
+    sayThanks(bot, message)
   });
 
   controller.hears(['Restart'], 'message_received', function(bot, incoming) {
@@ -169,7 +169,7 @@ function sayThanks(bot, incoming){
           "buttons":[
             {
               "type":"web_url",
-              "url":"https://gentle-earth-80429.herokuapp.com/ARF/http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+frid+"&PID="+pid,
+              "url":"https://gentle-earth-80429.herokuapp.com/ARF/"+frid+"&PID="+pid,
               "title":"DONE",
               "messenger_extensions": true,
               "webview_height_ratio": "full"
