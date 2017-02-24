@@ -141,10 +141,8 @@ function referralMsg(bot, incoming, frid, pid){
 function welcomeMessage(bot, incoming){
   var start_time = Date.now();
   var id = incoming.user
-  var first_name
   getProfile(incoming.user, function(err, user) {
     var full_name = user.first_name +" "+user.last_name
-    first_name = user.first_name
     controller.storage.users.get(id, function (err, user) {
       if (err) {
         console.log(err)
@@ -159,20 +157,20 @@ function welcomeMessage(bot, incoming){
         controller.storage.users.save(user)
       }
     })
-  });
-  bot.reply(incoming, {text: "Hey "+first_name+", thanks for coming along..."});
-  setTimeout(function() {
-    bot.reply(incoming, {text: "To kick things off lets keep things light."});
+    bot.reply(incoming, {text: "Hey "+user.first_name+", thanks for coming along..."});
     setTimeout(function() {
-      bot.reply(incoming, {text: "Here is your first question...."});
+      bot.reply(incoming, {text: "To kick things off lets keep things light."});
       setTimeout(function() {
-        bot.reply(incoming, {text: "Which of the following items in the list below would you consider a favorite thing to do in your spare time? (Pick 1)"});
+        bot.reply(incoming, {text: "Here is your first question...."});
         setTimeout(function() {
-          question001(bot, incoming)
+          bot.reply(incoming, {text: "Which of the following items in the list below would you consider a favorite thing to do in your spare time? (Pick 1)"});
+          setTimeout(function() {
+            question001(bot, incoming)
+          }, 1000)
         }, 1000)
       }, 1000)
     }, 1000)
-  }, 1000)
+  });
 }
 
 function sayThanks(bot, incoming){
