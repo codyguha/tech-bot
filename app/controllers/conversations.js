@@ -40,9 +40,24 @@ module.exports = function (controller) {
     })
   });
 
-  controller.hears(['Q4'], 'message_received', function (bot, message) {
-    sayThanks(bot, message)
-  });
+  function getProfile(id, cb) {
+      if (!cb) cb = Function.prototype
+      request({
+        method: 'GET',
+        uri: `https://graph.facebook.com/v2.6/${id}`,
+        qs: {
+          fields: 'first_name, last_name',
+          access_token: process.env.page_token
+        },
+        json: true
+      }, function(err, res, body) {
+        if (err) return cb(err)
+        if (body.error) return cb(body.error)
+
+        cb(null, body)
+      });
+  };
+
 
   controller.hears(['Restart'], 'message_received', function(bot, incoming) {
     welcomeMessage(bot, incoming);
@@ -88,6 +103,15 @@ module.exports = function (controller) {
           console.log(err)
         }
         else if (user.status !== "completed") {
+          controller.storage.users.get(incoming.user, function (err, user) {
+            if (err) {
+              console.log(err)
+            }
+            else {
+              user.satisfaction = incoming.text
+              controller.storage.users.save(user)
+            }
+          })
           sayThanks(bot, incoming)
         }
         else {
@@ -115,21 +139,25 @@ function referralMsg(bot, incoming, frid, pid){
 }
 
 function welcomeMessage(bot, incoming){
-  var timeInMs = Date.now();
+  var start_time = Date.now();
   var id = incoming.user
-  controller.storage.users.get(id, function (err, user) {
-    if (err) {
-      console.log(err)
-    }
-    else if (!user) {
-      controller.storage.users.save({id: id, start_time: timeInMs})
-    }
-    else {
-      user.start_time = timeInMs
-      user.status = "started"
-      controller.storage.users.save(user)
-    }
-  })
+  getProfile(incoming.user, function(err, user) {
+    var full_name = user.first_name +" "+user.last_name
+    controller.storage.users.get(id, function (err, user) {
+      if (err) {
+        console.log(err)
+      }
+      else if (!user) {
+        controller.storage.users.save({id: id, full_name: full_name, start_time: start_time, status: "started"})
+      }
+      else {
+        user.start_time = start_time
+        user.status = "started"
+        user.full_name = full_name
+        controller.storage.users.save(user)
+      }
+    })
+  });
   bot.reply(incoming, {text: "Awesome, thanks for coming along..."});
   setTimeout(function() {
     bot.reply(incoming, {text: "To kick things off lets keep things light."});
@@ -172,7 +200,7 @@ function sayThanks(bot, incoming){
               "url":"https://gentle-earth-80429.herokuapp.com/ARF/"+frid+"&PID="+pid,
               "title":"DONE",
               "messenger_extensions": true,
-              "webview_height_ratio": "full"
+              "webview_height_ratio": "compact"
             }
           ]
         }
