@@ -141,8 +141,10 @@ function referralMsg(bot, incoming, frid, pid){
 function welcomeMessage(bot, incoming){
   var start_time = Date.now();
   var id = incoming.user
+  var first_name
   getProfile(incoming.user, function(err, user) {
     var full_name = user.first_name +" "+user.last_name
+    first_name = user.first_name
     controller.storage.users.get(id, function (err, user) {
       if (err) {
         console.log(err)
@@ -158,7 +160,7 @@ function welcomeMessage(bot, incoming){
       }
     })
   });
-  bot.reply(incoming, {text: "Awesome, thanks for coming along..."});
+  bot.reply(incoming, {text: "Hey "+first_name+", thanks for coming along..."});
   setTimeout(function() {
     bot.reply(incoming, {text: "To kick things off lets keep things light."});
     setTimeout(function() {
