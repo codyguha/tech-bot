@@ -109,6 +109,7 @@ module.exports = function (controller) {
             }
             else {
               user.satisfaction = incoming.payload
+              console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>GOT HERE WITH: " + incoming.payload )
               controller.storage.users.save(user)
             }
           })
