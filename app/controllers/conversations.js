@@ -103,16 +103,8 @@ module.exports = function (controller) {
           console.log(err)
         }
         else if (user.status !== "finished") {
-          controller.storage.users.get(incoming.user, function (err, user) {
-            if (err) {
-              console.log(err)
-            }
-            else {
-              user.satisfaction = incoming.payload
-              console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>GOT HERE WITH: " + incoming.payload )
-              controller.storage.users.save(user)
-            }
-          })
+          user.satisfaction = incoming.payload
+          controller.storage.users.save(user)
           sayThanks(bot, incoming)
         }
         else {
@@ -201,7 +193,7 @@ function sayThanks(bot, incoming){
               "url":"https://gentle-earth-80429.herokuapp.com/ARF/"+frid+"&PID="+pid,
               "title":"DONE",
               "messenger_extensions": true,
-              "webview_height_ratio": "compact"
+              "webview_height_ratio": "full"
             }
           ]
         }
