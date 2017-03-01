@@ -149,9 +149,9 @@ function welcomeMessage(bot, incoming){
     setTimeout(function() {
       bot.reply(incoming, {text: "To kick things off lets keep things light."});
       setTimeout(function() {
-        bot.reply(incoming, {text: "Here is your first question...(Scroll right to see all the available responses)"});
+        bot.reply(incoming, {text: "Here is your first question..."});
         setTimeout(function() {
-          bot.reply(incoming, {text: "Which of the following items in the list below would you consider a favorite thing to do in your spare time? (Pick 1)"});
+          bot.reply(incoming, {text: "Which of the following items in the list below would you consider a favorite thing to do in your spare time? (Scroll right to see all the available responses and \"select\" 1)"});
           setTimeout(function() {
             question001(bot, incoming)
           }, 1000)
