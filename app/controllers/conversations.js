@@ -2,43 +2,6 @@ var request = require('request');
 
 module.exports = function (controller) {
 
-  var reminderTimer;
-
-  function timerStart(bot, incoming){
-    reminderTimer = setTimeout(function() {
-      bot.reply(incoming, {text: "😨 HEY COME BACK!!! we just started :) Pick one from the list above"});
-    }, 20000);
-  }
-
-  function timerReset(bot, incoming){
-    clearTimeout(reminderTimer);
-    reminderTimer = setTimeout(function() {
-       getProfile(incoming.user, function(err, user) {
-          bot.reply(incoming, {
-          "attachment":{
-            "type":"template",
-            "payload":{
-              "template_type":"button",
-              "text":"Did you forget about me "+user.first_name+"? We would like you to try and get through the entire survey from start to finish. It should take about 5 minutes. Can we start from the beginning again? (The survey should take about 5 minutes.)",
-              "buttons":[
-                {
-                  "type":"postback",
-                  "title": "Restart Survey",
-                  "payload": "Restart"
-                }
-              ]
-            }
-          }
-        })
-       });
-    }, 20000);
-    //3600000
-  }
-
-  function timerEnd(bot, incoming){
-    clearTimeout(reminderTimer);
-  }
-
   // this is triggered when a user clicks the send-to-messenger plugin
   controller.on('facebook_optin', function (bot, message) {
     var id = message.user
@@ -223,7 +186,6 @@ function sayThanks(bot, incoming){
       }});
     }, 1000)
   });
-  timerEnd(bot, incoming);
 }
 
 function question001(bot, incoming) {
@@ -288,7 +250,6 @@ function question001(bot, incoming) {
       menu_items.push(menu_item);
     }
   }
-  timerReset(bot, incoming)
 }
 
 function question002(bot, incoming) {
@@ -315,7 +276,6 @@ function question002(bot, incoming) {
       }, 1000)
     }, 5000)
   }, 1000)
-  timerReset(bot, incoming)
 }
 
 function question002List(bot, incoming){
@@ -335,7 +295,6 @@ function question002List(bot, incoming){
       ]
     }
   }});
-  timerReset(bot, incoming)
 }
 
 function question003start(bot, incoming) {
@@ -361,7 +320,6 @@ function question003start(bot, incoming) {
       });
     }, 1000)
   }, 1000)
-  timerReset(bot, incoming)
 }
 
 function question003(bot, incoming) {
@@ -457,7 +415,6 @@ function question003(bot, incoming) {
           ]
         }, function(response, convo) {
             score = score + +response.payload
-            timerReset(bot, incoming)
             convo.next();
         });
       } else if (i === 1) {
@@ -494,7 +451,6 @@ function question003(bot, incoming) {
           ]
         }, function(response, convo) {
             score = score + +response.payload
-            timerReset(bot, incoming)
             convo.next();
         });
       }  else if (i === 4) {
@@ -530,7 +486,6 @@ function question003(bot, incoming) {
           ]
         }, function(response, convo) {
             score = score + +response.payload
-            timerReset(bot, incoming)
             convo.next();
         });
       } else {
@@ -565,7 +520,6 @@ function question003(bot, incoming) {
           ]
         }, function(response, convo) {
             score = score + +response.payload
-            timerReset(bot, incoming)
             convo.next();
         });
       }
@@ -606,7 +560,6 @@ function question003end(bot, incoming) {
       }, 1000)
     }, 1000)
   }, 1000)
-  timerReset(bot, incoming)
 }
 
 function question004start(bot, incoming) {
@@ -618,7 +571,6 @@ function question004start(bot, incoming) {
       question004(bot, incoming)
     }, 1000)
   }, 1000)
-  timerReset(bot, incoming)
 }
 
 function question004(bot, incoming) {
@@ -694,7 +646,6 @@ function question004(bot, incoming) {
           }
         }, function(response, convo) {
             score = score + +response.text
-            timerReset(bot, incoming)
             convo.next();
         });
       }
@@ -722,7 +673,6 @@ function question004end(bot, incoming) {
       }
     });
   }, 1000)
-  timerReset(bot, incoming)
 }
 
 function question005(bot, message){
@@ -738,7 +688,6 @@ function question005(bot, message){
     } else {
       i++
       question005question(bot, message, i)
-      timerReset(bot, incoming)
     }
   }
   function question005question(bot, message, i){
@@ -825,7 +774,6 @@ function question006start(bot, incoming) {
       question006(bot, incoming)
     }, 4000)
   }, 1000)
-  timerReset(bot, incoming)
 }
 
 function question006(bot, incoming) {
@@ -880,7 +828,6 @@ function question006(bot, incoming) {
       }
     }
   });
-  timerReset(bot, incoming)
 }
 
 function question006end(bot, incoming) {
@@ -923,7 +870,6 @@ function question006end(bot, incoming) {
       }, 2000)
     }, 3000)
   }, 1000)
-  timerReset(bot, incoming)
 }
 
 function question007(bot, incoming){
