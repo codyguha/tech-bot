@@ -7,24 +7,10 @@ module.exports = function (controller) {
   function timerStart(bot, incoming){
     reminderTimer = setTimeout(function() {
       bot.reply(incoming, {text: "😨 HEY COME BACK!!! we just started :) Pick one from the list above"});
-    }, 60000);
+    }, 20000);
   }
 
-  function timerReset(bot, incoming, progress){
-    var payload;
-    if (progress === "2"){
-      payload = "Q_02restart"
-    } else if (progress === "3") {
-      payload = "Q_03"
-    } else if (progress === "4") {
-      payload = "Q_04"
-    } else if (progress === "5") {
-      payload = "Q_05restart"
-    } else if (progress === "6") {
-      payload = "Q_06restart"
-    } else if (progress === "7") {
-      payload = "Q_07restart"
-    }
+  function timerReset(bot, incoming){
     clearTimeout(reminderTimer);
     reminderTimer = setTimeout(function() {
        getProfile(incoming.user, function(err, user) {
@@ -33,23 +19,23 @@ module.exports = function (controller) {
             "type":"template",
             "payload":{
               "template_type":"button",
-              "text":"Did youforget about me "+user.first_name+"? Shall we get back to it?",
+              "text":"Did you forget about me "+user.first_name+"? We would like you to try and get through the entire survey from start to finish. It should take about 5 minutes. Can we start from the beginning again? (The survey should take about 5 minutes.)",
               "buttons":[
                 {
                   "type":"postback",
-                  "title": "Continue Survey",
-                  "payload": payload
+                  "title": "Restart Survey",
+                  "payload": "Restart"
                 }
               ]
             }
           }
         })
        });
-    }, 60000);
+    }, 10000);
+    //3600000
   }
 
   function timerEnd(bot, incoming){
-    bot.reply(incoming, {text: "timer ended"})
     clearTimeout(reminderTimer);
   }
 
@@ -141,23 +127,15 @@ module.exports = function (controller) {
   controller.on('facebook_postback', function(bot, incoming) {
     if (incoming.payload === "Q_02") {
       question002(bot, incoming)
-    } else if (incoming.payload === "Q_02restart") {
-      question002List(bot, incoming)
+    } else if (incoming.payload === "Restart") {
+      welcomeMessage(bot, incoming)
     } else if (incoming.payload === "Q_03") {
       question003start(bot, incoming)
-    } else if (incoming.payload === "Q_03start") {
-      question003(bot, incoming)
     } else if (incoming.payload === "Q_04") {
       question004start(bot, incoming)
-    } else if (incoming.payload === "Q_05restart") {
-      question004end(bot, incoming)
     } else if (incoming.payload === "Q_05") {
       question005(bot, incoming)
-    }  else if (incoming.payload === "Q_06restart") {
-      question006start(bot, incoming)
-    } else if (incoming.payload === "Q_07restart") {
-      question006end(bot, incoming)
-    }else if (incoming.payload === "LOVE" || incoming.payload === "LIKE" || incoming.payload === "OK" || incoming.payload === "NOLIKE" || incoming.payload === "HATE") {
+    } else if (incoming.payload === "LOVE" || incoming.payload === "LIKE" || incoming.payload === "OK" || incoming.payload === "NOLIKE" || incoming.payload === "HATE") {
       controller.storage.users.get(incoming.user, function (err, user) {
         if (err) {
           console.log(err)
@@ -312,7 +290,7 @@ function question001(bot, incoming) {
       menu_items.push(menu_item);
     }
   }
-   timerStart(bot, incoming);
+  timerReset(bot, incoming)
 }
 
 function question002(bot, incoming) {
@@ -339,7 +317,7 @@ function question002(bot, incoming) {
       }, 1000)
     }, 5000)
   }, 1000)
-  timerReset(bot, incoming, "2");
+  timerReset(bot, incoming)
 }
 
 function question002List(bot, incoming){
@@ -359,7 +337,7 @@ function question002List(bot, incoming){
       ]
     }
   }});
-  timerReset(bot, incoming, "2");
+  timerReset(bot, incoming)
 }
 
 function question003start(bot, incoming) {
@@ -385,7 +363,7 @@ function question003start(bot, incoming) {
       });
     }, 1000)
   }, 1000)
-  timerReset(bot, incoming, "3");
+  timerReset(bot, incoming)
 }
 
 function question003(bot, incoming) {
@@ -446,7 +424,6 @@ function question003(bot, incoming) {
               controller.storage.users.save(user)
             }
           })
-          timerReset(bot, incoming, "3");
           question003end(bot, incoming)
         });
       } else if (i === 0) {
@@ -482,7 +459,7 @@ function question003(bot, incoming) {
           ]
         }, function(response, convo) {
             score = score + +response.payload
-            timerReset(bot, incoming, "3");
+            timerReset(bot, incoming)
             convo.next();
         });
       } else if (i === 1) {
@@ -519,7 +496,7 @@ function question003(bot, incoming) {
           ]
         }, function(response, convo) {
             score = score + +response.payload
-            timerReset(bot, incoming, "3");
+            timerReset(bot, incoming)
             convo.next();
         });
       }  else if (i === 4) {
@@ -555,7 +532,7 @@ function question003(bot, incoming) {
           ]
         }, function(response, convo) {
             score = score + +response.payload
-            timerReset(bot, incoming, "3");
+            timerReset(bot, incoming)
             convo.next();
         });
       } else {
@@ -590,13 +567,12 @@ function question003(bot, incoming) {
           ]
         }, function(response, convo) {
             score = score + +response.payload
-            timerReset(bot, incoming, "3");
+            timerReset(bot, incoming)
             convo.next();
         });
       }
     }
   });
-  timerReset(bot, incoming, "3");
 }
 
 function question003end(bot, incoming) {
@@ -632,7 +608,7 @@ function question003end(bot, incoming) {
       }, 1000)
     }, 1000)
   }, 1000)
-  timerReset(bot, incoming, "4");
+  timerReset(bot, incoming)
 }
 
 function question004start(bot, incoming) {
@@ -644,7 +620,7 @@ function question004start(bot, incoming) {
       question004(bot, incoming)
     }, 1000)
   }, 1000)
-  timerReset(bot, incoming, "4");
+  timerReset(bot, incoming)
 }
 
 function question004(bot, incoming) {
@@ -720,13 +696,12 @@ function question004(bot, incoming) {
           }
         }, function(response, convo) {
             score = score + +response.text
-            timerReset(bot, incoming, "4");
+            timerReset(bot, incoming)
             convo.next();
         });
       }
     }
   });
-  timerReset(bot, incoming, "4");
 }
 
 function question004end(bot, incoming) {
@@ -749,7 +724,7 @@ function question004end(bot, incoming) {
       }
     });
   }, 1000)
-  timerReset(bot, incoming, "5");
+  timerReset(bot, incoming)
 }
 
 function question005(bot, message){
@@ -765,7 +740,7 @@ function question005(bot, message){
     } else {
       i++
       question005question(bot, message, i)
-      timerReset(bot, incoming, "5");
+      timerReset(bot, incoming)
     }
   }
   function question005question(bot, message, i){
@@ -852,7 +827,7 @@ function question006start(bot, incoming) {
       question006(bot, incoming)
     }, 4000)
   }, 1000)
-  timerReset(bot, incoming, "6");
+  timerReset(bot, incoming)
 }
 
 function question006(bot, incoming) {
@@ -902,13 +877,12 @@ function question006(bot, incoming) {
               }
           ]
         }, function(response, convo) {
-            timerReset(bot, incoming, "6");
             convo.next();
         });
       }
     }
   });
-  
+  timerReset(bot, incoming)
 }
 
 function question006end(bot, incoming) {
@@ -946,12 +920,12 @@ function question006end(bot, incoming) {
       setTimeout(function() {
         bot.reply(incoming, {text: "What did you think of this questionnaire?"});
         setTimeout(function() {
-          timerReset(bot, incoming, "7");
           question007(bot, incoming)
         }, 1000)
       }, 2000)
     }, 3000)
   }, 1000)
+  timerReset(bot, incoming)
 }
 
 function question007(bot, incoming){
