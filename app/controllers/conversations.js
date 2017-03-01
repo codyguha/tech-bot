@@ -2,13 +2,27 @@ var request = require('request');
 
 module.exports = function (controller) {
 
-  var timeoutHandle;
+  var reminderTimer;
 
-  function timer(bot, incoming){
-    timeoutHandle = setTimeout(function() {
+  function timerStart(bot, incoming){
+    reminderTimer = setTimeout(function() {
       bot.reply(incoming, {text: "😨 HEY COME BACK!!!"});
-    }, 4000);
+    }, 20000);
   }
+
+  function timerReset(bot, incoming){
+    clearTimeout(reminderTimer);
+    bot.reply(incoming, {text: "timer reset"})
+    reminderTimer = setTimeout(function() {
+      bot.reply(incoming, {text: "😨 HEY COME BACK!!!"});
+    }, 20000);
+  }
+
+  function timerEnd(bot, incoming){
+    bot.reply(incoming, {text: "timer ended"})
+    clearTimeout(reminderTimer);
+  }
+
   // this is triggered when a user clicks the send-to-messenger plugin
   controller.on('facebook_optin', function (bot, message) {
     var id = message.user
@@ -98,6 +112,7 @@ module.exports = function (controller) {
     if (incoming.payload === "Q_02") {
       question002(bot, incoming)
     } else if (incoming.payload === "Q_03") {
+      timerEnd(bot, incoming)
       question003start(bot, incoming)
     } else if (incoming.payload === "Q_03start") {
       question003(bot, incoming)
@@ -259,6 +274,7 @@ function question001(bot, incoming) {
       menu_items.push(menu_item);
     }
   }
+   timerStart(bot, incoming);
 }
 
 function question002(bot, incoming) {
@@ -285,6 +301,7 @@ function question002(bot, incoming) {
       }, 1000)
     }, 5000)
   }, 1000)
+  timerReset(bot, incoming);
 }
 
 function question002List(bot, incoming){
