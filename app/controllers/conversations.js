@@ -31,7 +31,7 @@ module.exports = function (controller) {
           }
         })
        });
-    }, 10000);
+    }, 20000);
     //3600000
   }
 
