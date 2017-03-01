@@ -92,7 +92,9 @@ module.exports = function (controller) {
       question002(bot, incoming)
     } else if (incoming.payload === "Q_03") {
       question003start(bot, incoming)
-    } else if (incoming.payload === "Q_04") {
+    } else if (incoming.payload === "Q_03start") {
+      question003(bot, incoming)
+    }else if (incoming.payload === "Q_04") {
       question004start(bot, incoming)
     } else if (incoming.payload === "Q_05") {
       question005(bot, incoming)
