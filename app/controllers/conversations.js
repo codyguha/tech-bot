@@ -127,8 +127,6 @@ module.exports = function (controller) {
   controller.on('facebook_postback', function(bot, incoming) {
     if (incoming.payload === "Q_02") {
       question002(bot, incoming)
-    } else if (incoming.payload === "Restart") {
-      welcomeMessage(bot, incoming)
     } else if (incoming.payload === "Q_03") {
       question003start(bot, incoming)
     } else if (incoming.payload === "Q_04") {
