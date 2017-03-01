@@ -1,6 +1,14 @@
 var request = require('request');
 
 module.exports = function (controller) {
+
+  var timeoutHandle;
+
+  function timer(bot, incoming){
+    timeoutHandle = setTimeout(function() {
+      bot.reply(incoming, {text: "😨 HEY COME BACK!!!"});
+    }, 4000);
+  }
   // this is triggered when a user clicks the send-to-messenger plugin
   controller.on('facebook_optin', function (bot, message) {
     var id = message.user
@@ -118,19 +126,6 @@ function errorResponse(bot, incoming){
   bot.reply(incoming, {text: "😨 oops! You've  already clicked that."});
 }
 
-function referralMsg(bot, incoming, frid, pid){
-  bot.reply(incoming, {text: "oooooo a referral from somewhere :)"});
-  setTimeout(function() {
-    bot.reply(incoming, {text: "your FRID is: " + frid});
-    setTimeout(function() {
-      bot.reply(incoming, {text: "your PID is: " + pid});
-      setTimeout(function() {
-        bot.reply(incoming, {text: "and finally, here is that magic link with the values appended: http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+frid+"&PID="+pid});
-      }, 2000)
-    }, 2000)
-  }, 2000)
-}
-
 function welcomeMessage(bot, incoming){
   var start_time = Date.now();
   var id = incoming.user
@@ -154,7 +149,7 @@ function welcomeMessage(bot, incoming){
     setTimeout(function() {
       bot.reply(incoming, {text: "To kick things off lets keep things light."});
       setTimeout(function() {
-        bot.reply(incoming, {text: "Here is your first question...."});
+        bot.reply(incoming, {text: "Here is your first question...(Scroll right to see all the available responses)"});
         setTimeout(function() {
           bot.reply(incoming, {text: "Which of the following items in the list below would you consider a favorite thing to do in your spare time? (Pick 1)"});
           setTimeout(function() {
@@ -955,6 +950,7 @@ function question007(bot, incoming){
 }
 
 }
+
 function shuffle(array) {
     let counter = array.length;
 
