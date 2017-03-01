@@ -3,7 +3,6 @@ var request = require('request');
 module.exports = function (controller) {
 
   var reminderTimer;
-  var reply = 
 
   function timerStart(bot, incoming){
     reminderTimer = setTimeout(function() {
