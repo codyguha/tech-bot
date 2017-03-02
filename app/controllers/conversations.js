@@ -773,7 +773,9 @@ function question006start(bot, incoming) {
     bot.reply(incoming, {text: "This ones about software and programming language.  I'm going to mention a name.  All you need to do is tell me if you use it or not."});
     setTimeout(function() {
       bot.reply(incoming, {text: "Here we go..."});
-      question006(bot, incoming)
+      setTimeout(function() {
+        question006(bot, incoming)
+      }, 1000)
     }, 4000)
   }, 1000)
 }
