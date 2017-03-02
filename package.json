@@ -1,5 +1,5 @@
 {
-  "name": "sugarbot",
+  "name": "techbot",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codyguha/sugar-bot.git"
+    "url": "git+https://github.com/codyguha/tech-bot.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/codyguha/sugar-bot/issues"
+    "url": "https://github.com/codyguha/tech-bot/issues"
   },
-  "homepage": "https://github.com/codyguha/sugar-bot#readme",
+  "homepage": "https://github.com/codyguha/tech-bot#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
     "botkit": "^0.4.3",
