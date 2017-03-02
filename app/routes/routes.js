@@ -24,13 +24,6 @@ module.exports = function (app) {
       res.render('email', {id: req.params.id});
   });
 
-  app.get('/ARF/:frids',
-    function(req, res){
-      var frids = req.params.frids
-      var url = "http://www.samplicio.us/router/ClientCallBack.aspx?fedResponseStatus=10&fedResponseID="+frids
-      res.render('send_home', {url: url});
-  });
-
   app.get('/unlimited-funding/:id',
     function(req, res){
       activitylist =  ["Build computer games","Tinker with my tools in the garage","Hike a different national park every week","Go on a never-ending winery tour","Start my own business","Go into politics","Volunteer for charities","Stay in bed and read all day","Watch TV and eat junk food"]
